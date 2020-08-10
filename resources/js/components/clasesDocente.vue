@@ -113,7 +113,7 @@
                             </a>
                           </div>
                           <br />
-                          <div v-show="clas.document1!= ''">
+                          <div v-show="clas.document1 !== ''">
                             Documento adicional:
                             <a :href="clas.document1" download>
                               <a :href="clas.document1" download>
@@ -124,7 +124,7 @@
                             </a>
                           </div>
                           <br />
-                          <div v-show="clas.document2!= ''">
+                          <div v-show="clas.document2 !== ''">
                             Documento adicional:
                             <a :href="clas.document2" download>
                               <a :href="clas.document2" download>
@@ -159,13 +159,13 @@
                             <!-- <iframe class="embed-responsive-item" :src="clas.video"></iframe> -->
                           </div>
                           <br />
-                          <div v-show="clas.video1!= ''">
+                          <div v-show="clas.video1 !== ''">
                             <video controls>
-                              <source :src="clas.video1" />
+                              <source v-bind:src="clas.video1" />
                             </video>
                           </div>
                           <br />
-                          <div v-show="clas.video2!= ''">
+                          <div v-show="clas.video2 !== ''">
                             <video controls>
                               <source :src="clas.video2" />
                             </video>
@@ -218,6 +218,7 @@ export default {
   },
   methods: {
     editNames(clas) {
+      this.fillS = [];
       var urlr = "showClass/" + clas;
       axios.get(urlr).then((response) => {
         this.fillS = response.data.clase;
