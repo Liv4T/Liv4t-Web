@@ -140,7 +140,7 @@ class ActivityController extends Controller
             'deliver_date'  => $data['deliver_date'],
             'feedback_date' => $data['feedback_date'],
             'id_weekly_plan' => $data['id_weekly_plan'],
-            'id_indicator' => $data['id_indicator'],
+            'id_indicator' => 0,
         ]);
 
         $Trivias = $data['trivia'];

@@ -82,12 +82,7 @@
                   </div>
                   <div class="col-md-6">
                     <label for="name">Logro</label>
-                    <select
-                      class="form-control"
-                      v-model="newLogro"
-                      @change="Indicator(newLogro)"
-                      required
-                    >
+                    <select class="form-control" v-model="newLogro" required>
                       <option
                         :value="logr.id"
                         v-for="logr in myOptions.achievements"
@@ -95,7 +90,7 @@
                     </select>
                     <div class="invalid-feedback">Please fill out this field</div>
                   </div>
-                  <div class="col-md-6">
+                  <!-- <div class="col-md-6">
                     <label for="name">Indicador</label>
                     <select class="form-control" v-model="newIndicator" required>
                       <option
@@ -104,7 +99,7 @@
                       >{{opt.type_activity +" - "+ opt.activity_rate+"%" }}</option>
                     </select>
                     <div class="invalid-feedback">Please fill out this field</div>
-                  </div>
+                  </div>-->
                 </div>
                 <div class="form-group row mx-auto">
                   <div class="col" align="center">
@@ -338,7 +333,6 @@ export default {
           feedback_date: this.newDateR,
           id_weekly_plan: this.seleccionado,
           activity_type: this.newActivity,
-          id_indicator: this.newIndicator,
           trivia: this.newTrivia,
         })
         .then((response) => {

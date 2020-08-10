@@ -15,7 +15,7 @@
                 finish-button-text="Guardar y enviar"
                 @on-complete="createSemana"
               >
-                <tab-content title="Ciclo">
+                <tab-content title="Módulo de aprendizaje">
                   <div class="form-group row mx-auto" v-for="(input, t) in inputs" :key="t">
                     <div class="col-md-6">
                       <label for="name">Pregunta conductora o nombre</label>

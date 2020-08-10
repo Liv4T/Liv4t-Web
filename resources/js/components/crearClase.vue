@@ -19,7 +19,7 @@
                   <div class="form-group mx-auto">
                     <div align="center">
                       <div class="col-md-6">
-                        <label for>Ciclo:</label>
+                        <label for>Módulo de aprendizaje:</label>
                         <select class="form-control" ref="seleccionado" required>
                           <option :value="option.id" v-for="option in myOptions">
                             {{
@@ -219,7 +219,7 @@ export default {
     };
   },
   mounted() {
-    var urlsel = "editGetWeek";
+    var urlsel = "editGetWeek/0/0";
     axios.get(urlsel).then((response) => {
       this.myOptions = response.data;
     });

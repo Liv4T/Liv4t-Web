@@ -32,21 +32,17 @@
                     :href="'/course/'+ area.id +'/'+ area.id_classroom"
                     class="btn btn-warning"
                   >General</a>
-                  <a
-                    v-show="general==true"
-                    :href="'/porcentaje/'+ area.id +'/'+ area.id_classroom"
-                    class="btn btn-warning"
-                  >Porcentaje de notas</a>
+
                   <a
                     v-show="general==true"
                     :href="'/crear_semana/'+ area.id +'/'+ area.id_classroom"
                     class="btn btn-warning"
-                  >Crear Semana</a>
+                  >Crear Módulo de aprendizaje</a>
                   <a
                     v-show="general==true"
                     :href="'/act_semana/'+ area.id +'/'+ area.id_classroom"
                     class="btn btn-warning"
-                  >Actualizar semana</a>
+                  >Actualizar Módulo de aprendizaje</a>
                 </div>
               </div>
             </div>

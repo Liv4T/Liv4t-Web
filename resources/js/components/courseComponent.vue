@@ -73,10 +73,10 @@
                 </div>
               </tab-content>
 
-              <tab-content title="Trimestral">
+              <tab-content title="Bimestral">
                 <div class="form-group row mx-auto" v-for="(input, t) in inputs" :key="t">
                   <div class="col-md-6">
-                    <label for="name">Indicador</label>
+                    <label for="name">Unidad</label>
                     <span>
                       <a
                         href="#"
@@ -161,7 +161,7 @@
                   </div>
                 </div>
               </tab-content>
-              <tab-content title="Trimestral">
+              <tab-content title="Bimestral">
                 <div class="form-group row mx-auto" v-for="(input, t) in fillC.quaterly" :key="t">
                   <div class="col-md-6">
                     <label for="name">Unidad</label>
