@@ -15,10 +15,10 @@
                 finish-button-text="Actualizar y enviar"
                 @on-complete="updateSemanal"
               >
-                <tab-content title="Semanal">
+                <tab-content title="Ciclo">
                   <div class="form-group row mx-auto" v-for="(act, t) in fillS" :key="t">
                     <div class="col-md-6">
-                      <label for="name">Pregunta conductora Semana {{t+1}}</label>
+                      <label for="name">Pregunta conductora o nombre {{t+1}}</label>
                       <div>
                         <input
                           type="text"
@@ -103,6 +103,7 @@ import VueFormWizard from "vue-form-wizard";
 import "vue-form-wizard/dist/vue-form-wizard.min.css";
 Vue.use(VueFormWizard);
 export default {
+  props: ["id_area", "id_classroom"],
   data() {
     return {
       inputs: [
@@ -126,9 +127,15 @@ export default {
     };
   },
   mounted() {
-    var urlsel = "editGetWeek";
+    var urlsel =
+      window.location.origin +
+      "/editOneWeek/" +
+      this.id_area +
+      "/" +
+      this.id_classroom;
     axios.get(urlsel).then((response) => {
       this.fillS = response.data;
+      console.log(this.fillS);
       if (this.fillS.length > 0) {
         this.semanal = true;
       }
@@ -173,7 +180,7 @@ export default {
         });
     },
     updateSemanal() {
-      var url = "updateCourseWeekly";
+      var url = window.location.origin + "/updateCourseWeekly";
 
       if (this.fillS.length >= 1) {
         for (let i = 0; i < this.fillS.length; i++) {
