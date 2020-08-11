@@ -35,9 +35,10 @@
                   >General</a>
 
                   <a
-                    :href="'/porcentaje/'+ area.id +'/'+ area.id_classroom"
+                    v-show="general==true"
+                    :href="'/act_semana/'+ area.id +'/'+ area.id_classroom"
                     class="btn btn-warning"
-                  >Porcentaje de notas</a>
+                  >Actualizar Módulo de aprendizaje</a>
 
                   <a href="/clases_d" class="btn btn-warning">Clases</a>
                 </div>
@@ -85,16 +86,6 @@ export default {
           this.general = true;
         } else {
           this.general = false;
-        }
-      });
-      var urlsel = "editGetWeek";
-      axios.get(urlsel).then((response) => {
-        this.week = response.data;
-
-        if (this.week.id_area == area && this.week.id_classroom == classroom) {
-          this.semanal = true;
-        } else {
-          this.semanal = false;
         }
       });
     },

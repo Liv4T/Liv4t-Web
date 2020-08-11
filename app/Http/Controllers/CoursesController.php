@@ -324,21 +324,38 @@ class CoursesController extends Controller
     {
         $user = Auth::user();
         $data = [];
-        $Weeks = Weekly::where('id_teacher', $user->id)->where('id_area', $id_area)->where('id_classroom', $id_classroom)->get();
-        $data = [];
-        // $data[0] = [
-        //     'id'   => 0,
-        //     'text' => 'Seleccione',
-        // ];
-        foreach ($Weeks as $key => $week) {
-            $data[$key] = [
-                'id'   => $week->id,
-                'text' => $week->driving_question,
-                'class' => $week->class_development,
-                'observation' => $week->observation,
-                'id_area' =>  $week->id_area,
-                'id_classroom' =>  $week->id_classroom,
-            ];
+        if ($user->type_user == 1) {
+            $Weeks = Weekly::where('id_area', $id_area)->where('id_classroom', $id_classroom)->get();
+            // $data[0] = [
+            //     'id'   => 0,
+            //     'text' => 'Seleccione',
+            // ];
+            foreach ($Weeks as $key => $week) {
+                $data[$key] = [
+                    'id'   => $week->id,
+                    'text' => $week->driving_question,
+                    'class' => $week->class_development,
+                    'observation' => $week->observation,
+                    'id_area' =>  $week->id_area,
+                    'id_classroom' =>  $week->id_classroom,
+                ];
+            }
+        } elseif ($user->type_user == 2) {
+            $Weeks = Weekly::where('id_teacher', $user->id)->where('id_area', $id_area)->where('id_classroom', $id_classroom)->get();
+            // $data[0] = [
+            //     'id'   => 0,
+            //     'text' => 'Seleccione',
+            // ];
+            foreach ($Weeks as $key => $week) {
+                $data[$key] = [
+                    'id'   => $week->id,
+                    'text' => $week->driving_question,
+                    'class' => $week->class_development,
+                    'observation' => $week->observation,
+                    'id_area' =>  $week->id_area,
+                    'id_classroom' =>  $week->id_classroom,
+                ];
+            }
         }
         return response()->json($data);
     }
