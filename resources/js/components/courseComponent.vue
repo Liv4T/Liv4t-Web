@@ -25,7 +25,8 @@
       <div class="col-md-11 mx-auto">
         <div class="custom-card text-center">
           <h3 class="card-header fondo">Planificación general</h3>
-          <form class="needs-validation" novalidate v-show="trimestre == false">
+           <span class="classroom-label">{{fillC.classroom_name}}</span>
+          <form class="needs-validation" novalidate>
             <form-wizard
               title
               subtitle
@@ -37,10 +38,10 @@
             >
               <tab-content title="Anual">
                 <div class="form-group mx-auto" v-for="(input1, t) in inputs1" :key="t">
-                  <div align="center">
-                    <strong>
-                      Logro
-                      <input type="number" style="width:50px;" v-model="input1.porcentaje" />%
+                  <div class="classroom-planning-section">
+                    <strong>Logro</strong>
+                      
+                      <input v-on:change="annualContentUpdateEvent($event,t)" type="number" style="width:50px;" v-model="input1.porcentaje" />%
                       <span>
                         <a
                           href="#"
@@ -48,12 +49,7 @@
                           @click.prevent="
                                                             remove1(t)
                                                         "
-                          v-show="
-                                                            t ||
-                                                                (!t &&
-                                                                    inputs1.length >
-                                                                        1)
-                                                        "
+                          v-show="(t>0 && inputs1_saved.length<=t)"
                         >-</a>
                         <a
                           href="#"
@@ -66,9 +62,8 @@
                                                         "
                         >+</a>
                       </span>
-                    </strong>
                   </div>
-                  <textarea name="welcome" class="form-control" v-model="input1.logro" required></textarea>
+                  <textarea name="welcome" class="form-control" v-model="input1.logro" v-on:change="annualContentUpdateEvent($event,t)" required></textarea>
                   <div class="invalid-feedback">Please fill out this field</div>
                 </div>
               </tab-content>
@@ -82,12 +77,7 @@
                         href="#"
                         class="badge badge-danger"
                         @click.prevent="remove(t)"
-                        v-show="
-                                                        t ||
-                                                            (!t &&
-                                                                inputs.length >
-                                                                    1)
-                                                    "
+                        v-show="(t>0 && inputs_saved.length<=t)"
                       >-</a>
                       <a
                         href="#"
@@ -105,6 +95,7 @@
                         class="form-control"
                         v-model="input.name"
                         placeholder="Nombre de la unidad"
+                        v-on:change="annualContentUpdateEvent($event,t)"
                         required
                       />
                     </div>
@@ -116,74 +107,8 @@
                       class="form-control"
                       v-model="input.contenido"
                       placeholder="Es la explicacion o sintesis de la unidad."
+                      v-on:change="annualContentUpdateEvent($event,t)"
                       required
-                    ></textarea>
-                    <div class="invalid-feedback">Please fill out this field</div>
-                  </div>
-                </div>
-                <!-- <div class="modal-footer">
-                  <a submit="createCourses" class="btn btn-warning float-right">Guardar</a>
-                </div>-->
-              </tab-content>
-            </form-wizard>
-          </form>
-          <form v-show="trimestre == true">
-            <form-wizard
-              title
-              subtitle
-              color="#ffc107"
-              next-button-text="Siguiente"
-              back-button-text="Atrás"
-              finish-button-text="Volver"
-              @on-complete="updateCourses"
-            >
-              <tab-content title="Anual">
-                <div>
-                  <div class="form-group mx-auto" v-for="(option,k) in fillC.achievements" :key="k">
-                    <div align="center">
-                      <strong>
-                        Logro {{ k+1 }}
-                        <input
-                          type="number"
-                          style="width:50px;"
-                          v-model="option.percentage"
-                          disabled
-                        />%
-                      </strong>
-                    </div>
-                    <textarea
-                      name="welcome"
-                      class="form-control"
-                      v-model="option.achievement"
-                      disabled
-                    ></textarea>
-                    <div class="invalid-feedback">Please fill out this field</div>
-                  </div>
-                </div>
-              </tab-content>
-              <tab-content title="Bimestral">
-                <div class="form-group row mx-auto" v-for="(input, t) in fillC.quaterly" :key="t">
-                  <div class="col-md-6">
-                    <label for="name">Unidad</label>
-                    <div>
-                      <input
-                        type="text"
-                        name="objetive1"
-                        class="form-control"
-                        v-model="input.unit_name"
-                        placeholder="Nombre de la unidad"
-                        disabled
-                      />
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <label for="name">Contenido</label>
-                    <textarea
-                      name="competences"
-                      class="form-control"
-                      v-model="input.content"
-                      placeholder="Es la explicacion o sintesis de la unidad."
-                      disabled
                     ></textarea>
                     <div class="invalid-feedback">Please fill out this field</div>
                   </div>
@@ -249,6 +174,7 @@ export default {
   props: ["id_area", "id_classroom"],
   data() {
     return {
+      serialLocalStorage:'7f284918-f0f6-4369-a368-eaf6321b6809',
       inputs: [
         {
           name: "",
@@ -261,6 +187,8 @@ export default {
           porcentaje: "",
         },
       ],
+       inputs1_saved:[],
+      inputs_saved:[],
       newTrimestre: [],
       newLogro1: "",
       newLogro2: "",
@@ -277,6 +205,7 @@ export default {
       anual: [],
       newAnual: [],
       errors: [],
+      isSynchronized:true
     };
   },
   mounted() {
@@ -288,7 +217,43 @@ export default {
       this.id_classroom;
     axios.get(urlsel).then((response) => {
       this.fillC = response.data;
-      console.log(this.trimestre);
+      
+      //set current data
+      if(response.data.achievements.length>0 && response.data.quaterly.length>0)
+      {
+        this.inputs1=[];
+        response.data.achievements.forEach((e)=>{
+          this.inputs1.push({id_plannification:e.id_planification,id_achievement:e.id, logro: e.achievement, porcentaje: e.percentage });
+        });
+         this.inputs1_saved= JSON.parse(JSON.stringify(this.inputs1));
+        this.inputs=[];
+        response.data.quaterly.forEach((e)=>{
+          this.inputs.push({ id_quaterly:e.id,name: e.unit_name, contenido: e.content });
+        });
+          this.inputs_saved= JSON.parse(JSON.stringify(this.inputs));
+      }
+      else
+      {
+        //load from localstorage
+        this.serialLocalStorage=this.serialLocalStorage+"-"+this.id_area+"-"+this.id_classroom;
+        if(localStorage.getItem(this.serialLocalStorage))
+        {
+          let savedInputModel=JSON.parse(decodeURIComponent(escape(window.atob(localStorage.getItem(this.serialLocalStorage)))));
+    
+            if(JSON.stringify(savedInputModel.inputs)!=JSON.stringify(this.inputs))
+            {
+              this.inputs=savedInputModel.inputs;
+              this.isSynchronized=false;
+            }
+
+            if(JSON.stringify(savedInputModel.inputs1)!=JSON.stringify(this.inputs1))
+            {
+              this.inputs1=savedInputModel.inputs1;
+               this.isSynchronized=false;
+            }
+        }
+      }
+
       if (this.fillC.quaterly.length > 0) {
         this.trimestre = true;
       } else {
@@ -297,6 +262,13 @@ export default {
     });
   },
   methods: {
+    annualContentUpdateEvent(e,i){
+      //serialize data on localstorage
+     localStorage.setItem(this.serialLocalStorage, window.btoa(unescape(encodeURIComponent(JSON.stringify({inputs1:this.inputs1,inputs:this.inputs})))));
+
+     this.isSynchronized=false;
+      
+    },
     getMenu() {
       window.location = "/actividad_g";
     },
@@ -315,6 +287,9 @@ export default {
 
     createCourses() {
       var url = window.location.origin + "/Courses";
+
+       if(this.inputs.length<1 ||  this.inputs1.length<1)
+        return;
 
       if (this.inputs.length >= 1) {
         for (let i = 0; i < this.inputs.length; i++) {
