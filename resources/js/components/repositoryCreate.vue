@@ -5,7 +5,7 @@
         <div class="col-md-11 mx-auto">
           <div class="custom-card text-center">
             <h3 class="card-header fondo">Entregas</h3>
-              <form-wizard
+              <form-wizard 
                 title
                 subtitle
                 color="#ffc107"
