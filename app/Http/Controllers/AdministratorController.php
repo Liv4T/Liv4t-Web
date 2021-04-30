@@ -38,7 +38,10 @@ class AdministratorController extends Controller
      */
     public function indexUsers()
     {
-        $users = User::all();
+        $user=Auth::user();
+        $userInstitution=$user->institution_id;
+
+        $users = User::where('institution_id', $userInstitution)->get();
 
         return $users;
     }
@@ -49,13 +52,16 @@ class AdministratorController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function indexStudents()
-    {
+    {   
+        $user=Auth::user();
+        $userInstitution=$user->institution_id;
+
         $students = [];
-        $studentAssigned = ClassroomStudent::all();
+        $studentAssigned = ClassroomStudent::where('institution_id', $userInstitution)->get();
         foreach ($studentAssigned as $key => $stud) {
             $students[$key] = $stud->id_user;
         }
-        $users = User::where('type_user', 3)->whereNotIn('id', $students)->get();
+        $users = User::where('type_user', 3)->whereNotIn('id', $students)->where('institution_id', $userInstitution)->get();
         return $users;
     }
 
@@ -72,9 +78,10 @@ class AdministratorController extends Controller
      */
     public function indexStudentsTeachersAssigned()
     {
-        /* aqui hace falta editar la consulta cuando sea por institucion */
-
-        $studentAssigned = ClassroomStudent::all();
+        $user=Auth::user();
+        $userInstitution=$user->institution_id;
+        
+        $studentAssigned = ClassroomStudent::where('institution_id', $userInstitution)->get();
         $students = [];
 
         foreach ($studentAssigned as $key => $studen) {
@@ -90,7 +97,7 @@ class AdministratorController extends Controller
             ];
         }
 
-        $teachersAssigned = ClassroomTeacher::all();
+        $teachersAssigned = ClassroomTeacher::where('institution_id', $userInstitution)->get();
         $teachers = [];
 
         foreach ($teachersAssigned as $key => $teacher) {
@@ -121,7 +128,10 @@ class AdministratorController extends Controller
      */
     public function indexTeachers()
     {
-        $users = User::where('type_user', 2)->get();
+        $user=Auth::user();
+        $userInstitution=$user->institution_id;
+
+        $users = User::where('type_user', 2)->where('institution_id',$userInstitution)->get();
 
         return $users;
     }
@@ -133,6 +143,8 @@ class AdministratorController extends Controller
      */
     public function assignStudents(Request $request)
     {
+        $user=Auth::user();
+        $userInstitution=$user->institution_id;
 
         $data = $request->all();
 
@@ -142,6 +154,7 @@ class AdministratorController extends Controller
             $ClassroomStudent = new ClassroomStudent;
             $ClassroomStudent->id_classroom = $data['id_classroom'];
             $ClassroomStudent->id_user = $student;
+            $ClassroomStudent->institution_id= $userInstitution;
             $ClassroomStudent->save();
         }
     }
@@ -153,7 +166,9 @@ class AdministratorController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function assignTeachers(Request $request)
-    {
+    {   
+        $user=Auth::user();
+        $userInstitution=$user->institution_id;
 
         $data = $request->all();
 
@@ -163,6 +178,7 @@ class AdministratorController extends Controller
                 $ClassroomTeacher->id_user = $data['id_teacher'];
                 $ClassroomTeacher->id_area = $area;
                 $ClassroomTeacher->id_classroom = $class;
+                $ClassroomTeacher->institution_id= $userInstitution;
                 $ClassroomTeacher->save();
             }
         }
@@ -214,6 +230,7 @@ class AdministratorController extends Controller
         $data = $request->all();
         $institution = new Institution;
         $user = Auth::user();
+        $userInstitution = $user->institution_id;
 
         /* Save the new institution */
         $institution->id_user = $user->id;
@@ -231,7 +248,7 @@ class AdministratorController extends Controller
         foreach ($sections as $index => $section) {
             $sectiones = Section::create([
                 'name' => $section['name'],
-                'id_institution' => $institution->id,
+                'id_institution' => $userInstitution,
             ]);
         }
 
@@ -243,7 +260,7 @@ class AdministratorController extends Controller
                 'name' => $period['name'],
                 'date_from' => $period['date_from'],
                 'date_to' => $period['date_to'],
-                'id_institution' => $institution->id,
+                'id_institution' => $userInstitution,
             ]);
         }
     }
@@ -253,27 +270,31 @@ class AdministratorController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function findInstitution(String $id)
+    public function findInstitution()
     {
+
+        $user = Auth::user();
+        $userInstitution = $user->institution_id;
+
         $sections = [];
         $periods = [];
-        $institution = Institution::findOrFail($id);
-        $Sections = Section::where('id_institution', $id)->get();
+        $institution = Institution::findOrFail($userInstitution);
+        $Sections = Section::where('id_institution', $userInstitution)->get();
         foreach ($Sections as $key => $value) {
             $sections[$key + 1] = [
                 'id'   => $value->id,
                 'name' => $value->name,
-                'id_institution' => $id,
+                'id_institution' => $userInstitution,
             ];
         };
-        $Periodos = Period::where('id_institution', $id)->get();
+        $Periodos = Period::where('id_institution', $userInstitution)->get();
         foreach ($Periodos as $key => $value) {
             $periods[$key + 1] = [
                 'id'   => $value->id,
                 'name' => $value->name,
                 'date_to' => $value->date_to,
                 'date_from' => $value->date_from,
-                'id_institution' => $id,
+                'id_institution' => $userInstitution,
             ];
         };
 

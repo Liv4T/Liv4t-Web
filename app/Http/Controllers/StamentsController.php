@@ -20,8 +20,12 @@ class StamentsController extends Controller
 
 
     public function getStaments(){
-        $user_id = Auth::user()->id;
-        $staments = Staments::where('user_id','=',$user_id)->get();
+        
+        $user=Auth::user();
+        $userInstitution=$user->institution_id;
+
+        $user_id = $user->id;
+        $staments = Staments::where('user_id','=',$user_id)->where('institution_id',$userInstitution)->get();
         return response()->json($staments);
     }
     /**
@@ -42,12 +46,16 @@ class StamentsController extends Controller
      */
     public function store(Request $request)
     {
+        $user=Auth::user();
+        $userInstitution=$user->institution_id;
+
         $stament = new Staments;
         $stament->name = $request->name;
         $stament->member = $request->member;
         $stament->stament = $request->stament;
         $stament->rol = $request->rol;
         $stament->user_id = Auth::user()->id;
+        $stament->institution_id = $userInstitution;
         $stament->save();
         return 'Estamento Guardado';
     }

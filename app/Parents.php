@@ -16,6 +16,7 @@ class Parents extends Model
         'day_week',
         'email_invited',
         'id_invited',
-        'id_sender'
+        'id_sender',
+        'institution_id'
     ];
 }

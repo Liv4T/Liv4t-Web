@@ -15,6 +15,9 @@ use Illuminate\Support\Facades\Mail;
 class PsychologyController extends Controller
 {
     public function createEvent(Request $request){
+        
+        $userData = Auth::user();
+        $userInstitution=$userData->institution_id;
 
         $evento = new EventsPsychology;
         $evento->name = $request->name;
@@ -24,6 +27,7 @@ class PsychologyController extends Controller
         $evento->url = $request->url;
         $evento->type_event = $request->type_event;
         $evento->user_invited = $request->user_invited; 
+        $evento->institution_id = $userInstitution;
         $evento->save();
 
         if ($evento->save()) {
@@ -50,25 +54,30 @@ class PsychologyController extends Controller
 
     public function getUsersToInvitations(){
         $users = [];
-
+        $user = Auth::user();
+        $userInstitution=$user->institution_id;
         $admins = DB::table("users")
         ->select('users.*')
         ->where('type_user','=',1)
+        ->where('institution_id','=', $userInstitution)
         ->get();
 
         $teachers = DB::table("users")
         ->select('users.*')
         ->where('type_user','=',2)
+        ->where('institution_id','=', $userInstitution)
         ->get();
 
         $fathers = DB::table("users")
         ->select('users.*')
         ->where('type_user','=',4)
+        ->where('institution_id','=', $userInstitution)
         ->get();
 
         $psychologists = DB::table("users")
         ->select('users.*')
         ->where('type_user','=',5)
+        ->where('institution_id','=', $userInstitution)
         ->get();
 
         array_push($users, $admins, $teachers, $fathers, $psychologists);
@@ -85,12 +94,13 @@ class PsychologyController extends Controller
 
         $eventos = [];
         $user = Auth::user();
+        $userInstitution=$user->institution_id;
         $date =  Carbon::now();
         $current_date=date('Y-m-d');
         $initial_range_date = date ( 'Y-m-d' , strtotime ( '-90 day' , strtotime ($current_date ) )) ;
         $end_range_date =date ( 'Y-m-d' ,  strtotime ( '+90 day' , strtotime ($current_date ) )) ;
         if (isset($user)) {
-            $eventos_psy = EventsPsychology::where('id_user', $user->id)->whereDate('date_from','>=',$initial_range_date)->whereDate('date_to','<=',$end_range_date)->where('type_event', '1')->where('deleted_at','=', null)->orderBy('date_from', 'ASC')->get();
+            $eventos_psy = EventsPsychology::where('id_user', $user->id)->whereDate('date_from','>=',$initial_range_date)->whereDate('date_to','<=',$end_range_date)->where('type_event', '1')->where('deleted_at','=', null)->where('institution_id','=', $userInstitution)->orderBy('date_from', 'ASC')->get();
             foreach ($eventos_psy as $index => $evento) {
                 array_push($eventos,[
                     "id" => $evento->id,
@@ -115,12 +125,13 @@ class PsychologyController extends Controller
 
         $eventos = [];
         $user = Auth::user();
+        $userInstitution=$user->institution_id;
         $date =  Carbon::now();
         $current_date=date('Y-m-d');
         $initial_range_date = date ( 'Y-m-d' , strtotime ( '-90 day' , strtotime ($current_date ) )) ;
         $end_range_date =date ( 'Y-m-d' ,  strtotime ( '+90 day' , strtotime ($current_date ) )) ;
         if (isset($user)) {
-            $eventos_psy = EventsPsychology::where('id_user', $user->id)->whereDate('date_from','>=',$initial_range_date)->whereDate('date_to','<=',$end_range_date)->where('type_event', '2')->where('deleted_at','=', null)->orderBy('date_from', 'ASC')->get();
+            $eventos_psy = EventsPsychology::where('id_user', $user->id)->whereDate('date_from','>=',$initial_range_date)->whereDate('date_to','<=',$end_range_date)->where('type_event', '2')->where('deleted_at','=', null)->where('institution_id','=', $userInstitution)->orderBy('date_from', 'ASC')->get();
             foreach ($eventos_psy as $index => $evento) {
                 array_push($eventos,[
                     "id" => $evento->id,
@@ -145,12 +156,13 @@ class PsychologyController extends Controller
 
         $eventos = [];
         $user = Auth::user();
+        $userInstitution=$user->institution_id;
         $date =  Carbon::now();
         $current_date=date('Y-m-d');
         $initial_range_date = date ( 'Y-m-d' , strtotime ( '-90 day' , strtotime ($current_date ) )) ;
         $end_range_date =date ( 'Y-m-d' ,  strtotime ( '+90 day' , strtotime ($current_date ) )) ;
         if (isset($user)) {
-            $eventos_psy = EventsPsychology::where('id_user', $user->id)->whereDate('date_from','>=',$initial_range_date)->whereDate('date_to','<=',$end_range_date)->where('type_event', '3')->where('deleted_at','=', null)->orderBy('date_from', 'ASC')->get();
+            $eventos_psy = EventsPsychology::where('id_user', $user->id)->whereDate('date_from','>=',$initial_range_date)->whereDate('date_to','<=',$end_range_date)->where('type_event', '3')->where('deleted_at','=', null)->where('institution_id','=', $userInstitution)->orderBy('date_from', 'ASC')->get();
             foreach ($eventos_psy as $index => $evento) {
                 array_push($eventos,[
                     "id" => $evento->id,
@@ -175,12 +187,13 @@ class PsychologyController extends Controller
 
         $eventos = [];
         $user = Auth::user();
+        $userInstitution=$user->institution_id;
         $date =  Carbon::now();
         $current_date=date('Y-m-d');
         $initial_range_date = date ( 'Y-m-d' , strtotime ( '-90 day' , strtotime ($current_date ) )) ;
         $end_range_date =date ( 'Y-m-d' ,  strtotime ( '+90 day' , strtotime ($current_date ) )) ;
         if (isset($user)) {
-            $eventos_psy = EventsPsychology::where('id_user', $user->id)->whereDate('date_from','>=',$initial_range_date)->whereDate('date_to','<=',$end_range_date)->where('type_event', '4')->where('deleted_at','=', null)->orderBy('date_from', 'ASC')->get();
+            $eventos_psy = EventsPsychology::where('id_user', $user->id)->whereDate('date_from','>=',$initial_range_date)->whereDate('date_to','<=',$end_range_date)->where('type_event', '4')->where('deleted_at','=', null)->where('institution_id','=', $userInstitution)->orderBy('date_from', 'ASC')->get();
             foreach ($eventos_psy as $index => $evento) {
                 array_push($eventos,[
                     "id" => $evento->id,

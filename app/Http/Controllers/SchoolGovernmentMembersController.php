@@ -15,8 +15,11 @@ class SchoolGovernmentMembersController extends Controller
      */
     public function index()
     {
-        $user_id = Auth::user()->id;
-        $members = SchoolGovernmentMembers::where('user_creator_id','=',$user_id)->orderBy('order','asc')->get();
+        $user=Auth::user();
+        $userInstitution= $user->institution_id;
+
+        $user_id = $user->id;
+        $members = SchoolGovernmentMembers::where('user_creator_id','=',$user_id)->where('institution_id','=',$userInstitution)->orderBy('order','asc')->get();
         return response()->json($members);
     }
 
@@ -37,7 +40,10 @@ class SchoolGovernmentMembersController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+    {   
+        $user=Auth::user();
+        $userInstitution= $user->institution_id;
+
         $members = new SchoolGovernmentMembers();
         $members->member = $request->member;
         $members->position = $request->position;
@@ -48,6 +54,7 @@ class SchoolGovernmentMembersController extends Controller
         $members->image = $request->image;
         $members->imageSchoolGovernment = $request->imageSchoolGovernment;
         $members->modeInsert = $request->modeInsert;
+        $members->institution_id= $userInstitution;
         $members->save();
         return response()->json("Miembro Creado");
     }

@@ -38,7 +38,10 @@ class ClassController extends Controller
      */
     public function index()
     {
-        $clases = Classs::all();
+        $user = Auth::user();
+        $userInstitution = $user->institution_id;
+        
+        $clases = Classs::where('institution_id', $userInstitution)->get();
         return $clases;
     }
 
@@ -344,8 +347,9 @@ class ClassController extends Controller
     public function saveActivityInteraction(Request $request,int $id_module,int $id_course, int $id_activity)
     {
         $auth = Auth::user();
+        $userInstitution = $auth->institution_id;
 
-        $score=ConfigurationParameter::where('code','CALIFICATION_BASE')->first();
+        $score=ConfigurationParameter::where('code','CALIFICATION_BASE')->where('institution_id', $userInstitution)->first();
 
 
 
@@ -607,6 +611,7 @@ class ClassController extends Controller
     public function saveCourse(Request $request,int $id_module)
     {
         $auth = Auth::user();
+        $userInstitution = $auth->institution_id;
 
         $this->validate($request, [
             'name' => 'required',
@@ -636,7 +641,8 @@ class ClassController extends Controller
                 'content_quantity'=>count($data['content']),
                 'state'=>1,
                 'updated_user'=>$auth->id,
-                'deleted'=>0
+                'deleted'=>0,
+                'institution_id'=>$userInstitution
             ]);
             $id_course=$course->id;
         }
@@ -737,7 +743,8 @@ class ClassController extends Controller
                         'deleted'=>0,
                         'updated_user'=>$auth->id,
                         'delivery_max_date'=>$activity['delivery_max_date'],
-                        'feedback_date'=>$activity['feedback_date']
+                        'feedback_date'=>$activity['feedback_date'],
+                        'institution_id'=>$userInstitution
                     ]);
                     $id_activity=$activity_new->id;
                 }
@@ -868,7 +875,7 @@ class ClassController extends Controller
     public function saveCourseContentInteraction(int $id_module,int $id_course,int $id_resource)
     {
         $auth = Auth::user();
-
+        $userInstitution = $auth->institution_id;
 
         $register_count=ClassContentInteraction::where('id_class_content',$id_resource)->where('id_student',$auth->id)->where('deleted',0)->update(array('updated_user'=>$auth->id));
 
@@ -878,7 +885,8 @@ class ClassController extends Controller
                 'id_class_content'=>$id_resource,
                 'id_student'=>$auth->id,
                 'deleted'=>0,
-                'updated_user'=>$auth->id
+                'updated_user'=>$auth->id,
+                'institution_id'=>$userInstitution
             ]);
         }
 
@@ -895,6 +903,9 @@ class ClassController extends Controller
      */
     public function store(Request $request)
     {
+        $user = Auth::user();
+        $userInstitution = $user->institution_id;
+
         $data = $request->all();
         if (isset($data['video']) && $data['video'] !== "") {
             $data['video'] = str_replace("watch?v=", "embed/", $data['video']);
@@ -925,6 +936,7 @@ class ClassController extends Controller
             'video'  => (isset($data['video']) && $data['video'] !== "") ? $data['video'] : '',
             'video1'  => (isset($data['video1']) && $data['video1'] !== "") ? $data['video1'] : '',
             'video2'  => (isset($data['video2']) && $data['video2'] !== "") ? $data['video2'] : '',
+            'institution_id' => $userInstitution,
         ]);
         return 'ok';
         $arch = Files::findOrFail($documento->id);
@@ -1126,8 +1138,9 @@ class ClassController extends Controller
     }
     public function getClass()
     {
-
-        $Classes = Classs::all();
+        $user = Auth::user();
+        $userInstitution = $user->institution_id;
+        $Classes = Classs::where('institution_id', $userInstitution)->get();
         $data = [];
         $data[0] = [
             'id'   => 0,

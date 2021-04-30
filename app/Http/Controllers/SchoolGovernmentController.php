@@ -84,17 +84,29 @@ class SchoolGovernmentController extends Controller
     }
 
     public function students(){
-        $students = User::where('type_user','=',3)->get();
+        
+        $user=Auth::user();
+        $userInstitution=$user->institution_id;
+
+        $students = User::where('type_user','=',3)->where('institution_id', $userInstitution)->get();
         return response()->json($students);
     }
 
     public function getLegislation(){
-        $school = SchoolGovernment::all();
+        
+        $user=Auth::user();
+        $userInstitution=$user->institution_id;
+
+        $school = SchoolGovernment::where('institution_id', $userInstitution)->get();
         return response()->json($school);
     }
 
     public function getAllAreas(){
-        $areas = Area::all();
+        
+        $user=Auth::user();
+        $userInstitution=$user->institution_id;
+
+        $areas = Area::where('institution_id', $userInstitution)->get();
         return response()->json($areas);
     }
 
@@ -124,9 +136,13 @@ class SchoolGovernmentController extends Controller
      */
     public function store(Request $request)
     {
+        $user=Auth::user();
+        $userInstitution=$user->institution_id;
+
         $school = new SchoolGovernment;
         $school->legislation = $request->legislation;
         $school->user_id = $request->user_id;
+        $school->institution_id = $userInstitution;
         $school->save();
         return response()->json("Legislación Creada");
     }

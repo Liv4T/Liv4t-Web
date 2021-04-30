@@ -6,6 +6,7 @@ use App\Area;
 use App\Classroom;
 use App\ClassroomTeacher;
 use App\User;
+use App\ClassroomStudent;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -30,11 +31,12 @@ class LectiveCourseController extends Controller
     {
         //
         $auth = Auth::user();
-
+        $userInstitution = $auth->institution_id;
+        
         $user = User::find($auth->id);
         $areas = [];
         if ($user->isAdmin()) {
-            $user_asigneds = ClassroomTeacher::all();
+            $user_asigneds = ClassroomTeacher::where('institution_id',$userInstitution);
             foreach ($user_asigneds as $key => $user_asigned) {
                 $user = User::find($user_asigned->id_user);
                 $classroom = Classroom::find($user_asigned->id_classroom);

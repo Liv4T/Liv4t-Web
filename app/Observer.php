@@ -25,7 +25,8 @@ class Observer extends Model
         'address',
         'phone',
         'repitent',
-        'observation'
+        'observation',
+        'institution_id'
     ];
 
     public function user(){

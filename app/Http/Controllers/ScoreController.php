@@ -69,6 +69,8 @@ class ScoreController extends Controller
     public function saveIndicator(Request $request)
     {
         $data = $request->all();
+        $user = Auth::user();
+        $userInstitution = $user->institution_id;
 
         if(isset($data['id_indicator']) && $data['id_indicator']!=0)
         {
@@ -81,6 +83,7 @@ class ScoreController extends Controller
             $indicator->id_achievement = $data['id_achievement'];
             $indicator->type_activity = $data['type_activity'];
             $indicator->activity_rate = $data['activity_rate'];
+            $indicator->institution_id = $userInstitution;
             $indicator->save();
         }     
     }
@@ -93,8 +96,10 @@ class ScoreController extends Controller
      */
     public function getIndicator(String $id)
     {
+        $user = Auth::user();
+        $userInstitution = $user->institution_id;
 
-        $indicators = Indicator::where('id_achievement', $id)->get();
+        $indicators = Indicator::where('id_achievement', $id)->where('institution_id', $userInstitution)->get();
         return $indicators;
     }
 

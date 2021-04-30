@@ -223,115 +223,10 @@
                         <div class="invalid-feedback"></div>
                         </div>
                     </div>
-                </div>
-                <div class="modal fade" id="createE">
-                    <div class="modal-lg modal-dialog">
-                        <div class="modal-content">
-                            <form class="needs-validation" v-on:submit.prevent="createEvent" novalidate>
-                                <div class="modal-header">
-                                    <h4>Crear evento</h4>
-                                    <button type="button" class="close" data-dismiss="modal">
-                                        <span>&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <div class="form-group row justify-content-center">
-                                        <div class="col-md-6">
-                                            <label for="name">Evento concurrente</label>
-                                            <select class="form-control" v-model="typeEvent" @change="selectChange">
-                                                <option :value="options.id" v-for="(options, key) in concurrent"
-                                                    :key="key">
-                                                    {{
-                                                options.type
-                                            }}
-                                                </option>
-                                            </select>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label style="display: none;" id="labeldia">Dia de la semana</label>
-                                            <select class="form-control" name="dia" id="dia" v-model="diaSemana"
-                                                style="display:none">
-                                                <option :value="options.id" v-for="(options, key) in dias" :key="key">
-                                                    {{
-                                                options.dia
-                                            }}
-                                                </option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row justify-content-center">
-                                        <div class="col-md-6">
-                                            <label for="name">Nombre del evento</label>
-                                            <input type="text" name="name" class="form-control" v-model="nameEvent" />
-                                            <div class="invalid-feedback">Please fill out this field</div>
-                                        </div>
-                                        <!-- <div class="col-md-6">
-                                    <label for="name">Materia</label>
-                                    <select class="form-control" v-model="materia" required>
-                                        <option :value="option.id+'/'+option.id_classroom " v-for="option in myOptions">
-                                        {{
-                                        option.text
-                                        }}
-                                        </option>
-                                    </select>
-                                </div> -->
-                                        <div class="col-md-6">
-                                            <label for="name">Materia</label>
-                                            <multiselect v-model="materia" :options="myOptions" :multiple="true"
-                                                :close-on-select="false" :clear-on-select="false"
-                                                :preserve-search="true" placeholder="Seleccione una o varias"
-                                                label="text" track-by="id" :preselect-first="true">
-                                                <template slot="selection" slot-scope="{ values, isOpen }"><span
-                                                        class="multiselect__single"
-                                                        v-if="values.length &amp;&amp; !isOpen">{{ values.length }}
-                                                        opciones
-                                                        selecionadas</span></template>
-                                            </multiselect>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <div class="col-md-6">
-                                            <label for="name">Desde</label>
-                                            <datetime format="YYYY-MM-DD H:i:s" v-model="desde"></datetime>
-                                            <div class="invalid-feedback">Please fill out this field</div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label for="name">Hasta</label>
-                                            <datetime format="YYYY-MM-DD H:i:s" v-model="hasta"></datetime>
-                                            <div class="invalid-feedback"></div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <strong for="name">Enlace de Meet</strong>
-                                            <input type="text" name="name" class="form-control" v-model="nameMeet" />
-                                            <div class="invalid-feedback">Please fill out this field</div>
-                                        </div>
-                                        <!-- <div class="col-md-6" style="display: none;">
-                                            <strong for="name">id ultimo</strong>
-                                            <input type="text" name="id_padre" class="form-control" v-model="lastId" />
-                                            <div class="invalid-feedback">Please fill out this field</div>
-                                        </div> -->
-                                    </div>
-                                    <div class="modal-footer">
-                                        <input type="submit" class="btn btn-warning" value="Guardar" />
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="col-md-6">
-                        <strong for="name">Enlace de Meet</strong>
-                        <input type="text" name="name" class="form-control" v-model="meetUp" />
-                        <div class="invalid-feedback">Por favor ingresa la fecha</div>
-                        </div>
-                        <div class="col-md-6" style="display: none;">
-                            <strong for="name">id ultimo</strong>
-                            <input type="text" name="id_padre" class="form-control" v-model="id_padreUp" />
-                            <div class="invalid-feedback">Please fill out this field</div>
-                        </div>
-                    </div>
                     <div class="modal-footer">
-                        <input type="submit" class="btn btn-warning" value="Guardar" />
+                        <input type="submit" class="btn btn-warning" value="Actualizar" />
                     </div>
-                    </div>
+                </div>
                 </form>
                 </div>
             </div>
@@ -402,7 +297,7 @@
                 nameUp: "",
                 fromUp: "",
                 toUp: "",
-                formatDate:"",
+                formatDate:"YYYY-MM-DD h:i:s",
                 id_padreUp: "",
                 id_padreDel: "",
                 editConcurrent: "",
@@ -414,7 +309,7 @@
                 idUp: "",
                 typeEvent: "",
                 daysWeek:[],
-                lastId: [],
+                lastId: 0,
                 lective_planification: {},
                 initialView: 'dayGridMonth',
                 arrayDaysEvent: [],
@@ -439,11 +334,11 @@
             Multiselect
         },
         filters: {
-            formatDate: (value) => {
+            formatDate:(value)=>{
                 if (value) {
                     return moment(String(value)).format('DD MMMM YYYY hh:mm a')
                 }
-            }
+            } 
         },
         mounted() {
             this.getData();
@@ -547,7 +442,7 @@
             cambio(){   
                if (this.typeEvent == 2) {
                     this.display="block";
-                    this.formatDate = "H:i:s";
+                    this.formatDate = "h:i:s";
                     this.last_insert();
                 } else if (this.typeEvent == 3) {
                     this.display="none";
@@ -555,7 +450,7 @@
                     this.last_insert();    
                 }else if (this.typeEvent == 1){
                     this.display="none";
-                    this.formatDate = "H:i:s";
+                    this.formatDate = "h:i:s";
                     this.last_insert(); 
                 }else if (this.typeEvent == 0){
                     this.display="none";
@@ -819,6 +714,7 @@
                     if(this.typeEvent == 1){ //Crear eventos de lunes a viernes y omitimos los dias que ya pasaron de la semana
                         
                         var date2 = new Date();
+                        console.log(date2);
                         if (date2.getDay() == 6){
                         date2.setDate(date2.getDate() + 2);
                         }

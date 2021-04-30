@@ -76,7 +76,8 @@ class UserController extends Controller
             'phone' => 'required',
             'id_number' => 'required'
         ]);
-
+        $userData = Auth::user();
+        $userInstitution=$userData->institution_id;
         // User::create($request->all());
         $data = $request->all();
         $url = url()->current();
@@ -94,6 +95,7 @@ class UserController extends Controller
         $user->address = isset($data['address']) ? $data['address'] : "";
         $user->type_user = isset($data['type_user']) ? $data['type_user'] : "";
         $user->picture = isset($data['user_name']) ? $url . "/uploads/images/" . $data['user_name'] . ".png" : "";
+        $user->institution_id=$userInstitution;
         $user->save();
 
         /* Send email register */

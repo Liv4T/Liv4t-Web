@@ -8,5 +8,5 @@ class SchoolGovernment extends Model
 {
     protected $table = "school_governments";
     protected $guarded = 'id';
-    protected $fillable = ['legislation'.'user_id'];
+    protected $fillable = ['legislation'.'user_id', 'institution_id'];
 }

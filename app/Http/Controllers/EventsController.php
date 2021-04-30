@@ -26,26 +26,8 @@ class EventsController extends Controller
      */
     public function createEvent(Request $request)
     {
-        // return $request;
-        // return $request->startDateTime;
-        // $event = new Event;
-
-        // $dateFrom = Carbon::parse($request->startDateTime);
-        // $dateFrom2 = $dateFrom;
-        // $dateFrom->addHour(5);
-        // $dateTo = Carbon::parse($request->endDateTime);
-        // $dateTo2 = $dateTo;
-        // $dateTo->addHour(5);
-
-        // $event->name = $request->name;
-        // $event->startDateTime = $dateFrom;
-        // $event->endDateTime = $dateTo;
-        // // $event->addAttendee(['email' => 'mildredfigueroaq@gmail.com']);
-
-        // $event->save();
-
-        $area_classroom = $request->id_area;
-        //$arrayAreaClassroom = explode("/", $area_classroom);
+        $user = Auth::user();
+        $userInstitution=$user->institution_id;
 
         $evento = new Eventos;
         $evento->name = $request->name;
@@ -56,6 +38,7 @@ class EventsController extends Controller
         $evento->id_user = Auth::user()->id;
         $evento->url = $request->url;
         $evento->id_padre = $request->id_padre; 
+        $evento->institution_id= $userInstitution;
         $evento->save();
 
         return response()->json($evento);
@@ -71,12 +54,19 @@ class EventsController extends Controller
         // $events = Event::get();
         $eventos = [];
         $user = Auth::user();
+        $userInstitution=$user->institution_id;
         $date =  Carbon::now();
         $current_date=date('Y-m-d');
         $initial_range_date = date ( 'Y-m-d' , strtotime ( '-90 day' , strtotime ($current_date ) )) ;
         $end_range_date =date ( 'Y-m-d' ,  strtotime ( '+90 day' , strtotime ($current_date ) )) ;
         if (isset($user) && ($user->isTeacher()||$user->isTutor())) {
-            $eventos_teacher = Eventos::where('id_user', $user->id)->whereDate('date_from','>=',$initial_range_date)->whereDate('date_to','<=',$end_range_date)->orderBy('date_from', 'ASC')->get();
+            $eventos_teacher = Eventos::where('id_user', $user->id)
+                ->whereDate('date_from','>=',$initial_range_date)
+                ->whereDate('date_to','<=',$end_range_date)
+                ->where('delete_at','=', null)
+                ->where('institution_id','=',$userInstitution)
+                ->orderBy('date_from', 'ASC')
+                ->get();
             foreach ($eventos_teacher as $index => $evento) {
 
 
@@ -103,7 +93,13 @@ class EventsController extends Controller
             }
         } elseif (isset($user) && $user->type_user == 3) {
             $classroom_student = ClassroomStudent::where('id_user', $user->id)->first();
-            $eventos_student = Eventos::where('id_classroom', $classroom_student->id_classroom)->whereDate('date_from','>=',$initial_range_date)->whereDate('date_to','<=',$end_range_date)->where('delete_at','=', null)->orderBy('date_from', 'ASC')->get();
+            $eventos_student = Eventos::where('id_classroom', $classroom_student->id_classroom)
+                ->whereDate('date_from','>=',$initial_range_date)
+                ->whereDate('date_to','<=',$end_range_date)
+                ->where('delete_at','=', null)
+                ->where('institution_id','=',$userInstitution)
+                ->orderBy('date_from', 'ASC')
+                ->get();
 
             foreach ($eventos_student as $index => $evento) {
 
@@ -135,7 +131,10 @@ class EventsController extends Controller
                 $planifications = LectivePlanification::where('id', $plan_student->id_lective_planification)->where('deleted', 0)->where('state', 1)->get();
 
                 foreach ($planifications as $i_plan => $plan) {
-                    $eventos_student = Eventos::where('id_area', $plan->id_lective)->where('id_classroom', 0)->orderBy('date_from', 'ASC')->get();
+                    $eventos_student = Eventos::where('id_area', $plan->id_lective)
+                        ->where('id_classroom', 0)
+                        ->orderBy('date_from', 'ASC')
+                        ->get();
                     foreach ($eventos_student as $index => $evento) {
                         $dateTo = Carbon::parse($evento->date_to);
                         if ($dateTo > $date) {
@@ -170,7 +169,13 @@ class EventsController extends Controller
         } elseif (isset($user) && $user->type_user == 1) {
             $initial_range_date_adm = date ( 'Y-m-d' , strtotime ( '-0 day' , strtotime ($current_date ) )) ;
             $end_range_date_adm =date ( 'Y-m-d' ,  strtotime ( '+7 day' , strtotime ($current_date ) )) ;
-            $eventos_all = Eventos::whereDate('date_from','>=',$initial_range_date_adm)->whereDate('date_to','<=',$end_range_date_adm)->where('delete_at','=', null)->orderBy('date_from', 'ASC')->limit(50)->get();
+            $eventos_all = Eventos::whereDate('date_from','>=',$initial_range_date_adm)
+                ->whereDate('date_to','<=',$end_range_date_adm)
+                ->where('delete_at','=', null)
+                ->where('institution_id','=',$userInstitution)
+                ->orderBy('date_from', 'ASC')
+                ->limit(50)
+                ->get();
             foreach ($eventos_all as $index => $evento) {
 
                     if ($evento->id_classroom == 0) // is lective
@@ -509,11 +514,13 @@ class EventsController extends Controller
     public function eventNearStudent(String $id_area, String $id_classroom)
     {
         $user = Auth::user();
+        $userInstitution=$user->institution_id;
         if (isset($user) && $user->type_user == 3) {
             $date =  Carbon::now();
             $event = Eventos::where('id_area',$id_area)
                             ->where('id_classroom',$id_classroom)
                             ->where('date_from','>=',$date)
+                            ->where('institution_id','=',$userInstitution)
                             ->orderBy('date_from','ASC')
                             ->first();
             return $event;

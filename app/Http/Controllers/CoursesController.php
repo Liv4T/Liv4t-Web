@@ -87,9 +87,10 @@ class CoursesController extends Controller
         if(!isset($auth)) return response()->json([]);
 
         $user = User::find($auth->id);
+        $userInstitution=$user->institution_id;
         $areas = [];
         if ($user->type_user == 1) {
-            $user_asigneds = ClassroomTeacher::all();
+            $user_asigneds = ClassroomTeacher::where('institution_id', $userInstitution)->get();
             foreach ($user_asigneds as $key => $user_asigned) {
                 $user = User::find($user_asigned->id_user);
                 $classroom = Classroom::find($user_asigned->id_classroom);
@@ -102,7 +103,7 @@ class CoursesController extends Controller
                 ];
             }
         } elseif ($user->isTeacher()||$user->isTutor()) {
-            $user_asignated = ClassroomTeacher::where('id_user', $user->id)->get();
+            $user_asignated = ClassroomTeacher::where('id_user', $user->id)->where('institution_id', $userInstitution)->get();
             if (isset($user_asignated)) {
                 foreach ($user_asignated as $key => $area) {
                     $classroom = Classroom::find($area->id_classroom);
@@ -116,7 +117,7 @@ class CoursesController extends Controller
                 }
             }
         } elseif ($user->type_user == 3) {
-            $user_asignateds = ClassroomStudent::where('id_user', $user->id)->get();
+            $user_asignateds = ClassroomStudent::where('id_user', $user->id)->where('institution_id', $userInstitution)->get();
             if (isset($user_asignateds)) {
                 foreach ($user_asignateds as $key => $user_asignated) {
                     $classroom = Classroom::find($user_asignated->id_classroom);
@@ -167,12 +168,15 @@ class CoursesController extends Controller
      */
     public function store(Request $request)
     {
+        $user = Auth::user();
+        $userInstitution=$user->institution_id;
         if (isset($request->duplicate) && $request->duplicate == 1) {
             $data = $request->all();
             $course = Courses::create([
                 'id_area'    => $data['id_area'],
                 'id_classroom'  => $data['id_classroom'],
                 'id_teacher'     =>  Auth::user()->id,
+                'institution_id' => $userInstitution,
             ]);
 
             $achievements = $data['logros'];
@@ -201,7 +205,7 @@ class CoursesController extends Controller
         } else {
             $data = $request->all();
 
-            $courses = Courses::where('id_teacher', Auth::user()->id)->where('id_area', $data['id_area'])->where('id_classroom', $data['id_classroom'])->get();
+            $courses = Courses::where('id_teacher', Auth::user()->id)->where('id_area', $data['id_area'])->where('id_classroom', $data['id_classroom'])->where('institution_id', $userInstitution)->get();
 
             if (count($courses) == 0) {
                 $course = Courses::create([
@@ -277,6 +281,8 @@ class CoursesController extends Controller
     public function courseWeekly(Request $request)
     {
         //
+        $user=Auth::user();
+        $userInstitution=$user->institution_id;
         if (isset($request->duplicate) && $request->duplicate == 1) {
             $data = $request->all();
             $Weeks = $data['semana'];
@@ -290,6 +296,7 @@ class CoursesController extends Controller
                     'id_classroom'    => $data['id_classroom'],
                     'week'    => $count,
                     'id_teacher'     =>  Auth::user()->id,
+                    'institution_id' => $userInstitution,
                 ]);
                 $count = $count + 1;
             }
@@ -311,6 +318,7 @@ class CoursesController extends Controller
                         $weekTeacher->id_area    = $data['id_area'];
                         $weekTeacher->id_classroom    = $data['id_classroom'];
                         $weekTeacher->id_teacher     =  Auth::user()->id;
+                        $weekTeacher->institution_id = $userInstitution;
                         $weekTeacher->save();
                         $countWeek = $countWeek + 1;
                     }
@@ -327,6 +335,7 @@ class CoursesController extends Controller
                         'id_classroom'    => $data['id_classroom'],
                         'week'    => $count,
                         'id_teacher'     =>  Auth::user()->id,
+                        'institution_id' => $userInstitution,
                     ]);
                     $count = $count + 1;
                 }
@@ -346,6 +355,7 @@ class CoursesController extends Controller
                     'id_classroom'    => $data['id_classroom'],
                     'week'    => $count,
                     'id_teacher'     =>  Auth::user()->id,
+                    'institution_id' => $userInstitution,
                 ]);
                 $count = $count + 1;
             }
@@ -422,8 +432,9 @@ class CoursesController extends Controller
 
     public function getWeek()
     {
-
-        $Weeks = Weekly::all();
+        $user = Auth::user();
+        $userInstitution = $user->institution_id;
+        $Weeks = Weekly::where('institution_id', $userInstitution)->get();
         $data = [];
         $data[0] = [
             'id'   => 0,
@@ -441,9 +452,10 @@ class CoursesController extends Controller
     public function editGetWeek(String $id_area, String $id_classroom)
     {
         $user = Auth::user();
+        $userInstitution = $user->institution_id;
         $data = [];
         if ($user->isAdmin()) {
-            $Weeks = Weekly::where('id_area', $id_area)->where('id_classroom', $id_classroom)->get();
+            $Weeks = Weekly::where('id_area', $id_area)->where('id_classroom', $id_classroom)->where('institution_id', $userInstitution)->get();
             // $data[0] = [
             //     'id'   => 0,
             //     'text' => 'Seleccione',
@@ -459,7 +471,7 @@ class CoursesController extends Controller
                 ];
             }
         } elseif ($user->isTeacher()||$user->isTutor()) {
-            $Weeks = Weekly::where('id_teacher', $user->id)->where('id_area', $id_area)->where('id_classroom', $id_classroom)->get();
+            $Weeks = Weekly::where('id_teacher', $user->id)->where('id_area', $id_area)->where('id_classroom', $id_classroom)->where('institution_id', $userInstitution)->get();
             $data = [];
             // $data[0] = [
             //     'id'   => 0,
@@ -513,7 +525,9 @@ class CoursesController extends Controller
 
     public function viewGetWeek(String $id_area, String $id_classroom)
     {
-        $Weeks = Weekly::where('id_area', $id_area)->where('id_classroom', $id_classroom)->get();
+        $user = Auth::user();
+        $userInstitution = $user->institution_id;
+        $Weeks = Weekly::where('id_area', $id_area)->where('id_classroom', $id_classroom)->where('institution_id', $userInstitution)->get();
         $data = [];
         foreach ($Weeks as $key => $week) {
             $data[$key] = [
@@ -536,7 +550,8 @@ class CoursesController extends Controller
     {
 
         $data = $request->all();
-
+        $user = Auth::user();
+        $userInstitution = $user->institution_id;
         if(isset($data['fromData']) && isset($data['toData']) && isset($data['fromData']['weekly_planning']['id']))
         {
             //copy weekly_planning
@@ -553,7 +568,8 @@ class CoursesController extends Controller
                     'id_classroom'=>$data['toData']['area']['id_classroom'],
                     'week'=>$weekly_plan->week,
                     'status'=>$weekly_plan->status,
-                    'observation_coord'=>$weekly_plan->observation_coord
+                    'observation_coord'=>$weekly_plan->observation_coord,
+                    'institution_id' => $userInstitution
                 ]);
                 $weekly_planning_id=$new_weekly_plan->id;
             }
@@ -566,7 +582,8 @@ class CoursesController extends Controller
                     'observation'=>$weekly_plan->observation,
                     'week'=>$weekly_plan->week,
                     'status'=>$weekly_plan->status,
-                    'observation_coord'=>$weekly_plan->observation_coord
+                    'observation_coord'=>$weekly_plan->observation_coord,
+                    'institution_id' => $userInstitution
                 ]);
                 $weekly_planning_id=$data['toData']['weekly_planning']['id'];
             }

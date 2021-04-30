@@ -176,8 +176,10 @@ class ActivityController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        $Activity = Activity::all();
+    {   
+        $user=Auth::user();
+        $userInstitution=$user->institution_id;
+        $Activity = Activity::where('institution_id',$userInstitution)->get();
 
         return response()->json($Activity);
     }
@@ -326,7 +328,9 @@ class ActivityController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+    {   
+        $user=Auth::user();
+        $userInstitution = $user->institution_id;
         $data = $request->all();
         $activity = Activity::create([
             'achievement'   => $data['achievement'],
@@ -340,6 +344,7 @@ class ActivityController extends Controller
             'content'=>json_encode($data['activity_data']),
             'state'=> 2,
             'deleted'=> 0,
+            'institution_id' => $userInstitution,
         ]);
 
         if($data['trivia'])

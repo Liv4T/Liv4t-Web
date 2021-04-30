@@ -6,6 +6,7 @@ use App\User;
 use App\ClassroomTeacher;
 use App\Classroom;
 use App\Area;
+use Auth;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
@@ -21,7 +22,10 @@ class MateriasTeachersExport implements FromCollection , ShouldAutoSize, WithMap
     */    
     public function collection()
     {
-        $user_asignated = ClassroomTeacher::all();
+        $user=Auth::user();
+        $userInstitution=$user->institution_id;
+
+        $user_asignated = ClassroomTeacher::where('institution_id',$userInstitution)->get();
         $areas = [];
         if (isset($user_asignated)) {
             foreach ($user_asignated as $key => $area) {
@@ -39,10 +43,12 @@ class MateriasTeachersExport implements FromCollection , ShouldAutoSize, WithMap
 
     public function map($areas): array
     {
+        $user=Auth::user();
+        $userInstitution=$user->institution_id;
         return [
             $areas['text'],
             $areas['classroom'],
-            User::where('id','=',$areas['id_user'])->first() ? User::where('id','=',$areas['id_user'])->first()->name : '',
+            User::where('id','=',$areas['id_user'])->where('institution_id',$userInstitution)->first() ? User::where('id','=',$areas['id_user'])->where('institution_id',$userInstitution)->first()->name : '',
         ];
     }
 

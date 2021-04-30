@@ -30,15 +30,20 @@ class ParentsController extends Controller
     }
 
     public function getParents(){
-        $parents = User::where('type_user','=',4)->get();
+        $user = Auth::user();
+        $userInstitution = $user->institution_id;
+
+        $parents = User::where('type_user','=',4)->where('institution_id', $userInstitution)->get();
         return response()->json($parents, 200);
     }
 
     public function getDataObserverStudents(){
         $user_name = Auth::user()->name;
+        $user = Auth::user();
+        $userInstitution = $user->institution_id;
 
-        $observer = Observer::where('father_name','=', $user_name)->get();
-        $observerMother = Observer::where('mother_name','=', $user_name)->get();
+        $observer = Observer::where('father_name','=', $user_name)->where('institution_id', $userInstitution)->get();
+        $observerMother = Observer::where('mother_name','=', $user_name)->where('institution_id', $userInstitution)->get();
 
         if($observer){
             return $observer;
@@ -56,20 +61,25 @@ class ParentsController extends Controller
     }
     public function getUsersToInvitations(){
         $users = [];
+        $user = Auth::user();
+        $userInstitution = $user->institution_id;
 
         $admins = DB::table("users")
         ->select('users.*')
         ->where('type_user','=',1)
+        ->where('institution_id', $userInstitution)
         ->get();
 
         $teachers = DB::table("users")
         ->select('users.*')
         ->where('type_user','=',2)
+        ->where('institution_id', $userInstitution)
         ->get();
 
         $psychologists = DB::table("users")
         ->select('users.*')
         ->where('type_user','=',5)
+        ->where('institution_id', $userInstitution)
         ->get();
 
         array_push($users, $admins, $teachers, $psychologists);
@@ -85,6 +95,9 @@ class ParentsController extends Controller
      */
     public function store(Request $request)
     {
+        $user = Auth::user();
+        $userInstitution = $user->institution_id;
+
         $parents = new Parents;
         $parents->name_event = $request->name_event;
         $parents->date_start = $request->date_start;
@@ -94,6 +107,7 @@ class ParentsController extends Controller
         $parents->email_invited = $request->email_invited;
         $parents->id_invited = $request->id_invited;
         $parents->id_sender = $request->id_sender;
+        $parents->institution_id = $userInstitution;
 
         $parents->save();
 

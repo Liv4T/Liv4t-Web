@@ -29,7 +29,10 @@ class NotesExport implements FromCollection , ShouldAutoSize, WithMapping, WithH
     */    
     public function collection()
     {
-        $score_base=ConfigurationParameter::where('code','CALIFICATION_BASE')->where('deleted',0)->first();
+        $user=Auth::user();
+        $userInstitution=$user->institution_id;
+        
+        $score_base=ConfigurationParameter::where('code','CALIFICATION_BASE')->where('deleted',0)->where('institution_id',$userInstitution)->first();
 
         $weekly_plans=Weekly::where('id_classroom',$this->classroom_id)->where('id_area',$this->area_id)->get();
 

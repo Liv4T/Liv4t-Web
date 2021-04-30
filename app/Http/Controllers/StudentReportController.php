@@ -8,6 +8,7 @@ use App\Area;
 use App\StudentReport;
 use App\Reason;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class StudentReportController extends Controller
@@ -15,8 +16,10 @@ class StudentReportController extends Controller
     //
     public function saveReport(Request $request){
 
+        $userData = Auth::user();
+        $userInstitution=$userData->institution_id;
+        
         $report = new StudentReport; 
-
         $report->student_id=$request->student_id;
         $report->reason=$request->reason;
         $report->person_inv=$request->student;
@@ -24,28 +27,43 @@ class StudentReportController extends Controller
         $report->grade=$request->grade;
         $report->description=$request->description;
         $report->id_classroom=$request->id_classroom;
+        $report->institution_id=$userInstitution;
         $report->save();
+
+        return 'ok';
     }
 
     public function createReason(Request $request){
         
         $reason = new Reason;
-
+        $userData = Auth::user();
+        $userInstitution=$userData->institution_id;
+        
         $reason->name=$request->reason;
-
+        $reason->institution_id=$userInstitution;
         $reason->save();
+
+        return 'ok';
     }
 
     public function reasons(){
-        $reasons=Reason::all();
+        
+        $userData = Auth::user();
+        $userInstitution=$userData->institution_id;
+        $reasons=Reason::where('institution_id','=',$userInstitution)->get();
 
         return response()->json($reasons);
     }
 
     public function studentsVisits(){
+        
+        $userData = Auth::user();
+        $userInstitution=$userData->institution_id;
+
         $students=DB::table("users")
         ->select('users.*')
         ->where('type_user','=',3)
+        ->where('institution_id','=', $userInstitution)
         ->get();
         $listStudents= [];
         foreach ($students as $index => $student) {
@@ -96,13 +114,15 @@ class StudentReportController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function getAreas(int $id){
+        $userData = Auth::user();
+        $userInstitution=$userData->institution_id;
         $student = User::where('id','=',$id)->get();
         $areas = [];
         $user_asignateds = ClassroomStudent::where('id_user', $id)->get();
         if (isset($user_asignateds)) {
             foreach ($user_asignateds as $key => $user_asignated) {
                 $classroom = Classroom::find($user_asignated->id_classroom);
-                $class = Area::where('id_grade', $classroom->id_grade)->get();
+                $class = Area::where('id_grade', $classroom->id_grade)->where('id_institution','=', $userInstitution)->get();
                 foreach ($class as $key => $area) {
                     array_push($areas, [
                         'text'         => $area->name . " - " . $classroom->name,

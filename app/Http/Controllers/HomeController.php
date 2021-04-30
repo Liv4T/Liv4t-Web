@@ -5,10 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Response;
-use Auth;
 use App\User;
 use App\Group;
 use App\Terms;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -94,7 +95,14 @@ class HomeController extends Controller
     }
     public function CreateGroup()
     {
-        $groups = auth()->user()->groups;
+        $user = Auth::user();
+        $userInstitution=$user->institution_id;
+        
+        $groups = DB::table('groups')
+        ->join('group_user', 'groups.id', '=', 'group_user.group_id')
+        ->select('groups.*')
+        ->where('group_user.user_id', $user->id)
+        ->where('groups.institution_id', $userInstitution)->get();
 
         $users = User::where('id', '<>', auth()->user()->id)->get();
         $user = User::find(auth()->user()->id);

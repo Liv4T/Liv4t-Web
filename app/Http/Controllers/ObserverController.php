@@ -22,9 +22,12 @@ class ObserverController extends Controller
     }
 
     public function getDataParentsStudents(){
-        $user_name = Auth::user()->name;
+        $user=Auth::user();
+        $userInstitution=$user->institution_id;
 
-        $observer = Observer::where('user_creator','=', $user_name)->get();
+        $user_name = $user->name;
+
+        $observer = Observer::where('user_creator','=', $user_name)->where('institution_id',$userInstitution)->get();
 
         return response()->json($observer);
     }
@@ -37,6 +40,11 @@ class ObserverController extends Controller
      */
     public function store(Request $request)
     {
+        $user=Auth::user();
+        $userInstitution=$user->institution_id;
+
+        $request->institution_id=$userInstitution;
+        
         $observer = new Observer;
         $observer->create($request->all());
         return $observer;

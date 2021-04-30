@@ -181,7 +181,11 @@ var render = function() {
                               staticClass: "text-link",
                               attrs: { href: "/reportVisits/" + student.id }
                             },
-                            [_vm._v(_vm._s(student.name + student.last_name))]
+                            [
+                              _vm._v(
+                                _vm._s(student.name + " " + student.last_name)
+                              )
+                            ]
                           )
                         ]),
                         _vm._v(" "),
@@ -223,7 +227,11 @@ var render = function() {
                               staticClass: "text-link",
                               attrs: { href: "/notes/" + student.id }
                             },
-                            [_vm._v(_vm._s(student.name + student.last_name))]
+                            [
+                              _vm._v(
+                                _vm._s(student.name + " " + student.last_name)
+                              )
+                            ]
                           )
                         ])
                       ])

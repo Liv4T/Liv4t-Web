@@ -421,8 +421,8 @@ export default {
             });
             $("#createMat").modal("show");
         },
-        createG(clas) {
-            var urlr = "findInstitution/8" + clas;
+        createG() {
+            var urlr = "findInstitution";
             axios.get(urlr).then(response => {
                 this.fillS = response.data;
             });

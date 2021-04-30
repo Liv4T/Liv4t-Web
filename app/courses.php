@@ -8,5 +8,5 @@ class Courses extends Model
 {
     //
     protected $table = "annual_planification";
-    protected $fillable = ["id_teacher", "id_area", "id_classroom"];
+    protected $fillable = ["id_teacher", "id_area", "id_classroom", "institution_id"];
 }

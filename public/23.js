@@ -435,10 +435,10 @@ __webpack_require__.r(__webpack_exports__);
       });
       $("#createMat").modal("show");
     },
-    createG: function createG(clas) {
+    createG: function createG() {
       var _this4 = this;
 
-      var urlr = "findInstitution/8" + clas;
+      var urlr = "findInstitution";
       axios.get(urlr).then(function (response) {
         _this4.fillS = response.data;
       });

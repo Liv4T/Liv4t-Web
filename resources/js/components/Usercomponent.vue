@@ -732,6 +732,9 @@ export default {
         this.names = response.data;
       });
     },
+    getMenu() {
+      window.location = "/salon_adm";
+    },
     editNames(name) {
       this.fillNames.id = name.id;
       this.fillNames.name = name.name;
@@ -792,12 +795,9 @@ export default {
       });
     },
     createNames() {
-      console.log("sent form");
-      console.log(this.newPicture);
       var url = "users_save";
       this.newAge = this.age;
-      console.log("send info user url, " + url);
-
+      
       axios
         .post(url, {
           name: this.newName,
@@ -836,6 +836,7 @@ export default {
           this.errors = [];
           $("#createu").modal("hide");
           toastr.success("New user created successfully");
+          this.getMenu();//Recargamos la pagina
         })
         .catch(error => {
           this.errors = error.response.data;

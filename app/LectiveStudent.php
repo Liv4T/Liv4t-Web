@@ -9,6 +9,6 @@ class LectiveStudent extends Model
     protected $table = 'lective_classroom_student';
 
     protected $fillable = [
-        'id_lective_planification', 'id_student', 'state','deleted','updated_user'
+        'id_lective_planification', 'id_student', 'state','deleted','updated_user','institution_id'
     ];
 }

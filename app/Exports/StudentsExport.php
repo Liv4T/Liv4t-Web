@@ -17,7 +17,10 @@ class StudentsExport implements FromCollection , ShouldAutoSize, WithMapping, Wi
     */    
     public function collection()
     {
-        return User::where('type_user','=',3)->get();
+        $user=Auth::user();
+        $userInstitution=$user->institution_id;
+
+        return User::where('type_user','=',3)->where('institution_id', $userInstitution)->get();
     }
 
     public function map($students): array

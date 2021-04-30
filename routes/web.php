@@ -481,7 +481,7 @@ Route::get('getInstitution', 'AdministratorController@indexInstitution')->name('
 Route::get('getSections', 'AdministratorController@getSections')->name('getSections');
 Route::get('getCity/{id}', 'AdministratorController@findCity')->name('getCity');
 Route::post('createInstitution', 'AdministratorController@createInstitution')->name('createInstitution');
-Route::get('findInstitution/{id}', 'AdministratorController@findInstitution')->name('findInstitution');
+Route::get('findInstitution', 'AdministratorController@findInstitution')->name('findInstitution');
 Route::put('updateInstitution', 'AdministratorController@updateInstitution')->name('updateInstitution');
 Route::post('createGrade', 'AdministratorController@createGrade')->name('createGrade');
 Route::post('createClassroom', 'AdministratorController@createClassroom')->name('createClassroom');
@@ -572,7 +572,7 @@ Route::post('/saveRepoStUpload', 'RepositoryController@storeRepositoryStudent')-
 
 /*login personalizado permite verificar suscripcion*/
 Route::get('/', function () {
-    return view('home');
+    return view('newHome');
 });
 Route::get('/loginNew', function () {
     return view('auth.login');

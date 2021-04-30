@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use Auth;
 
 class InvitationsParentsController extends Controller
 {
@@ -13,10 +14,14 @@ class InvitationsParentsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
+    {   
+        $user = Auth::user();
+        $userInstitution = $user->institution_id;
+
         $users = User::where('type_user','=',1)
             ->where('type_user','=', 2)
             ->where('type_user','=', 5)
+            ->where('institution_id', $userInstitution)
             ->get();
         
             return response()->json($users, 200);

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Classroom; 
 use App\ClassroomStudent;
 use App\User;
+use Auth;
 use Illuminate\Http\Request;
 
 class ClassroomController extends Controller
@@ -17,7 +18,10 @@ class ClassroomController extends Controller
      */
     public function classroomByInstitution($id){
         
-        $classroom = Classroom::where('id_institution', $id)->get();
+        $user = Auth::user();
+        $userInstitution = $user->institution_id;
+
+        $classroom = Classroom::where('id_institution', $userInstitution)->get();
 
         foreach ($classroom as $index => $classR) {
             $class[$index] = [
@@ -36,6 +40,7 @@ class ClassroomController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function studentsForClassroom($id){
+        
         $students = [];
         $classroom_student = ClassroomStudent::where('id_classroom', $id)->get();
         $classroom = Classroom::find($id);

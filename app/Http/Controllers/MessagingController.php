@@ -42,10 +42,12 @@ class MessagingController extends Controller
         $data = $request->all();
         $message = new Messaging;
         $user = Auth::user();
+        $userInstitution=$user->institution_id;
 
         $message->id_emisor = $user->id;
         $message->message = $data['message'];
         $message->subject = $data['subject'];
+        $message->institution_id= $userInstitution;
 
         $message->save();
         if ($message->save()) {
@@ -54,6 +56,7 @@ class MessagingController extends Controller
                 $receptor_message->id_user = $receptor;
                 $receptor_message->status = 0;
                 $receptor_message->id_message = $message->id;
+                $receptor_message->institution_id = $userInstitution;
                 $receptor_message->save();
             }
 
@@ -91,6 +94,7 @@ class MessagingController extends Controller
     public function showMessage($id)
     {
         $user_auth = Auth::user();
+        $userInstitution=$user_auth->institution_id;
         $id_user = $user_auth->id;
         $message = Messaging::find($id);
         $receivers = [];
@@ -98,13 +102,13 @@ class MessagingController extends Controller
             $user = User::findOrFail($message->id_emisor);
             $message->emisor = $user->name . " " . $user->last_name;
 
-            $user_message = ReceptorMessage::where('id_message', $message->id)->where('id_user', $id_user)->first();
+            $user_message = ReceptorMessage::where('id_message', $message->id)->where('id_user', $id_user)->where('institution_id', $userInstitution)->first();
             if (isset($user_message)) {
                 $user_message->status = 1;
                 $user_message->save();
             }
 
-            $user_messages = ReceptorMessage::where('id_message', $message->id)->get();
+            $user_messages = ReceptorMessage::where('id_message', $message->id)->where('institution_id', $userInstitution)->get();
             foreach ($user_messages as $index => $receiver) {
                 $user_sent = User::find($receiver->id_user);
                 $receivers[$index]  = [
@@ -126,7 +130,8 @@ class MessagingController extends Controller
     public function showSentMessage()
     {
         $user = Auth::user();
-        $messages = Messaging::where('id_emisor', $user->id)->get();
+        $userInstitution=$user->institution_id;
+        $messages = Messaging::where('id_emisor', $user->id)->where('institution_id', $userInstitution)->get();
         if (isset($messages)) {
             $receivers = [];
             $received_messages = [];
@@ -161,9 +166,9 @@ class MessagingController extends Controller
     public function showReceivedMessage()
     {
         $user = Auth::user();
-        // return $user->id;
+        $userInstitution=$user->institution_id;
         $messages = [];
-        $messagesReceivers = ReceptorMessage::where('id_user', $user->id)->get();
+        $messagesReceivers = ReceptorMessage::where('id_user', $user->id)->where('institution_id', $userInstitution)->get();
         foreach ($messagesReceivers as $key => $messagesReceiver) {
             $message = Messaging::find($messagesReceiver->id_message);
             $user = User::find($message->id_emisor);

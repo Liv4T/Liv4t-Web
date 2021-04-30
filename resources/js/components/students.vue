@@ -15,7 +15,7 @@
                         </tr>
                         <tr v-for="(student,t) in students" :key="t">
                             <td><img v-bind:src="student.picture" alt="" width="32px" height="16px"></td>
-                            <td><a class="text-link" :href="'/reportVisits/' + student.id">{{ student.name + student.last_name }}</a></td>
+                            <td><a class="text-link" :href="'/reportVisits/' + student.id">{{ student.name + ' ' + student.last_name }}</a></td>
                             <td></td>
                             <td></td>
                             <td>{{ student.count}}</td>
@@ -28,7 +28,7 @@
                         </tr>
                         <tr v-for="(student,t) in students" :key="t">
                             <td><img v-bind:src="student.picture" alt="" width="32px" height="16px"></td>
-                            <td><a class="text-link" :href="'/notes/' + student.id">{{ student.name + student.last_name }}</a></td>
+                            <td><a class="text-link" :href="'/notes/' + student.id">{{ student.name + ' ' + student.last_name }}</a></td>
                         </tr>
                     </table>
                     </div>

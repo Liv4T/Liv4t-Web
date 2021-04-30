@@ -30,10 +30,10 @@ class CalificationController extends Controller
     public function getAllStudents(int $area_id,int $classroom_id)
     {
         $auth = Auth::user();
-
+        $userInstitution= $auth->institution_id;
         if(!isset($auth)) return  response()->json([]);
 
-        $score_base=ConfigurationParameter::where('code','CALIFICATION_BASE')->where('deleted',0)->first();
+        $score_base=ConfigurationParameter::where('code','CALIFICATION_BASE')->where('deleted',0)->where('institution_id', $userInstitution)->first();
 
         $weekly_plans=Weekly::where('id_classroom',$classroom_id)->where('id_area',$area_id)->get();
 
@@ -113,12 +113,13 @@ class CalificationController extends Controller
     public function getByStudent(int $area_id,int $classroom_id,int $id_student)
     {
         $auth = Auth::user();
+        $userInstitution= $auth->institution_id;
 
         if(!isset($auth)) return  response()->json([]);
 
         $student=User::find($id_student);
 
-        $score_base=ConfigurationParameter::where('code','CALIFICATION_BASE')->where('deleted',0)->first();
+        $score_base=ConfigurationParameter::where('code','CALIFICATION_BASE')->where('deleted',0)->where('institution_id', $userInstitution)->first();
 
         $area=Area::find($area_id);
 
@@ -249,12 +250,13 @@ class CalificationController extends Controller
     }
     public function getAllClasses(int $area_id,int $classroom_id,int $student_id,int $id_module){
         $auth = Auth::user();
+        $userInstitution = $auth->institution_id;
 
         if(!isset($auth)) return  response()->json([]);
 
 
             $classes=Classs::where('id_weekly_plan',$id_module)->get();
-            $score_base=ConfigurationParameter::where('code','CALIFICATION_BASE')->where('deleted',0)->first();
+            $score_base=ConfigurationParameter::where('code','CALIFICATION_BASE')->where('deleted',0)->where('institution_id', $userInstitution)->first();
 
             foreach ($classes as $key_class => $class) {
                 $progress=  DB::select('call obtener_progreso_clase(?,?)',[$class->id, $student_id])[0]->porcentaje;
@@ -468,9 +470,12 @@ class CalificationController extends Controller
     }
 
     public function generateTemplateCalification(int $student_id){
-        $templatePath=ConfigurationParameter::where('code','TEMPLATE_NOTESHEET_PATH')->first();
-        $templateHeader=ConfigurationParameter::where('code','TEMPLATE_NOTESHEET_HEADER')->first();
-        $templateFooter=ConfigurationParameter::where('code','TEMPLATE_NOTESHEET_FOOTER')->first();
+
+        $user=Auth::user();
+        $userInstitution = $user->institution_id;
+        $templatePath=ConfigurationParameter::where('code','TEMPLATE_NOTESHEET_PATH')->where('institution_id', $userInstitution)->first();
+        $templateHeader=ConfigurationParameter::where('code','TEMPLATE_NOTESHEET_HEADER')->where('institution_id', $userInstitution)->first();
+        $templateFooter=ConfigurationParameter::where('code','TEMPLATE_NOTESHEET_FOOTER')->where('institution_id', $userInstitution)->first();
 
         if(!isset($templatePath)||!isset($templateHeader)||!isset($templateFooter))  return;
 
@@ -497,7 +502,7 @@ class CalificationController extends Controller
 
         $current_date=date('Y-m-d');
 
-        $current_period=Period::whereDate('date_from','<=',$current_date)->whereDate('date_to','>=',$current_date)->first();
+        $current_period=Period::whereDate('date_from','<=',$current_date)->whereDate('date_to','>=',$current_date)->where('id_institution', $userInstitution)->first();
 
         if(!isset($current_period)) return response('Period not configured',400);
 

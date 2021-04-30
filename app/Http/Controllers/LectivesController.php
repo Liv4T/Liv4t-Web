@@ -36,10 +36,11 @@ class LectivesController extends Controller
         if(!isset($auth)) return response()->json($lectives);
 
         $user = User::find($auth->id);
+        $userInstitution = $user->institution_id;
 
         if ($user->isAdmin()) {//admin
 
-            $lectivePlanifications = LectivePlanification::where('deleted',0)->get();
+            $lectivePlanifications = LectivePlanification::where('deleted',0)->where('institution_id', $userInstitution)->get();
 
             foreach ($lectivePlanifications as $key => $planification) {
 
@@ -61,7 +62,7 @@ class LectivesController extends Controller
 
             }
         } elseif ($user->isTutor()||$user->isTeacher()) { // teacher
-            $lectivePlanifications = LectivePlanification::where('deleted',0)->where('id_teacher',$user->id)->get();
+            $lectivePlanifications = LectivePlanification::where('deleted',0)->where('id_teacher',$user->id)->where('institution_id', $userInstitution)->get();
 
             foreach ($lectivePlanifications as $key => $planification) {
 
@@ -91,7 +92,7 @@ class LectivesController extends Controller
 
             foreach ($lectives_student as $key_i=> $lective_student)
             {
-                $lectivePlanifications = LectivePlanification::where('deleted',0)->where('id',$lective_student->id_lective_planification)->get();
+                $lectivePlanifications = LectivePlanification::where('deleted',0)->where('id',$lective_student->id_lective_planification)->where('institution_id', $userInstitution)->get();
 
                 foreach ($lectivePlanifications as $key_j => $planification) {
 
@@ -235,6 +236,7 @@ class LectivesController extends Controller
     public function saveIndicator(Request $request,int $id_lective_planification){
         $data = $request->all();
         $auth = Auth::user();
+        $userInstitution = $auth->institution_id;
 
         if(isset($data['id_indicator']) && $data['id_indicator']!=0)
         {
@@ -247,7 +249,8 @@ class LectivesController extends Controller
                 'rate'=>$data['rate'],
                 'state'=>1,
                 'deleted'=>0,
-                'updated_user'=>$auth->id
+                'updated_user'=>$auth->id,
+                'institution_id'=> $userInstitution
             ]);
         }
         return 'Ok';
@@ -290,6 +293,7 @@ class LectivesController extends Controller
         $data = $request->all();
 
         $auth = Auth::user();
+        $userInstitution = $auth->institution_id;
 
         $user = User::find($auth->id);
 
@@ -308,7 +312,8 @@ class LectivesController extends Controller
                     'observation'=>$weekly_plan['observation'],
                     'state'=>1,
                     'deleted'=>0,
-                    'updated_user'=>$user->id
+                    'updated_user'=>$user->id,
+                    'institution_id'=> $userInstitution
                 ]);
             }
         }
@@ -382,6 +387,7 @@ class LectivesController extends Controller
     public function saveWeeklyPlanificationDetail(Request $request,int $id_lective_planification,int $id_weekly_plan)
     {
         $auth = Auth::user();
+        $userInstitution=$auth->institution_id;
 
         $data = $request->all();
 
@@ -413,7 +419,8 @@ class LectivesController extends Controller
                                 'description'=>$item_detail['description'],
                                 'state'=>1,
                                 'deleted'=>0,
-                                'updated_user'=>$user->id
+                                'updated_user'=>$user->id,
+                                'institution_id'=>$userInstitution
                             ]);
                         }
                     }
@@ -429,7 +436,8 @@ class LectivesController extends Controller
                     'hourly_intensity'=>$item['hourly_intensity'],
                     'state'=>1,
                     'deleted'=>0,
-                    'updated_user'=>$user->id
+                    'updated_user'=>$user->id,
+                    'institution_id'=>$userInstitution
                 ]);
 
                 $id_class=$class->id;
@@ -445,7 +453,8 @@ class LectivesController extends Controller
                                 'description'=>$item_detail['description'],
                                 'state'=>1,
                                 'deleted'=>0,
-                                'updated_user'=>$user->id
+                                'updated_user'=>$user->id,
+                                'institution_id'=>$userInstitution
                             ]);
                     }
                 }
@@ -506,11 +515,12 @@ class LectivesController extends Controller
     public function findStudents(String $content)
     {
 
-        $auth = Auth::user();
+        $user = Auth::user();
+        $userInstitution = $user->institution_id;
 
-        $user_identification_finded = User::where('type_user',3)->Where('id_number',$content)->get();
-        $user_lastname_finded = User::where('type_user',3)->Where('last_name','like',$content.'%')->get();
-        $user_name_finded = User::where('type_user',3)->Where('name','like',$content.'%')->get();
+        $user_identification_finded = User::where('type_user',3)->Where('id_number',$content)->where('institution_id', $userInstitution)->get();
+        $user_lastname_finded = User::where('type_user',3)->Where('last_name','like',$content.'%')->where('institution_id', $userInstitution)->get();
+        $user_name_finded = User::where('type_user',3)->Where('name','like',$content.'%')->where('institution_id', $userInstitution)->get();
 
         $students = [];
 
@@ -571,6 +581,7 @@ class LectivesController extends Controller
     {
 
         $auth = Auth::user();
+        $userInstitution = $auth->institution_id;
 
         $data = $request->all();
 
@@ -587,7 +598,8 @@ class LectivesController extends Controller
                     'id_student'=>$student['id_user'],
                     'state'=>1,
                     'deleted'=>0,
-                    'updated_user'=>$user->id
+                    'updated_user'=>$user->id,
+                    'institution_id'=>$userInstitution
                 ]);
             }
         }

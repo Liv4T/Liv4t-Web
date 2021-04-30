@@ -3,6 +3,7 @@
 namespace App\Exports;
 
 use DB;
+use Auth;
 use App\ConfigurationParameter;
 use App\Weekly;
 use Maatwebsite\Excel\Concerns\FromCollection;
@@ -25,8 +26,11 @@ class CourseExport implements FromCollection , ShouldAutoSize, WithMapping, With
     * @return \Illuminate\Support\Collection
     */    
     public function collection()
-    {
-        $score_base=ConfigurationParameter::where('code','CALIFICATION_BASE')->where('deleted',0)->first();
+    {   
+        $user=Auth::user();
+        $userInstitution=$user->institution_id;
+
+        $score_base=ConfigurationParameter::where('code','CALIFICATION_BASE')->where('deleted',0)->where('institution_id', $userInstitution)->first();
 
         $weekly_plans=Weekly::where('id_classroom',$this->classroom_id)->where('id_area',$this->area_id)->get();
 
