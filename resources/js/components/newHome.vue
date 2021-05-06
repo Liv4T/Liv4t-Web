@@ -280,14 +280,15 @@ export default {
 </script>
 <style>
 .logo-liv4t{
-    height: 100px !important;
+    height: 120px !important;
+    width: 330px;
 }
 .logo-liv4t-old{
     height: 200px !important;
     margin-left: 180px;
 }
 .margin-logo{
-    margin-right: 250px !important;
+    margin-right: 150px !important;
 }
 .color-nav{
     color: black;
@@ -672,7 +673,7 @@ export default {
         margin-top: 20px;
     }
     .text-roles{
-        font-size: 12px !important;
+        font-size: 11px !important;
     }
     .position-a{
         height: 90px !important;
