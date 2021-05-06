@@ -78,11 +78,11 @@ class LandingController extends Controller
         if ($contact->save()) {
             $email_to = $request->email;
 
-            Mail::send('emails.signUp', ["name" => $request->name, "email" => $request->email, "phone" => $request->phone, "message" => $request->message], function ($message) use ($email_to) {
-                $message->to('inscripciones@liv4t.com', 'Liv4T Inscripciones');
-                $message->subject('Inscripción');
+            Mail::send('emails.signUp', ["name" => $request->name, "email" => $request->email, "phone" => $request->phone, "messages" => $request->message], function ($message) use ($email_to) {
+                $message->to('desarrollo@liv4t.com', 'Liv4T Inscripciones');
+                $message->subject('Contacto');
             });
-            return view("/", ["saved" => true]);
+            return view("/newHome", ["saved" => true]);
         }
     }
 
