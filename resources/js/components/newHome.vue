@@ -38,8 +38,11 @@
             </div>
         </div>
         <div class="col fondo3">
-            <div>
+            <div class="">
                 <img class="logo-liv4t-old" thumbnail fluid src="https://firebasestorage.googleapis.com/v0/b/chat-firebase-7b7ff.appspot.com/o/LOGO_LIV4T_SKOOL.png?alt=media&token=e0a74c90-0f0d-4932-863a-827b5f87ed0c">
+                <img class="pincel" src="../assets/img/home26.png" alt="">
+                <img class="avion" src="../assets/img/home25.png" alt="">
+                <img class="escuadra" src="../assets/img/home24.png" alt="">
             </div>
             <div>
                 <label class="text-fondo3">Roles para Estudiantes, Docentes, Administrativos y Padres de Familia</label>
@@ -514,6 +517,15 @@ export default {
 .margin-check{
     margin-left: 25px;
 }
+.pincel{
+    display: none;
+}
+.avion{
+    display: none;
+}
+.escuadra{
+    display: none;
+}
 
 @media (max-width: 600px) {
     .logo-liv4t{
@@ -648,7 +660,7 @@ export default {
     .fondo6{
         background-image: url("../assets/img/home33.png");
         background-repeat: no-repeat;
-        height: 240px;
+        height: 265px;
         background-size: 100% 100%;
         width: 100%;
         margin-left: 20px;
@@ -728,6 +740,27 @@ export default {
     .margin-check{
         margin-left: 25px;
         margin-bottom: 120px;
+    }
+    .pincel {
+        height: 55px !important;
+        margin-left: 180px;
+        top: -50px;
+        position: absolute;
+        display: block;
+    }
+    .avion{
+        height: 90px !important;
+        margin-left: 220px;
+        top: -38px;
+        position: absolute;
+        display: block; 
+    }
+    .escuadra{
+        height: 90px !important;
+        margin-left: 220px;
+        top: 20px;
+        position: absolute;
+        display: block; 
     }
 }
 
