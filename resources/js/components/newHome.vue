@@ -2,7 +2,7 @@
     <div>
         <div>
             <nav class="navbar navbar-expand-md navbar-light">
-                <ul class="navbar-nav mr-sm-6 justify-content-start">
+                <ul class="navbar-nav mr-sm-6 justify-content-start flex-nav">
                     <li class="margin-logo">
                         <img class="logo-liv4t" thumbnail fluid src="../assets/img/home6.png"  alt="4"></img>
                     </li>
@@ -26,10 +26,10 @@
             <div class="col-md-7">
                 <div class="row">
                     <div class="col-lg-6">
-                        <img class="img-dim" src="../assets/img/home4.png" alt="" style="margin-top: -60px"> 
+                        <a><img class="img-dim" src="../assets/img/home19.png" alt="" style=""><label class="text-img-dim">Liv4T</label></a>
                     </div>
                     <div class="col-lg-6">
-                        <img class="img-dim" src="../assets/img/home3.png" alt=""> 
+                        <img class="esquina" src="../assets/img/home3.png" alt=""> 
                     </div>
                     <div class="col-lg-6 img-pos">
                         <label class="text-img-pos"><b>Liv4T Skool</b> es una plataforma educativa de comunicación y gestión de contenidos que apoya los procesos administrativos y pedagógicos, y que permite conexión remota y seguimiento. Diseñada por profesores y administradores escolares.</label>
@@ -64,26 +64,87 @@
             </div>
         </div>
         <div class="col fondo4">
-            <div class="container" style="padding-top:100px;">
+            <div class="container container-top">
                 <div>
-                    <a class="text-virtualiza"><img class="img-virtualiza" src="../assets/img/home7.1.png" alt="">Planeación Académica</a>
+                    <a><img class="img-virtualiza" src="../assets/img/home7.1.png" alt=""><label class="text-virtualiza">Planeación Académica</label></a>
                 </div>
                 <div>
-                    <a class="text-virtualiza"><img class="img-virtualiza" src="../assets/img/home7.2.png" alt="">Gestión Administrativa</a>
+                    <a><img class="img-virtualiza" src="../assets/img/home7.2.png" alt=""><label class="text-virtualiza">Gestión Administrativa</label></a>
                 </div>
                 <div>
-                    <a class="text-virtualiza"><img class="img-virtualiza" src="../assets/img/home7.3.png" alt="">Comunicación Instantanea y Segura</a>
+                    <a><img class="img-virtualiza" src="../assets/img/home7.3.png" alt=""><label class="text-virtualiza">Comunicación Instantanea y Segura</label></a>
                 </div>
                 <div>
-                    <a class="text-virtualiza"><img class="img-virtualiza" src="../assets/img/home7.4.png" alt="">Apoyo a la Formación Integral</a>
+                    <a><img class="img-virtualiza" src="../assets/img/home7.4.png" alt=""><label class="text-virtualiza">Apoyo a la Formación Integral</label></a>
                 </div>
                 <div>
-                    <a class="text-virtualiza"><img class="img-virtualiza" src="../assets/img/home7.5.png" alt="">Enseñanza Sincrónica y Asincrónica</a>
+                    <a><img class="img-virtualiza" src="../assets/img/home7.5.png" alt=""><label class="text-virtualiza">Enseñanza Sincrónica y Asincrónica</label></a>
                 </div>
             </div>
         </div>
+        <div class="row margin-estudiante">
+            <div class="col-lg-12">
+                <img class="img-roles" src="../assets/img/home9.png" >
+            </div>
+            <div class="col-lg-6 fondo6">
+                <div>
+                    <img class="position-a" src="../assets/img/home39.png">
+                </div>
+                <div class="margin-role">
+                   <a class="text-roles"><img class="img-virtualiza" src="../assets/img/home34.png" alt=""><label><b>Gestión y acceso a reportes personalizados:</b> <br>Alumnos y docentes.</label></a> 
+                </div>
+                <div>
+                   <a class="text-roles"><img class="img-virtualiza" style="margin-top: -85px;" src="../assets/img/home35.png" alt=""><label><b>Cumplimiento con Requerimientos de Ley:</b><br><b>Proyectos transversales, lineamientos, observadores</b><br><b>de los estudiantes, gobierno escolar entre otros para</b><br><b>la administración escolar.</b></label></a> 
+                </div>
+                <div>
+                   <a class="text-roles"><img class="img-virtualiza" style="margin-top: -20px;" src="../assets/img/home36.png" alt=""><label><b>Información actualizada de docentes, alumnos,</b><br><b>exalumnos y directivos.</b></label></a> 
+                </div>
+            </div>
+            <div class="col-lg-6 fondo6">
+                <div>
+                    <img class="position-a" src="../assets/img/home31.png">
+                </div>
+                <div class="margin-role">
+                   <a class="text-roles"><img class="img-docente" style="margin-top: -30px;" src="../assets/img/home34.png" alt=""><label>Planeación de contenidos curriculares anuales,<br>bimestrales y por clase de acuerdo con los estándares <br>requeridos.</label></a> 
+                </div>
+                <div>
+                   <a class="text-roles"><img class="img-docente" style="margin-top: -60px;" src="../assets/img/home35.png" alt=""><label>Comunicación sincrónica y asincrónica vía chat, foro y<br>mensajería con toda la comunidad: Estudiantes,<br>docentes, padres y directivos.</label></a> 
+                </div>
+                <div>
+                   <a class="text-roles"><img class="img-docente" style="margin-top: -10px;" src="../assets/img/home36.png" alt=""><label>Calificaciones de manera automática.</label></a> 
+                </div>
+                <div>
+                   <a class="text-roles"><img class="img-docente" style="margin-top: -25px;" src="../assets/img/home37.png" alt=""><label>Repositorio de información con clases grabadas,<br>actividades y recursos.</label></a> 
+                </div>
+            </div>
+        </div>
+        <div class="row fondo7">
+            <div class="col-lg-3">
+            
+            </div>
+            <div class="col-lg-6 fondo6" style="margin-top: -40px;">
+                <div>
+                    <img class="position-a" src="../assets/img/home32.png">
+                </div>
+                <div class="margin-role">
+                <a class="text-roles"><img class="img-docente" style="margin-top: -30px;" src="../assets/img/home34.png" alt=""><label>Autogestión del aprendizaje mediante el acceso<br>permanente a actividades realizadas previamente, sin<br>internet y de forma remota.</label></a> 
+                </div>
+                <div>
+                <a class="text-roles"><img class="img-docente" style="margin-top: -20px;" src="../assets/img/home35.png" alt=""><label>Desarrollo de la creatividad y los talentos personales.</label></a> 
+                </div>
+                <div>
+                <a class="text-roles"><img class="img-docente" style="margin-top: -40px;" src="../assets/img/home36.png" alt=""><label>Interacción con otros miembros de la comunidad escolar: <br>Compañeros, docentes, personal administrativo y <br>acompañamiento psicológico.</label></a> 
+                </div>
+                <div>
+                <a class="text-roles"><img class="img-docente" style="margin-top: -25px;" src="../assets/img/home37.png" alt=""><label>Acceso a educación de alta calidad de manera virtual y<br>didáctica.</label></a> 
+                </div>
+            </div>
+            <div class="col-lg-3">
+                
+            </div>
+        </div>   
         <div class="row">
-            <div class="col-lg-6">
+            <div class="col-lg-12">
                 <div>
                     <img src="../assets/img/home12.png" alt="">
                 </div>
@@ -107,19 +168,19 @@
         <div class="row centrado fondo-gris-form">
             <div class="col-lg-6">
                 <div class="text-center margin-b">
-                    <label style="font-size: 48px; font-family: Nunito;">INSCRÍBETE</label>
+                    <label class="text-inscribete">INSCRÍBETE</label>
                     <p class="line-yellow-form2"></p>
                 </div>
                 <div class="text-center margin-b">
-                    <label style="font-size: 36px; font-family: Nunito;">inscripciones@liv4t.com</label>
+                    <label class="text-correo">inscripciones@liv4t.com</label>
                 </div>
                 <div class="text-center margin-b">
-                    <a href=""><i class="fab fa-facebook" style="font-size: 50px; color: black;"></i></a>
-                    <a href=""><i class="fab fa-instagram" style="font-size: 50px; color: black;"></i></a>
+                    <a href="https://www.facebook.com/liv4tskool" target="_blank"><i class="fab fa-facebook" style="font-size: 50px; color: black;"></i></a>
+                    <a href="https://www.instagram.com/liv4tskool/?hl=es-la" target="_blank"><i class="fab fa-instagram" style="font-size: 50px; color: black;"></i></a>
                 </div>
             </div>
              <div class="col-lg-6">
-                <form v-on:submit.prevent="createContact">
+                <form v-on:submit.prevent="createSignUp">
                     <div class="form-group">
                         <input type="text" class="form-control" name="name" id="name" v-model="name" placeholder="Nombre Completo" required>
                     </div>
@@ -146,18 +207,18 @@
         </div>
         <div class="text-center">
             <div>
-                <label class="margin-b" style="font-size: 48px; font-weight:900; font-family: Nunito;">Recibe todas las novedades de nuestra comunidad</label>
+                <label class="margin-b text-recibe">Recibe todas las novedades de nuestra comunidad</label>
             </div>
             <div>
                 <form v-on:submit.prevent="suscribe">
                     <div class="row centrado2">
                         <div class="col-lg-8">
-                            <input type="text" class="form-control" v-model="email_novedades" placeholder="Ingresa tu e-mail">
+                            <input type="text" class="form-control margin-b" v-model="email_novedades" placeholder="Ingresa tu e-mail">
                         </div>
                         <div class="col-lg-3" style="text-align: left;">
                             <button type="submit" class="btn btn-primary btn-form2">INGRESAR</button>
                         </div>
-                        <div class="form-check" style="margin-left: 25px;">
+                        <div class="form-check margin-check">
                             <input class="form-check-input" type="checkbox" id="gridCheck" required>
                             <label class="form-check-label text-terms" for="gridCheck">
                                 Acepto Políticas de datos y términos y condiciones
@@ -180,11 +241,37 @@ export default {
             email: "",
             phone: "",
             email_novedades: "",
+            message: ""
         };
     },
     computed: {},
     methods: {
-        
+        getHome() {
+            window.location = "/";
+        },
+        suscribe(){
+            var url="suscribe";
+            axios.post(url,{email: this.email_novedades})
+            .then((response) => {
+              this.getHome();
+              toastr.success("Contacto Guardado con Exito");
+            })
+            .catch((error) => {});
+        },
+        createSignUp(){
+            var url="createSignUp";
+            axios.post(url,{
+                name: this.name,
+                email: this.email,
+                phone: this.phone,
+                message: this.message
+            })
+            .then((response) => {
+              this.getHome();
+              toastr.success("Contacto Guardado con Exito");
+            })
+            .catch((error) => {});
+        },
     }
 };
 </script>
@@ -225,24 +312,40 @@ export default {
     height: 230px;
 }
 .img-dim{
-    width: 800px;
-    height: 600px !important;
+    background-repeat: no-repeat;
+    height: 240px !important;
+    background-size: 100% 100%;
+    width: 100%;
+    margin-left: 20px;
+    position: relative;
+    margin-top: 20px;
+    margin-bottom: 1rem;
+    z-index: -1;
+}
+.text-img-dim{
+    font-size: 78px;
+    margin-left: 20px;
+    position: relative;
+    margin-left: 80px;
+    margin-bottom: 1rem;
+    top: -150px;
+    font-family: 'Nunito';
 }
 .img-pos{
-   background-image: url("../assets/img/home5.png");
+   background-image: url("../assets/img/home18.png");
     background-repeat: no-repeat;
     background-size: cover;
     position: absolute;
-    height: 450px;
+    height: 520px;
     top: 105px;
-    left: -295px;
+    left: -190px;
     max-width: 950px;
     width: 950px;
 }
 .text-img-pos{
-    top: 100px;
+    top: 150px;
     position: absolute;
-    padding: 70px 60px 70px 225px;
+    padding: 70px 100px 70px 120px;
     font-size: 28px;
     text-align: justify;
     font-family: Nunito;
@@ -271,9 +374,21 @@ export default {
 .img-virtualiza{
     height: 110px !important;
 }
+.img-docente{
+    height: 90px !important;
+}
 .text-virtualiza{
     color: black;
     font-size: 30px !important;
+    text-decoration: none !important;
+    font-family: Nunito;
+}
+.img-roles{
+    height: 250px;
+}
+.text-roles{
+    color: black;
+    font-size: 20px !important;
     text-decoration: none !important;
     font-family: Nunito;
 }
@@ -305,6 +420,9 @@ export default {
     width: 90%;
     padding: 20px 20px 20px 70px;
 }
+.container-top{
+    padding-top:100px;
+}
 .line-yellow-form{
     border-bottom: 7px solid rgb(248, 207, 26);
     max-width: 380px;
@@ -331,6 +449,9 @@ export default {
 .margin-b{
     margin-bottom: 2rem;
 }
+.margin-estudiante{
+    margin-bottom: 4rem;
+}
 .btn-form{
     left: 35%;
     font-size: 40px;
@@ -355,6 +476,259 @@ export default {
     border-radius: 10px;
     height: 35px;
     font-family: Nunito;
+}
+.fondo6{
+    background-image: url("../assets/img/home33.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 370px;
+    margin-bottom: 3rem;
+}
+.position-a{
+    position: absolute;
+    top: -50px;
+}
+.margin-role{
+    margin-top: 65px;
+}
+.fondo7{
+    background-image: url("../assets/img/home30.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 370px;
+    margin-bottom: 3rem;
+}
+.text-inscribete{
+    font-size: 48px;
+    font-family: Nunito;
+}
+.text-correo{
+    font-size: 36px; 
+    font-family: Nunito;
+}
+.text-recibe{
+    font-size: 48px;
+    font-weight: 900;
+    font-family: Nunito;
+}
+.margin-check{
+    margin-left: 25px;
+}
+
+@media (max-width: 600px) {
+    .logo-liv4t{
+        height: 100px;
+        width: 120px;
+        position: relative;
+    }
+    .navbar a{
+        padding: 14px 4px !important;
+    }
+    .color-nav {
+        font-size: 14px !important;
+    }
+    .flex-nav{
+        flex-direction: row !important;
+    }
+    .margin-logo{
+        margin-right: 0 !important;
+    }
+    .fondo1{
+        background-repeat: no-repeat;
+        height: 240px;
+        background-size: 100% 100%;
+        width: 100%;
+        position: relative;
+        margin-top: 20px;
+        margin-bottom: 1rem;
+    }
+    .fondo2{
+        background-image: url("../assets/img/home2.png");
+        background-repeat: no-repeat;
+        height: 315px;
+        background-size: 100% 100%;
+        width: 100%;
+        position: relative;
+        margin-bottom: 4rem;
+    }
+    .img-dim {
+        width: 200px;
+        height: 150px !important;
+        float: right;
+        position: relative;
+    }
+    .esquina{
+        margin-top: -300px;
+        margin-left: 35px;
+        z-index: -1;
+    }
+    .img-pos {
+        background-image: url("../assets/img/home18.png");
+        background-repeat: no-repeat;
+        background-size: contain;
+        position: absolute;
+        height: 210px;
+        top: 85px;
+        left: 20px;
+        width: 350px;
+    }
+    .text-img-dim {
+        font-size: 52px;
+        margin-left: 20px;
+        position: relative;
+        margin-left: 185px;
+        margin-bottom: 1rem;
+        top: -100px;
+        font-family: 'Nunito';
+    }
+    .text-img-pos {
+        top: -15px;
+        position: absolute;
+        padding: 80px 36px 0px 45px;
+        font-size: 12px;
+        text-align: justify;
+        font-family: Nunito;
+        line-height: 16px;
+        font-weight: 400;
+    }
+    .logo-liv4t-old {
+        height: 70px !important;
+        margin-left: 45px;
+        top: -65px;
+        position: absolute;
+    }
+    .fondo3 {
+        background-image: url("../assets/img/home21.png");
+        background-repeat: no-repeat;
+        height: 220px;
+        background-size: 100% 100%;
+        width: 100%;
+        position: relative;
+        margin-top: 55px;
+    }
+    .text-fondo3 {
+        font-weight: 900;
+        font-size: 14px;
+        font-family: Nunito;
+        margin-left: 0px;
+        padding-top: 7px;
+        margin-bottom: -2.5rem;
+    }
+    .fondo4{
+        background-repeat: no-repeat;
+        background-size: 100%;
+        height: 200px;
+    }
+    .container-top{
+        padding-top:0;
+        margin-left: -22px !important;
+        padding-left: 0;
+    }
+    .text-virtualiza{
+        font-size: 12px !important;
+        margin-left: -5px;
+    }
+    .img-virtualiza {
+        height: 40px !important;
+    }
+    .img-roles{
+        height: 150px;
+        margin-left: -25px;
+    }
+    .fondo5{
+        background-image: url("../assets/img/home13.png");
+        background-repeat: no-repeat;
+        height: 240px;
+        background-size: 100% 100%;
+        width: 100%;
+        position: relative;
+        margin-top: 0;
+        margin-bottom: 3rem;
+    }
+    .fondo6{
+        background-image: url("../assets/img/home33.png");
+        background-repeat: no-repeat;
+        height: 240px;
+        background-size: 100% 100%;
+        width: 100%;
+        margin-left: 20px;
+        position: relative;
+        margin-top: 20px;
+        margin-bottom: 1rem;
+    }
+    .margin-role {
+        margin-top: 20px;
+    }
+    .text-roles{
+        font-size: 12px !important;
+    }
+    .position-a{
+        height: 90px !important;
+    }
+    .img-docente {
+        height: 40px !important;
+    }
+    .margin-estudiante{
+        margin-bottom: 1rem;
+    }
+    .fondo7{
+        background-size: 100% 100%;
+        margin-bottom: 0;
+    }
+    .text-porque {
+        font-size: 14px !important;
+        line-height: 18px;
+        padding: 0px 25px 0px 30px;
+    }
+    .form-tittle-text {
+        font-size: 30px;
+    }
+    .line-yellow-form {
+        border-bottom: 5px solid rgb(248, 207, 26);
+        max-width: 280px;
+    }
+    .text-inscribete{
+        font-size: 28px;
+        font-family: Nunito;
+    }
+    .text-correo{
+        font-size: 22px; 
+        font-family: Nunito;
+    }
+    .centrado {
+        margin-left: auto;
+        margin-right: auto;
+        width: 85%;
+        padding: 30px;
+    }
+    .btn-form{
+        font-size: 22px;
+    }
+    .text-recibe{
+        font-size: 28px;
+        font-weight: 900;
+        font-family: Nunito;
+    }
+    .margin-b {
+        margin-bottom: 0.5rem;
+    }
+    .line-yellow-form2 {
+        max-width: 145px;
+    }
+    .centrado2 {
+        padding: 10px 10px 10px 10px;
+    }
+    .text-terms {
+        font-size: 11px;
+    }
+    .btn-form2 {
+        font-size: 16px;
+        height: 26px;
+    }
+    .margin-check{
+        margin-left: 25px;
+        margin-bottom: 120px;
+    }
 }
 
 </style>

@@ -76,4 +76,15 @@ footer .footer-icon{
     font-size: 20px;
     color: #97ACAC;
 }
+@media (max-width: 600px) {
+    .footer-color {
+        bottom: 0;
+        width: 100%;
+        position: absolute;
+        height: 160px;
+        padding-top: 20px;
+        background-color: rgb(21, 185, 185);
+        margin: 0px auto;
+    }
+}
 </style>

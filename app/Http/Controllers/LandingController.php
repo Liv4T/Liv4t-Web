@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\LandingContact; 
+use App\ContactHome;
+use App\SignUp;
 use Illuminate\Support\Facades\Mail;
 
 class LandingController extends Controller
@@ -40,4 +42,48 @@ class LandingController extends Controller
             return view("landing", ["saved" => true]);
         }
     }
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function suscribe(Request $request){
+
+        $contact = new contactHome;
+        
+        $contact->email = $request->email;
+        $contact->save();
+
+        return 'ok';
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function signUp(Request $request)
+    {
+        //
+        $contact = new SignUp;
+
+        $contact->name = $request->name;
+        $contact->email = $request->email;
+        $contact->phone = $request->phone;
+        $contact->message = $request->message;
+        $contact->save();
+
+        if ($contact->save()) {
+            $email_to = $request->email;
+
+            Mail::send('emails.signUp', ["name" => $request->name, "email" => $request->email, "phone" => $request->phone, "message" => $request->message], function ($message) use ($email_to) {
+                $message->to('inscripciones@liv4t.com', 'Liv4T Inscripciones');
+                $message->subject('Inscripción');
+            });
+            return view("/", ["saved" => true]);
+        }
+    }
+
 }

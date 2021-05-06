@@ -404,6 +404,8 @@ Route::resource('course_unit', 'Course_unitController', ['except' => 'show', 'cr
 Route::get('/home', 'HomeController@index')->name('home');
 Route::post('/SaveTerms', 'HomeController@UserTerms')->name('SaveTerms');
 Route::get('/getTerms', 'HomeController@getUserTerms')->name('getTerms');
+Route::post('/suscribe', 'LandingController@suscribe')->name('suscribe');
+Route::post('/createSignUp', 'LandingController@signUp')->name('createSignUp');
 
 //Almacenar las notas
 Route::post('saveIndicator', 'ScoreController@saveIndicator')->name('saveIndicator');
