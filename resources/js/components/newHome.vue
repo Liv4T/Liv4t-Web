@@ -147,15 +147,13 @@
             </div>
         </div>   
         <div class="row">
-            <div class="col-lg-12">
-                <div>
-                    <img src="../assets/img/home12.png" alt="">
-                </div>
-                <div>
-                    <p class="text-porque">Liv4T Skool da roles diversos que le permitirán evaluar, analizar y llevar un adecuado seguimiento de docentes y estudiantes, permitiendo el analisis de procesos, cotenidos, actividades y rendiiento.</p>
+            <div>
+                <img src="../assets/img/home12.png" alt="">
+            </div>
+            <div class="col-lg-6">
+                    <p class="text-porque">Liv4T Skool da roles diversos que le permitirán evaluar, analizar y llevar un adecuado seguimiento de docentes y estudiantes, permitiendo el analisis de procesos, cotenidos, actividades y rendimiento.</p>
                     <p class="text-porque">Permite comunicación constante a través de chat o correos electrónicos en los diferentes estamentos de la institución.</p>
                     <p class="text-porque">Articula los aspectos administrativos del colegio en función de los aprendizajes de los estudiantes.</p>
-                </div>
             </div>
             <div class="col-lg-6">
                 <img src="../assets/img/home11.png" alt="">
