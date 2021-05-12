@@ -6,7 +6,11 @@
     @endif
 
     @if(Auth::user()->isNurse())
-        <menu-school></menu-school>
+        <new-menu-scholgov></new-menu-scholgov>
+    @endif
+
+    @if(Auth::user()->isSchoolGovernment())
+        <new-menu-scholgov></new-menu-scholgov>
     @endif
 <government-members-component :user="{{Auth::user()}}"></government-members-component>
 <div class="container">

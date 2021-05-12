@@ -7,7 +7,7 @@
         <inicio-component></inicio-component>
     @endif
  @if(Auth::user()->type_user == '6')
-    <menu-school></menu-school>
+    <!-- <new-menu-scholgov></new-menu-scholgov> -->
     <inicio-component></inicio-component>
   @endif
   <perfil-docente></perfil-docente>

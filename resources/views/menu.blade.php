@@ -21,7 +21,7 @@
 @endif
 
 @if(Auth::user()->isSchoolGovernment())
-<menu-school></menu-school>
+<new-menu-scholgov></new-menu-scholgov>
 @endif
 
 @if(Auth::user()->isTutor())

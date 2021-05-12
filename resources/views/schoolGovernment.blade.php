@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<menu-school></menu-school>
+<new-menu-scholgov></new-menu-scholgov>
 <school-government-component></school-government-component>
 <div class="container">
     <div class="row justify-content-center">

@@ -259,7 +259,8 @@ Vue.component("modal-edit-observer-component", () => import("./components/ModalE
 Vue.component("modal-view-observer-component", () => import("./components/ModalViewObserver.vue"));
 
 // SchoolGovernment
-Vue.component("menu-school", () =>import("./components/menuSchoolGov.vue"));
+Vue.component("new-menu-scholgov", () =>import("./components/menuSchoolGov.vue"));
+Vue.component("new-menu-scholgov", ()=>import("./components/newMenuSchoolGov.vue"));
 Vue.component("school-government-component", () =>import("./components/SchoolGov.vue"));
 Vue.component("modal-school-component", () =>import("./components/ModalSchoolGov.vue"));
 Vue.component("legislation-component", () =>import("./components/legislation.vue"));

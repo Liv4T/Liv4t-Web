@@ -2,7 +2,7 @@
 
 @section('content')
 @if (Auth::user()->type_user == '6')
-    <menu-school></menu-school>
+    <new-menu-scholgov></new-menu-scholgov>
 @endif
 <reports-government></reports-government>
 <div class="container">
