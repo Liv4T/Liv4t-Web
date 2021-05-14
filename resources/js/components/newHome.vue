@@ -45,43 +45,43 @@
                 <img class="escuadra" src="../assets/img/home24.png" alt="">
             </div>
             <div>
-                <label class="text-fondo3">Roles para Estudiantes, Docentes, Administrativos y Padres de Familia</label>
+                <label class="text-fondo3">Roles para estudiantes, docentes, administrativos y padres de familia</label>
             </div>
             <div>
-                <label class="text-fondo3">Módulo Psicología</label>
+                <label class="text-fondo3">Módulo psicología</label>
             </div>
             <div>
-                <label class="text-fondo3">Módulo de Gobierno Escolar</label>
+                <label class="text-fondo3">Módulo de gobierno escolar</label>
             </div>
             <div>
-                <label class="text-fondo3">Reportes Personalizados</label>
+                <label class="text-fondo3">Reportes personalizados</label>
             </div>
             <div>
-                <label class="text-fondo3">Banco de Contenidos y Recursos Pedagógicos</label>
+                <label class="text-fondo3">Banco de contenidos y recursos pedagógicos</label>
             </div>
             <div>
-                <label class="text-fondo3">Módulo de Electivas</label>
+                <label class="text-fondo3">Módulo de electivas</label>
             </div>
             <div>
-                <label class="text-fondo3">Módulo de Tutorías</label>
+                <label class="text-fondo3">Módulo de tutorías</label>
             </div>
         </div>
         <div class="col fondo4">
             <div class="container container-top">
                 <div>
-                    <a><img class="img-virtualiza" src="../assets/img/home7.1.png" alt=""><label class="text-virtualiza">Planeación Académica</label></a>
+                    <a><img class="img-virtualiza" src="../assets/img/home7.1.png" alt=""><label class="text-virtualiza">Planeación académica</label></a>
                 </div>
                 <div>
-                    <a><img class="img-virtualiza" src="../assets/img/home7.2.png" alt=""><label class="text-virtualiza">Gestión Administrativa</label></a>
+                    <a><img class="img-virtualiza" src="../assets/img/home7.2.png" alt=""><label class="text-virtualiza">Gestión administrativa</label></a>
                 </div>
                 <div>
-                    <a><img class="img-virtualiza" src="../assets/img/home7.3.png" alt=""><label class="text-virtualiza">Comunicación Instantanea y Segura</label></a>
+                    <a><img class="img-virtualiza" src="../assets/img/home7.3.png" alt=""><label class="text-virtualiza">Comunicación instantanea y segura</label></a>
                 </div>
                 <div>
-                    <a><img class="img-virtualiza" src="../assets/img/home7.4.png" alt=""><label class="text-virtualiza">Apoyo a la Formación Integral</label></a>
+                    <a><img class="img-virtualiza" src="../assets/img/home7.4.png" alt=""><label class="text-virtualiza">Apoyo a la formación integral</label></a>
                 </div>
                 <div>
-                    <a><img class="img-virtualiza" src="../assets/img/home7.5.png" alt=""><label class="text-virtualiza">Enseñanza Sincrónica y Asincrónica</label></a>
+                    <a><img class="img-virtualiza" src="../assets/img/home7.5.png" alt=""><label class="text-virtualiza">Enseñanza sincrónica y asincrónica</label></a>
                 </div>
             </div>
         </div>
@@ -94,13 +94,16 @@
                     <img class="position-a" src="../assets/img/home39.png">
                 </div>
                 <div class="margin-role">
-                   <a class="text-roles"><img class="img-virtualiza" src="../assets/img/home34.png" alt=""><label><b>Gestión y acceso a reportes personalizados:</b> <br>Alumnos y docentes.</label></a> 
+                   <a class="text-roles"><img class="img-docente" src="../assets/img/home34.png" alt=""><label><b>Gestiona diferentes sedes bajo un mismo usuario</b></label></a> 
                 </div>
                 <div>
-                   <a class="text-roles"><img class="img-virtualiza" style="margin-top: -85px;" src="../assets/img/home35.png" alt=""><label><b>Cumplimiento con Requerimientos de Ley:</b><br><b>Proyectos transversales, lineamientos, observadores</b><br><b>de los estudiantes, gobierno escolar entre otros para</b><br><b>la administración escolar.</b></label></a> 
+                   <a class="text-roles"><img class="img-docente" style="margin-top: -60px;" src="../assets/img/home35.png" alt=""><label><b>Gestión y acceso a reportes personalizados:</b> permitiendo<br>cruce de información para tomar decisiones. Los reportes<br>se generan de acuerdo a las necesidades de la institución.</label></a> 
                 </div>
                 <div>
-                   <a class="text-roles"><img class="img-virtualiza" style="margin-top: -20px;" src="../assets/img/home36.png" alt=""><label><b>Información actualizada de docentes, alumnos,</b><br><b>exalumnos y directivos.</b></label></a> 
+                   <a class="text-roles"><img class="img-docente" style="margin-top: -40px;" src="../assets/img/home36.png" alt=""><label>Es una plataforma, pensada para el contexto<br> escolar/universitario, con elementos que permiten<br> cumplir los requerimientos de ley, todo en un solo lugar.</label></a> 
+                </div>
+                <div>
+                   <a class="text-roles"><img class="img-docente" style="margin-top: -25px;" src="../assets/img/home37.png" alt=""><label>Posibilita asignar roles para las diferentes tareas a realizar.</label></a> 
                 </div>
             </div>
             <div class="col-lg-6 fondo6">
@@ -114,11 +117,12 @@
                    <a class="text-roles"><img class="img-docente" style="margin-top: -60px;" src="../assets/img/home35.png" alt=""><label>Comunicación sincrónica y asincrónica vía chat, foro y<br>mensajería con toda la comunidad: Estudiantes,<br>docentes, padres y directivos.</label></a> 
                 </div>
                 <div>
-                   <a class="text-roles"><img class="img-docente" style="margin-top: -10px;" src="../assets/img/home36.png" alt=""><label>Calificaciones de manera automática.</label></a> 
+                   <a class="text-roles"><img class="img-docente" style="margin-top: -40px;" src="../assets/img/home36.png" alt=""><label>Módulo de evaluaciones con banco de preguntas y<br> estadísticas de intentos, actualización automática<br> de notas en el sistema.*</label></a> 
                 </div>
                 <div>
                    <a class="text-roles"><img class="img-docente" style="margin-top: -25px;" src="../assets/img/home37.png" alt=""><label>Repositorio de información con clases grabadas,<br>actividades y recursos.</label></a> 
                 </div>
+                <div class="div-junio"><label class="position-junio">*A partir de junio 2021</label></div>
             </div>
         </div>
         <div class="row fondo7">
@@ -130,10 +134,10 @@
                     <img class="position-a" src="../assets/img/home32.png">
                 </div>
                 <div class="margin-role">
-                <a class="text-roles"><img class="img-docente" style="margin-top: -30px;" src="../assets/img/home34.png" alt=""><label>Autogestión del aprendizaje mediante el acceso<br>permanente a actividades realizadas previamente, sin<br>internet y de forma remota.</label></a> 
+                <a class="text-roles"><img class="img-docente" style="margin-top: -30px;" src="../assets/img/home34.png" alt=""><label>Autogestión del aprendizaje mediante el acceso<br>permanente a actividades, con o sin internet<br>y de forma remota</label></a> 
                 </div>
                 <div>
-                <a class="text-roles"><img class="img-docente" style="margin-top: -20px;" src="../assets/img/home35.png" alt=""><label>Desarrollo de la creatividad y los talentos personales.</label></a> 
+                <a class="text-roles"><img class="img-docente" style="margin-top: -20px;" src="../assets/img/home35.png" alt=""><label>Promueve el desarrollo de la creatividad y los<br> talentos personales.</label></a> 
                 </div>
                 <div>
                 <a class="text-roles"><img class="img-docente" style="margin-top: -40px;" src="../assets/img/home36.png" alt=""><label>Interacción con otros miembros de la comunidad escolar: <br>Compañeros, docentes, personal administrativo y <br>acompañamiento psicológico.</label></a> 
@@ -485,8 +489,11 @@ export default {
     background-image: url("../assets/img/home33.png");
     background-repeat: no-repeat;
     background-size: cover;
-    height: 370px;
+    height: 392px;
     margin-bottom: 3rem;
+}
+.position-junio{
+    padding-left: 440px;
 }
 .position-a{
     position: absolute;
@@ -661,13 +668,20 @@ export default {
     .fondo6{
         background-image: url("../assets/img/home33.png");
         background-repeat: no-repeat;
-        height: 265px;
+        height: 280px;
         background-size: 100% 100%;
         width: 100%;
         margin-left: 20px;
         position: relative;
         margin-top: 20px;
         margin-bottom: 1rem;
+    }
+    .position-junio{
+        padding-left: 160px;
+    }
+    .div-junio{
+        margin-top: -20px;
+        font-size: 12px;
     }
     .margin-role {
         margin-top: 20px;

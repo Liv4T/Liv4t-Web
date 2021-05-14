@@ -45,6 +45,7 @@ Vue.component("draw-c", require("./components/draw.vue").default);
 Vue.component("newhome", require("./components/newHome.vue").default);
 Vue.component("footer-home",()=>import("./components/footerHome.vue"));
 Vue.component("board", require("./components/board.vue").default);
+Vue.component("equations", require("./components/equations.vue").default);
 Vue.component("footers", require("./components/footer.vue").default);
 Vue.component("unit-class", require("./components/unitComponent.vue").default);
 Vue.component("free-component", require("./components/freeComponent.vue").default);
