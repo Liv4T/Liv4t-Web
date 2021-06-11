@@ -654,7 +654,7 @@ Route::middleware('auth')->get('/student/lectives/courses', function () {
 Route::middleware('auth')->get('/student/lectives/activities', function () {
     return view('lectivesStudentActivities');
 });
-
+ 
 
 
 // CLASES

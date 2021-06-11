@@ -166,8 +166,9 @@ Vue.component("activity-relationship", ()=>import("./components/activityRelation
 
 Vue.component("activity-student-play-component", ()=>import("./components/activityStudentPlayComponent.vue"));
 Vue.component("editor-component", () => import("./components/editorComponent.vue"));
+Vue.component("equation-component", () => import("./components/equationComponent.vue"));
 Vue.component("process-ribbon-component", () =>   import("./components/processRibbonComponent.vue"));
-
+ 
 Vue.component("lectives-adm", () => import ("./components/lectivesAdmComponent.vue"));
 Vue.component("lectives-adm-assing-teacher", () => import ("./components/lectivesAdmAssingTeacherComponent.vue"));
 Vue.component("lectives-student-activities", () => import ("./components/lectivesStudentActivitiesComponent.vue"));

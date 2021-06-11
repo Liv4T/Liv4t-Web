@@ -19,7 +19,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["content", "customtoolbar", "readonly"],
+  props: ["content", "customtoolbar", "readonly", "type"],
   components: {
     VueEditor: vue2_editor__WEBPACK_IMPORTED_MODULE_0__["VueEditor"]
   },

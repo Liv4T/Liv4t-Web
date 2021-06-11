@@ -30,10 +30,11 @@
                                         </select>
                                         </div>
                                     </div>
-                                    <editor-component :content="question.question" @updateText="SetQuestionEvent($event,k_q)" v-bind:readonly="disabled"></editor-component>
+                                    <editor-component v-if="question.type_question!='EQUATION'" :content="question.question" :type="question.type_question" @updateText="SetQuestionEvent($event,k_q)" v-bind:readonly="disabled"></editor-component>
+                                    <equation-component v-if="question.type_question=='EQUATION'" :content="question.question" @updateText="SetQuestionEvent($event,k_q)"></equation-component>
                                 </div>
                             </div>
-                            <template v-if="question.type_question!='OPEN_RTA'">
+                            <template v-if="question.type_question=='SIMPLE_RTA'">
                                 <div class="row"  v-for="(option, k_op) in question.options" v-bind:key="k_op">
                                     <div class="col-11 text-left">
                                         <input type="text" class="form-control" :placeholder="'Opción '+(k_op+1)" v-model="option.content" v-bind:readonly="disabled"/>
@@ -44,7 +45,7 @@
                                     </div>
                                 </div>
                             </template>
-                            <div class="row" v-if="question.type_question!='OPEN_RTA'">
+                            <div class="row" v-if="question.type_question=='SIMPLE_RTA'">
                                 <div class="col-12">
                                     <label for="question"><span class="required" >*</span>Respuesta correcta:</label>
                                     <select class="form-control"  v-model="question.valid_answer_index" v-bind:readonly="disabled">
@@ -73,12 +74,13 @@
                                             <button class="btn btn-warning" alt="Remover pregunta" v-if="(k_q)>0 && !disabled" @click.prevent="RemoveQuestionEvent(k_q)" >Remover pregunta</button>
                                         </div>
                                     </div>
-                                    <div class="question_container" v-html="question.question">
+                                    <div v-if="question.type_question!='EQUATION'" class="question_container" v-html="question.question">
 
                                     </div>
+                                    <equation-component v-if="question.type_question=='EQUATION'" :content="question.question"></equation-component>
                                 </div>
                             </div>
-                            <template v-if="question.type_question!='OPEN_RTA'">
+                            <template v-if="question.type_question=='SIMPLE_RTA'">
                                 <div class="row"  v-for="(option, k_op) in question.options" v-bind:key="k_op">
                                     <div class="col-12 text-left">
                                         <button class="q-option" :disabled="disabled" @click="SelectOptionEvent(k_q,k_op)"    v-bind:class="{'q-option-checked':question.response==k_op}">{{option.content}} <i  class="fa fa-check" v-if="k_op==question.valid_answer_index && disabled"></i></button>
@@ -90,6 +92,14 @@
                                      <div class="col-12">
                                          <editor-component :content="question.response" @updateText="SetResponseEvent($event,k_q)" v-bind:readonly="disabled" ></editor-component>
                                      </div>
+                                </div>
+                            </template>
+                            <template v-if="question.type_question=='EQUATION'">
+                                <div class="row" >
+                                    <div v-if="question.type_question=='EQUATION'">Respuesta</div>
+                                    <div class="col-12">
+                                        <equation-component :content="question.response" @updateText="SetResponseEvent($event,k_q)" v-bind:readonly="disabled" ></equation-component>
+                                    </div>
                                 </div>
                             </template>
                             <div class="row " v-if="disabled">
@@ -114,7 +124,9 @@ export default {
             question_types:[
                 {label:'RESPUESTA ÚNICA',id:'SIMPLE_RTA'},
                 {label:'RESPUESTA ABIERTA',id:'OPEN_RTA'},
-            ]
+                {label:'ECUACIÓN',id:'EQUATION'},
+            ],
+            formula: "",
         }
     },
     methods:{
@@ -144,6 +156,7 @@ export default {
         RemoveOptionOnQuestion(index_question,index)
         {
             this.module.questions[index_question].options.splice(index,1);
+            
         },
     /*
         uploadQuestionFile(file){
@@ -172,10 +185,9 @@ export default {
         },
 
         SetQuestionEvent(content,ix_question){
-
-           this.module.questions[ix_question].question=content;
-
-
+        
+            this.module.questions[ix_question].question=content;
+           
         },
         SetJustifyEvent(content,ix_question){
            this.module.questions[ix_question].justify=content;

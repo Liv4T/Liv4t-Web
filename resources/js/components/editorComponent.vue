@@ -7,8 +7,9 @@
 </template>
 <script>
 import { VueEditor } from "vue2-editor";
+
 export default {
-    props: ["content","customtoolbar","readonly"],
+    props: ["content","customtoolbar","readonly","type"],
     components: {
         VueEditor
     },

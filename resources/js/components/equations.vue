@@ -10,7 +10,7 @@
             v-model="formula1">
                 f(x)=
             </mathlive-mathfield>
-        </div>
+        </div> 
         <div>
             <mathlive-mathfield 
             id="mf" ref="mathfield"

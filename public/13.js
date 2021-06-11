@@ -117,6 +117,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['module', 'disabled', 'playing'],
   data: function data() {
@@ -127,7 +137,11 @@ __webpack_require__.r(__webpack_exports__);
       }, {
         label: 'RESPUESTA ABIERTA',
         id: 'OPEN_RTA'
-      }]
+      }, {
+        label: 'ECUACIÓN',
+        id: 'EQUATION'
+      }],
+      formula: ""
     };
   },
   methods: {
@@ -389,23 +403,37 @@ var render = function() {
                               ])
                             ]),
                             _vm._v(" "),
-                            _c("editor-component", {
-                              attrs: {
-                                content: question.question,
-                                readonly: _vm.disabled
-                              },
-                              on: {
-                                updateText: function($event) {
-                                  return _vm.SetQuestionEvent($event, k_q)
-                                }
-                              }
-                            })
+                            question.type_question != "EQUATION"
+                              ? _c("editor-component", {
+                                  attrs: {
+                                    content: question.question,
+                                    type: question.type_question,
+                                    readonly: _vm.disabled
+                                  },
+                                  on: {
+                                    updateText: function($event) {
+                                      return _vm.SetQuestionEvent($event, k_q)
+                                    }
+                                  }
+                                })
+                              : _vm._e(),
+                            _vm._v(" "),
+                            question.type_question == "EQUATION"
+                              ? _c("equation-component", {
+                                  attrs: { content: question.question },
+                                  on: {
+                                    updateText: function($event) {
+                                      return _vm.SetQuestionEvent($event, k_q)
+                                    }
+                                  }
+                                })
+                              : _vm._e()
                           ],
                           1
                         )
                       ]),
                       _vm._v(" "),
-                      question.type_question != "OPEN_RTA"
+                      question.type_question == "SIMPLE_RTA"
                         ? _vm._l(question.options, function(option, k_op) {
                             return _c(
                               "div",
@@ -492,7 +520,7 @@ var render = function() {
                           })
                         : _vm._e(),
                       _vm._v(" "),
-                      question.type_question != "OPEN_RTA"
+                      question.type_question == "SIMPLE_RTA"
                         ? _c("div", { staticClass: "row" }, [
                             _c("div", { staticClass: "col-12" }, [
                               _vm._m(2, true),
@@ -586,45 +614,62 @@ var render = function() {
                     { staticClass: "col-12" },
                     [
                       _c("div", { staticClass: "row" }, [
-                        _c("div", { staticClass: "col-12 text-left" }, [
-                          _c("div", { staticClass: "row" }, [
-                            _c("div", { staticClass: "col-7" }, [
-                              _c("label", [
-                                _c("span", { staticClass: "required" }, [
-                                  _vm._v("*")
-                                ]),
-                                _vm._v("Pregunta N° " + _vm._s(k_q + 1) + " :")
+                        _c(
+                          "div",
+                          { staticClass: "col-12 text-left" },
+                          [
+                            _c("div", { staticClass: "row" }, [
+                              _c("div", { staticClass: "col-7" }, [
+                                _c("label", [
+                                  _c("span", { staticClass: "required" }, [
+                                    _vm._v("*")
+                                  ]),
+                                  _vm._v(
+                                    "Pregunta N° " + _vm._s(k_q + 1) + " :"
+                                  )
+                                ])
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "col-5 text-right" }, [
+                                k_q > 0 && !_vm.disabled
+                                  ? _c(
+                                      "button",
+                                      {
+                                        staticClass: "btn btn-warning",
+                                        attrs: { alt: "Remover pregunta" },
+                                        on: {
+                                          click: function($event) {
+                                            $event.preventDefault()
+                                            return _vm.RemoveQuestionEvent(k_q)
+                                          }
+                                        }
+                                      },
+                                      [_vm._v("Remover pregunta")]
+                                    )
+                                  : _vm._e()
                               ])
                             ]),
                             _vm._v(" "),
-                            _c("div", { staticClass: "col-5 text-right" }, [
-                              k_q > 0 && !_vm.disabled
-                                ? _c(
-                                    "button",
-                                    {
-                                      staticClass: "btn btn-warning",
-                                      attrs: { alt: "Remover pregunta" },
-                                      on: {
-                                        click: function($event) {
-                                          $event.preventDefault()
-                                          return _vm.RemoveQuestionEvent(k_q)
-                                        }
-                                      }
-                                    },
-                                    [_vm._v("Remover pregunta")]
-                                  )
-                                : _vm._e()
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("div", {
-                            staticClass: "question_container",
-                            domProps: { innerHTML: _vm._s(question.question) }
-                          })
-                        ])
+                            question.type_question != "EQUATION"
+                              ? _c("div", {
+                                  staticClass: "question_container",
+                                  domProps: {
+                                    innerHTML: _vm._s(question.question)
+                                  }
+                                })
+                              : _vm._e(),
+                            _vm._v(" "),
+                            question.type_question == "EQUATION"
+                              ? _c("equation-component", {
+                                  attrs: { content: question.question }
+                                })
+                              : _vm._e()
+                          ],
+                          1
+                        )
                       ]),
                       _vm._v(" "),
-                      question.type_question != "OPEN_RTA"
+                      question.type_question == "SIMPLE_RTA"
                         ? _vm._l(question.options, function(option, k_op) {
                             return _c(
                               "div",
@@ -673,6 +718,35 @@ var render = function() {
                                 { staticClass: "col-12" },
                                 [
                                   _c("editor-component", {
+                                    attrs: {
+                                      content: question.response,
+                                      readonly: _vm.disabled
+                                    },
+                                    on: {
+                                      updateText: function($event) {
+                                        return _vm.SetResponseEvent($event, k_q)
+                                      }
+                                    }
+                                  })
+                                ],
+                                1
+                              )
+                            ])
+                          ]
+                        : _vm._e(),
+                      _vm._v(" "),
+                      question.type_question == "EQUATION"
+                        ? [
+                            _c("div", { staticClass: "row" }, [
+                              question.type_question == "EQUATION"
+                                ? _c("div", [_vm._v("Respuesta")])
+                                : _vm._e(),
+                              _vm._v(" "),
+                              _c(
+                                "div",
+                                { staticClass: "col-12" },
+                                [
+                                  _c("equation-component", {
                                     attrs: {
                                       content: question.response,
                                       readonly: _vm.disabled
