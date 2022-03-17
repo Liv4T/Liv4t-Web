@@ -1264,7 +1264,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("label", [
       _c("span", { staticClass: "required" }, [_vm._v("*")]),
-      _vm._v("Planificación Para :")
+      _vm._v("Planificación Anual Para :")
     ])
   },
   function() {

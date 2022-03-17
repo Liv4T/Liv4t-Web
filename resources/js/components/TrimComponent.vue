@@ -24,23 +24,23 @@
             <div class="row">
                 <div class="col-md-12 mx-auto">
                     <div class="custom-card text-center">
-                        <h3 class="card-header fondo">Planificación Trimestral</h3>                        
+                        <h3 class="card-header fondo">Planificación Trimestral</h3>
                         <span class="classroom-label">{{fillC.classroom_name}}</span>
                         <span v-show="!isSynchronized">(Hay cambios que no han sido guardados)</span>
                         <div class="row">
                             <div class="col-12 mt-2">
                                 <label><span class="required">*</span>Planificación Para :</label><br>
-                                
+
                                     <input type="checkbox" id="students" name="students" v-model="activityForAllStudents">
                                     <label for="piar" class="mr-3"> Todos los Estudiantes</label>
 
                                     <input v-show="piarStudents.length > 0" type="checkbox" id="piar" name="students" v-model="activityForPIARStudents">
                                     <label v-if="piarStudents.length == 0" for="piar" class="mr-3"> No se encuentran Estudiantes PIAR</label>
                                     <label v-else for="piar" class="mr-3"> Estudiantes PIAR</label>
-                                    
+
                                     <input type="checkbox" id="specific" name="students" v-model="activityForSelectStudents">
                                     <label for="specific"> Estudiantes en Especifico</label>
-                                
+
                                 <div v-if="(activityForPIARStudents == true && piarStudents.length > 0) || activityForSelectStudents == true">
                                     <label>Selecciona Los estudiantes</label>
                                     <multiselect v-model="saveStudent" :options="selectedStudentsData" :multiple="true"
@@ -63,7 +63,7 @@
                             <form-wizard
                                 title
                                 subtitle
-                                color="#ffc107"                                
+                                color="#ffc107"
                                 finish-button-text="Guardar y enviar"
                                 @on-complete="createCourses"
                             >
@@ -72,7 +72,7 @@
                                     role="status"
                                     aria-hidden="true"
                                     v-if="isLoading"
-                                ></span>                                
+                                ></span>
 
                                 <tab-content title="Trimestral">
                                     <div class="form-group row mx-auto" v-for="(input, t) in inputs" :key="t">
@@ -84,7 +84,7 @@
                                             </select>
                                         </div>
                                         <div class="col-md-6">
-                                            <label for="name">Logro</label>
+                                            <label for="name">Logro Anual</label>
                                             <span>
                                             <a
                                                 href="#"
@@ -103,7 +103,7 @@
                                                     class="btn btn-primary"
                                                     @click.prevent="modalDelete(input.id_quaterly, input.logro)"
                                                     v-show="(t > 0)"
-                                                >Eliminar</a>                                            
+                                                >Eliminar</a>
                                             </span>
                                             <div>
                                                 <input
@@ -126,12 +126,12 @@
                                                 @click.prevent="removeI(t)"
                                                 v-show="k != 0 && k == input.inputCl.length - 1 "
                                             >-</a>
-                                            <a 
+                                            <a
                                                 href="#"
                                                 class="badge badge-primary"
                                                 @click.prevent="addI(t)"
                                                 v-show="k == input.inputCl.length - 1"
-                                            >+</a>                                            
+                                            >+</a>
                                             </span>
                                             <div>
                                                 <input
@@ -164,7 +164,7 @@
                                     </div>-->
 
                                     <a v-show="(activityForPIARStudents == true && piarStudents.length > 0)" v-on:click="showPIARPlanT" class="btn btn-primary">Crear Planificación General Estudiantes PIAR</a>
-                                
+
                                     <div class="mt-3" v-show="(activityForPIARStudents == true && piarStudents.length > 0)">
                                         <div class="form-group row mx-auto" v-for="(inputsP1, keyy) in inputsPIAR1" :key="keyy">
                                             <div class="col-md-6">
@@ -179,11 +179,11 @@
                                                 <a
                                                     href="#"
                                                     class="badge badge-primary"
-                                                    @click.prevent="addP1(keyy)"                                                   
+                                                    @click.prevent="addP1(keyy)"
                                                     v-show="keyy == inputsPIAR1.length -1"
                                                 >+</a>
                                                 </span>
-                                                
+
                                                 <div>
                                                     <input
                                                         type="text"
@@ -193,11 +193,11 @@
                                                         v-on:change="annualContentUpdateEvent($event,keyy,'inputsPIAR1','logroPIAR')"
                                                         placeholder="Nombre de Logro"
                                                         required
-                                                    />                                                    
+                                                    />
                                                 </div>
                                             </div>
-                                            <div class="col-md-6">   
-                                                <label for="name">Indicador de logro</label>                                                                                            
+                                            <div class="col-md-6">
+                                                <label for="name">Indicador de logro</label>
                                                 <div>
                                                     <input
                                                         type="text"
@@ -207,7 +207,7 @@
                                                         v-on:change="annualContentUpdateEvent($event,keyy,'inputsPIAR1','namePIAR')"
                                                         placeholder="Nombre de la unidad"
                                                         required
-                                                    />                                                    
+                                                    />
                                                 </div>
 
                                                 <label for="name">Contenidos</label>
@@ -223,8 +223,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                </tab-content>              
-                            </form-wizard>            
+                                </tab-content>
+                            </form-wizard>
                         </form>
                     </div>
                 </div>
@@ -393,9 +393,9 @@ export default {
                 this.selectedStudentsData = this.studentsOptions;
             }
         },
-        
+
         idArea(newVal, oldVal){
-            if(newVal !== oldVal){                
+            if(newVal !== oldVal){
                 this.getData();
             }
         },
@@ -423,7 +423,7 @@ export default {
             })
 
             axios.get('/getPlanificationPiar').then((response)=>{
-                let data = response.data;                
+                let data = response.data;
                 if(data.length > 0){
                     this.inputsPIAR1.splice(0);
                     this.inputsPIAR.splice(0);
@@ -432,7 +432,7 @@ export default {
                         console.log("data piar: ", JSON.parse(el.logros));
                         let trimestres = JSON.parse(el.trimestres)
                         this.saveStudent = JSON.parse(el.students)
-    
+
                         logros.forEach((lg)=>{
                             this.inputsPIAR1.push({
                                 contenidoPIAR: lg.contenidoPIAR,
@@ -440,7 +440,7 @@ export default {
                                 namePIAR: lg.namePIAR
                             })
                         })
-    
+
                         trimestres.forEach((lg)=>{
                             this.inputsPIAR.push({
                                 logroPIAR: lg.logroPIAR,
@@ -448,13 +448,13 @@ export default {
                             })
                         })
                     });
-                    
+
                     this.showPiarPlan = true,
                     this.showPIARPlanTrimestral = true,
                     this.activityForAllStudents = true;
                 }
             })
-            
+
             //load from localstorage
             this.serialLocalStorage=this.serialLocalStorage+"-"+this.idArea;
 
@@ -477,22 +477,22 @@ export default {
                             return false;
                             }
                         }
-                        if(IsJsonString()){            
+                        if(IsJsonString()){
                             valueJson=e.unit_name ? JSON.parse(e.unit_name): {};
-                        } else{            
+                        } else{
                             let json=[{
                             indicador: e.unit_name ? e.unit_name : ""
                             }];
                             valueJson=json;
                         }
-                        
+
                         i++;
                         this.inputs.push({ id_quaterly:e.id,inputCl: valueJson, contenido: e.content, logro:e.logro, objetive: e.id_achievement});
                     });
                     //console.log(this.inputs);
                     this.inputs_saved= JSON.parse(JSON.stringify(this.inputs));
                 }else{
-        
+
                     if(localStorage.getItem(this.serialLocalStorage)){
                         let savedInputModel=JSON.parse(decodeURIComponent(escape(window.atob(localStorage.getItem(this.serialLocalStorage)))));
                         console.log(JSON.stringify(this.inputs));
@@ -521,7 +521,7 @@ export default {
             }
             //console.log(l.normalize('NFD').replace(/([^n\u0300-\u036f]|n(?!\u0303(?![\u0300-\u036f])))[\u0300-\u036f]+/gi,"$1"));
             //serialize data on localstorage
-            
+
             this.isSynchronized=false;
         },
         modalDelete(id, name){
@@ -540,16 +540,16 @@ export default {
                 this.isLoading=false;
                 this.getData();
                 $("#deleteLog").modal("hide");
-                    
+
             }).catch((error) => {
                 this.errors = error.response.data;
                 this.isLoading=false;
             });
         },
         annualContentUpdateEventI(e,index1,index2,property=null){
-            
+
             //this.inputs[index1].inputCl[index2]=this.inputs[index1].inputCl[index2][property].replace(/[^a-zA-Z0-9-.ñáéíóú_*+-/=&%$#!()?¡¿ ]/g, "|");
-            
+
             //serialize data on localstorage
             localStorage.setItem(this.serialLocalStorage, window.btoa(unescape(encodeURIComponent(JSON.stringify({inputs:this.inputs})))));
 
@@ -581,7 +581,7 @@ export default {
         addPIAR(index) {
             this.inputsPIAR.push({ logroPIAR: "", porcentajePIAR: "0" });
         },
-        
+
         removePIAR(index) {
             this.inputsPIAR.splice(index, 1);
         },
@@ -596,8 +596,8 @@ export default {
         isLoadingEvent(){
             return this.isLoading;
         },
-        createCourses() { 
-            
+        createCourses() {
+
                 this.isLoading=true;
                 var url = window.location.origin + "/Courses";
                 console.log(url);
@@ -624,7 +624,7 @@ export default {
                     this.errors = [];
                     toastr.success("Nueva planificación trimestral creada exitosamente");
                     this.isLoading=false;
-                        
+
                 }).catch((error) => {
                     this.errors = error.response.data;
                     toastr.error("Debe completar todos los campos");
@@ -646,12 +646,12 @@ export default {
                             this.newTrimestre.push(this.inputsPIAR[i]);
                         }
                     }
-                
+
                     if (this.inputsPIAR1.length > 0) {
                         for (let i = 0; i < this.inputsPIAR1.length; i++) {
                         this.newLogro.push(this.inputsPIAR1[i]);
                         }
-                    }                
+                    }
 
                     axios.post('/piarAnualPlanification', {
                         //Cursos generales
@@ -669,7 +669,7 @@ export default {
                         this.isLoading=false;
                     });
                 }
-            }             
+            }
         },
         updateCourses() {
             window.location = "/actividad_g";

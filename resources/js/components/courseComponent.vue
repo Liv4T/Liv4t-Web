@@ -24,23 +24,23 @@
             <div class="container-fluid">
                 <div class="col-md-12 mx-auto">
                     <div class="custom-card text-center">
-                        <h3 class="card-header fondo">Planificación general</h3>                        
+                        <h3 class="card-header fondo">Planificación general</h3>
                         <span class="classroom-label">{{fillC.classroom_name}}</span>
                         <span v-show="!isSynchronized">(Hay cambios que no han sido guardados)</span>
                         <div class="row">
                             <div class="col-12 mt-2">
-                                <label><span class="required">*</span>Planificación Para :</label><br>
-                                
+                                <label><span class="required">*</span>Planificación Anual Para :</label><br>
+
                                     <input type="checkbox" id="students" name="students" v-model="activityForAllStudents">
                                     <label for="piar" class="mr-3"> Todos los Estudiantes</label>
 
                                     <input v-show="piarStudents.length > 0" type="checkbox" id="piar" name="students" v-model="activityForPIARStudents">
                                     <label v-if="piarStudents.length == 0" for="piar" class="mr-3"> No se encuentran Estudiantes PIAR</label>
                                     <label v-else for="piar" class="mr-3"> Estudiantes PIAR</label>
-                                    
+
                                     <input type="checkbox" id="specific" name="students" v-model="activityForSelectStudents">
                                     <label for="specific"> Estudiantes en Especifico</label>
-                                
+
                                 <div v-if="(activityForPIARStudents == true && piarStudents.length > 0) || activityForSelectStudents == true">
                                     <label>Selecciona Los estudiantes</label>
                                     <multiselect v-model="saveStudent" :options="selectedStudentsData" :multiple="true"
@@ -63,7 +63,7 @@
                             <!-- <form-wizard
                                 title
                                 subtitle
-                                color="#ffc107"                                
+                                color="#ffc107"
                                 finish-button-text="Guardar y enviar"
                                 @on-complete="createCourses"
                             > -->
@@ -73,8 +73,8 @@
                                     aria-hidden="true"
                                     v-if="isLoading"
                                 ></span>
-                                
-                                
+
+
                                     <div class="form-group mx-auto" v-for="(input1, t) in inputs1" :key="t">
                                         <div class="classroom-planning-section">
                                             <strong>Objetivo: </strong>
@@ -100,7 +100,7 @@
                                                 <a
                                                     href="#"
                                                     class="btn btn-primary"
-                                                    
+
                                                     @click.prevent="modalDelete(input1.id_achievement, input1.logro)"
                                                     v-show="(t > 0)"
                                                 >Eliminar</a>
@@ -116,9 +116,9 @@
                                         ></textarea>
                                         <div class="invalid-feedback">Please fill out this field</div>
                                     </div>
-                                    
+
                                     <a v-show="(activityForPIARStudents == true && piarStudents.length > 0)" v-on:click="showPIARPlan" class="btn btn-primary">Crear Planificación General Estudiantes PIAR</a>
-                                    
+
                                     <div v-show="(activityForPIARStudents == true && piarStudents.length > 0)">
                                         <div v-for="(inputsP, key) in inputsPIAR" :key="'-'+key">
                                             <div class="classroom-planning-section">
@@ -146,7 +146,7 @@
                                                     >+</a>
                                                 </span>
                                             </div>
-                                            
+
                                             <textarea
                                                 name="welcome"
                                                 class="form-control"
@@ -155,7 +155,7 @@
                                                 required
                                             ></textarea>
                                         </div>
-                                    </div>                              
+                                    </div>
                                     <button type="button" class="btn btn-primary" style="float: right;margin-top: 13px;" v-on:click="createCourses">Guardar</button>
                             <!-- </form-wizard>             -->
                         </form>
@@ -318,21 +318,21 @@ export default {
                 this.selectedStudentsData = this.studentsOptions;
             }
         },
-        
+
         idArea(newVal, oldVal){
-            if(newVal !== oldVal){                
+            if(newVal !== oldVal){
                 this.getData();
             }
         },
     },
-    mounted() {            
+    mounted() {
         if(this.idArea){
-            this.AreaId = this.idArea            
+            this.AreaId = this.idArea
         }else{
-            
+
             let params = window.location.pathname;
             let ids = params.split('/');
-                
+
             let idArea = ids[2]+"/"+ids[3];
             this.AreaId = idArea;
             this.areaId = ids[2];
@@ -367,14 +367,14 @@ export default {
                         let logros = JSON.parse(el.logros)
                         let trimestres = JSON.parse(el.trimestres)
                         this.saveStudent = JSON.parse(el.students)
-    
+
                         logros.forEach((lg)=>{
                             this.inputsPIAR1.push({
                                 contenidoPIAR: lg.contenidoPIAR,
                                 namePIAR: lg.namePIAR
                             })
                         })
-    
+
                         trimestres.forEach((lg)=>{
                             this.inputsPIAR.push({
                                 logroPIAR: lg.logroPIAR,
@@ -386,10 +386,10 @@ export default {
                         this.showPiarPlan = true,
                         this.showPIARPlanTrimestral = true,
                         this.activityForAllStudents = true;
-                    }                    
+                    }
                 }
             })
-            
+
             //load from localstorage
             this.serialLocalStorage=this.serialLocalStorage+"-"+this.AreaId;
 
@@ -405,7 +405,7 @@ export default {
                     this.inputs1_saved= JSON.parse(JSON.stringify(this.inputs1));
                 }
                 else{
-        
+
                     if(localStorage.getItem(this.serialLocalStorage)){
                         let savedInputModel=JSON.parse(decodeURIComponent(escape(window.atob(localStorage.getItem(this.serialLocalStorage)))));
 
@@ -438,7 +438,7 @@ export default {
                 this.isLoading=false;
                 this.getData();
                 $("#deleteOb").modal("hide");
-                    
+
             }).catch((error) => {
                 this.errors = error.response.data;
                 this.isLoading=false;
@@ -476,7 +476,7 @@ export default {
         addPIAR(index) {
             this.inputsPIAR.push({ logroPIAR: "", porcentajePIAR: "0" });
         },
-        
+
         removePIAR(index) {
             this.inputsPIAR.splice(index, 1);
         },
@@ -492,15 +492,15 @@ export default {
             return this.isLoading;
         },
         createCourses() {
-            
+
                 this.isLoading=true;
-                var url = window.location.origin + "/Courses";                
+                var url = window.location.origin + "/Courses";
 
                 if(this.inputs1.length<1)
                     return;
 
                 this.newLogro = [];
-            
+
                 if (this.inputs1.length >= 1) {
                     for (let i = 0; i < this.inputs1.length; i++) {
                     this.newLogro.push(this.inputs1[i]);
@@ -508,8 +508,8 @@ export default {
                     console.log(this.newLogro);
                 }
                 let ids = this.AreaId.split('/');
-                
-                axios.post(url, {                    
+
+                axios.post(url, {
                     id_area: ids[0],
                     id_classroom: ids[1],
                     logros: this.newLogro,
@@ -517,7 +517,7 @@ export default {
                     this.errors = [];
                     toastr.success("Nuevo plan general creado exitosamente");
                     this.isLoading=false;
-                        
+
                 }).catch((error) => {
                     this.errors = error.response.data;
                     this.isLoading=false;
@@ -531,7 +531,7 @@ export default {
 
                     this.newLogro = [];
 
-                
+
                     if (this.inputsPIAR1.length > 0) {
                         for (let i = 0; i < this.inputsPIAR1.length; i++) {
                         this.newLogro.push(this.inputsPIAR1[i]);
@@ -548,13 +548,13 @@ export default {
                         this.errors = [];
                         toastr.success(response.data);
                         this.isLoading=false;
-                            
+
                     }).catch((error) => {
                         this.errors = error.response.data;
                         this.isLoading=false;
                     });
                 }
-            }                  
+            }
         },
         updateCourses() {
             window.location = "/actividad_g";
