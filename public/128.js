@@ -1040,7 +1040,7 @@ var render = function() {
                               _vm._v(" "),
                               _c("div", { staticClass: "col-md-6" }, [
                                 _c("label", { attrs: { for: "name" } }, [
-                                  _vm._v("Logro")
+                                  _vm._v("Logro Anual")
                                 ]),
                                 _vm._v(" "),
                                 _c("span", [

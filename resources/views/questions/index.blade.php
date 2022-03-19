@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('content')    
+@section('content')
     @if (Auth::user()->isTeacher()||Auth::user()->isPsychology()||Auth::user()->isTutor())
     <menu-docente></menu-docente>
     @endif
@@ -68,7 +68,7 @@
                                     </div>
                                     <p class="lead">
                                         Creado por:
-                                        <a class="etiqueta" >{{$que->user['name']}}</a>
+                                        <a class="etiqueta" >{{ $que->user_name }}</a>
                                         <small class="text-muted">{{$que->created_at->diffForHumans()}}</small>
                                     </p>
                                     Descripción:
