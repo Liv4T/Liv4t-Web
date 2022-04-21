@@ -6,23 +6,23 @@
         <div v-show="user.type_user === 3 && nameArea === ''" class="responsiveContent mb-3 mb-3">
             <iframe id="frameStudent" class="text-center" src="https://www.youtube.com/embed/9x3O3gxpEXs"  frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         </div>
-        <div class="form-group width-r mx-auto">                
-            
+        <div class="form-group width-r mx-auto">
+
             <div class="row pd-20">
                 <div class="dropdown col-md-2">
                     <button class="btn btn-warning dropdown-toggle mg-btn" type="button" id="admin" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="background-color: #49CEFB; border-color: #49CEFB; box-shadow: 3px 3px 3px 3px #b0acac">{{ $t('lang.area.electivas') }}</button>
-                    <div class="dropdown-menu" aria-labelledby="admin" v-for="(area, k) in planifications" :key="k">
-                        <a class="dropdown-item" href="" @click.prevent="nameArea = area.lective.name, id_lective_planification = area.id_planification, idArea = '', idClassroom = ''">{{ area.lective.name }}</a>
+                    <div class="dropdown-menu" aria-labelledby="admin">
+                        <a class="dropdown-item" v-for="(area, k) in planifications" :key="k" href="" @click.prevent="nameArea = area.lective.name, id_lective_planification = area.id_planification, idArea = '', idClassroom = ''">{{ area.lective.name }}</a>
                     </div>
                 </div>
 
                 <div class="col-md-2" v-for="(area, t) in areas" :key="t">
                     <a v-on:click="cleanOtherSection" href="http://" class="btn btn-warning mg-btn" :style="area.style" @click.prevent="nameArea = area.text, colorTitle = area.titleColor, idArea = area.id, idClassroom = area.id_classroom">
                         <h6 class="letra-poppins-bold" style="color: black">{{ $t('lang.area.'+nameMinus(area.text)) }}</h6>
-                    </a>                    
+                    </a>
                 </div>
             </div>
-        </div>                
+        </div>
         <div v-if="nameArea != ''">
             <div v-if="showSection ==='inicio'" class="form-group text-center">
                 <a href="" class="btn btn-warning letra-poppins-bold" :style="`${colorTitle} border-color: #ffa4f2;`"
@@ -45,16 +45,16 @@
                     <div v-if="showSection === 'inicio'">
                         <div v-if="activetab === 1" class="tabcontent"><calendar-component :type_u="3" :user="user"></calendar-component></div>
                         <div v-if="activetab === 2" class="tabcontent">
-                            <!-- <student-courses 
-                                :nameArea="nameArea" 
-                                :planifications="planifications" 
+                            <!-- <student-courses
+                                :nameArea="nameArea"
+                                :planifications="planifications"
                                 :id_lective_planification="id_lective_planification"
                                 :idClass="idClass"
                                 :moduleId="idModule"
                             ></student-courses> -->
                             <cycle-list :idArea="idArea+'/'+idClassroom" :planif="planif" :moduleId="idModule" :user="user"></cycle-list>
                         </div>
-                            
+
                         <div v-if="activetab === 3" class="tabcontent"><repo-student :nameArea="nameArea" :planifications="planifications" :id_lective_planification="id_lective_planification"></repo-student></div>
                         <div v-if="activetab === 4" class="tabcontent"><notas-component :idArea="idArea" :idClassroom="idClassroom" :user="user" :nameArea="nameArea" :planifications="planifications" :id_lective_planification="id_lective_planification"></notas-component></div>
                     </div>
@@ -69,7 +69,7 @@
                     </div>
                 </div>
             </div>
-        
+
             <div class="form-group text-center">
                 <a class="btn btn-warning mg-btn">
                     <h1 class="letra-poppins-bold">{{ $t('lang.calendar.pendingWork') }}</h1>
@@ -84,8 +84,8 @@
                                 <span>{{activity.date_init_class|formatDate}}</span>
                             </div>
 
-                            <div class="activity-event-date">   
-                                <small>{{ $t('lang.calendar.urlOfClasses') }}:</small>                                     
+                            <div class="activity-event-date">
+                                <small>{{ $t('lang.calendar.urlOfClasses') }}:</small>
                                 <a :href="activity.url_class" class="badge badge-primary" target="_blank">{{activity.url_class}}</a>
                             </div>
 
@@ -93,21 +93,21 @@
                                 <small>{{ $t('lang.calendar.feedbackDate') }}:</small>
                                 <span>{{activity.feedback_date|formatDate}}</span>
                             </div>
-                        
+
                             <div class="activity-event-date" v-else>
                                 <small>{{ $t('lang.calendar.maximumHomewoorkDate') }}:</small>
                                 <span>{{activity.delivery_max_date|formatDate}}</span>
-                            </div>                                    
+                            </div>
 
                             <div class="activity-event-action">
-                                <a class="btn btn-link" v-on:click="getActivityId(activity.weekly_plan_id, activity.id_class)">{{ $t('lang.calendar.submit') }}</a>                                
+                                <a class="btn btn-link" v-on:click="getActivityId(activity.weekly_plan_id, activity.id_class)">{{ $t('lang.calendar.submit') }}</a>
                             </div>
                         </div>
                     </div>
                 </a>
             </div>
         </div>
-    </div>    
+    </div>
 </template>
 <script>
 import pdf from "vue-pdf";
@@ -224,7 +224,7 @@ export default {
                     style: "background-color: #EDCB00; border-color: #EDCB00; box-shadow: 3px 3px 3px 3px #b0acac",
                     title: "background-color: #EDCB00;"
                 },
-                
+
             ],
             areas: [],
             descripcion: "",
@@ -250,36 +250,37 @@ export default {
             groups:{}
         };
     },
-    mounted() {        
+    mounted() {
         axios.get("/api/lectives").then((response) => {
             if(response.data.length > 0){
                 this.planifications = response.data;
+                console.log(this.planifications);
                 this.lectivs = true;
             }else{
                 this.lectivs = false;
-            }          
+            }
         });
-    
+
         var url = "/GetArearByUser";
         axios.get(url).then((response) => {
             this.areas = response.data;
             this.areas.forEach((e)=>{
                 this.colorClass.filter(i=>{
-                    // console.log(i.area === e.text);  
+                    // console.log(i.area === e.text);
                     let text1 = i.area;
                     let text2 = e.text;
 
                     text1 = this.nameMinus(text1);
                     text2 = this.nameMinus(text2);
 
-                    if(text1 === text2){                        
+                    if(text1 === text2){
                         e.style = i.style;
                         e.titleColor = i.title;
-                    }                    
+                    }
                 })
             })
         });
-        // console.log("Component mounted.");        
+        // console.log("Component mounted.");
     },
     watch:{
         nameArea(new_value, old_value){
@@ -288,7 +289,7 @@ export default {
             }
         }
     },
-    methods: {        
+    methods: {
         getActivitiesStudents(nameArea){
             this.activities = [];
             axios.get("/api/student/activity").then((response) => {
@@ -298,33 +299,33 @@ export default {
 
                 activs.forEach((el)=>{
                     if(el.activityForAllStudents == 1){
-                        
+
                         if(el.selectedStudents == "[]" || el.selectedStudents == null){
                             this.activities.push(el)
                         }
-                        
+
                         }else if(el.activityForPIARStudents == 1){
 
                         let PIARStudents= JSON.parse(el.selectedStudents);
                         PIARStudents.forEach((e)=>{
                             if(e.id == this.user.id){
-                                this.activities.push(el)   
+                                this.activities.push(el)
                             }
                         });
 
                         }else if(el.activityForSelectStudents == 1){
-                            
+
                         let selectedStudents= JSON.parse(el.selectedStudents);
                         selectedStudents.forEach((e)=>{
                             if(e.id == this.user.id){
-                                this.activities.push(el)   
+                                this.activities.push(el)
                             }
                         });
                     }
                 })
             });
         },
-        
+
         modaliniciar() {
             var url = window.location.origin + "/SaveTerms";
 
@@ -342,14 +343,14 @@ export default {
 
         getActivityId(id_module, id_class){
             this.idClass = id_module;
-            this.idModule = id_class;            
+            this.idModule = id_class;
             this.activetab !== 2 ? this.activetab = 2 : this.activetab;
         },
         nameMinus(name){
           var nameMinus=name.toLowerCase();
           return nameMinus.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
         },
-        showOtherSection(data){            
+        showOtherSection(data){
             if(data === 'chat'){
                 axios.get('/chat2').then((response)=>{
                     this.groups = response.data

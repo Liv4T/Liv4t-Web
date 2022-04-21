@@ -88,7 +88,7 @@ export default {
      axios.get("/api/lectives").then((response) => {
       this.planifications= response.data;
     });
-  
+
   },
   methods: {
     showModalAddCourses(id_lective_planification,id_weekly_plan) {
@@ -115,21 +115,12 @@ export default {
               }
             }
           })
-
-        
-
         });
           this.backPage= "return"
       });
-
-
-
-
-
-    
     },
     getPlanificationEvent(id_lective_planification) {
-    
+
       axios.get(`/api/lectives/planification/${id_lective_planification}`).then((response) => {
         this.planification = response.data;
       });

@@ -98,6 +98,30 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["current_course", "courses", "backPage"],
   data: function data() {
@@ -105,16 +129,42 @@ __webpack_require__.r(__webpack_exports__);
       showComponent: 'inicio',
       id_lective_planification: null,
       id_weekly_plan: null,
-      id_class: null
+      id_class: null,
+      delName: "",
+      delId: ""
     };
   },
   created: function created() {},
+  mounted: function mounted() {
+    console.log("cursos", this.courses);
+  },
   methods: {
     showSection: function showSection(data, id_lective_planification, id_weekly_plan, id_class) {
       this.showComponent = data;
       this.id_weekly_plan = id_weekly_plan;
       this.id_lective_planification = id_lective_planification;
       this.id_class = id_class;
+    },
+    returnPage: function returnPage() {
+      window.location = "/teacher/lectives/courses";
+    },
+    deleteClass: function deleteClass(id_class) {
+      var _this = this;
+
+      var url = "/api/lectives/delete/class/" + id_class;
+      axios.put(url).then(function (response) {
+        toastr.success("Clase eliminada correctamente");
+
+        _this.returnPage();
+      });
+    },
+    deletC: function deletC() {
+      $("#deleteC").modal("hide");
+    },
+    viewDelete: function viewDelete(id, name) {
+      this.delName = name;
+      this.delId = id;
+      $("#deleteC").modal("show");
     }
   }
 });
@@ -430,6 +480,41 @@ var render = function() {
                                     }
                                   },
                                   [_vm._v("Crear Actividad")]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "a",
+                                  {
+                                    staticClass: "btn btn-warning",
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.showSection(
+                                          "edit_class",
+                                          _vm.current_course
+                                            .id_lective_planification,
+                                          _vm.current_course.id_weekly_plan,
+                                          course.id_class
+                                        )
+                                      }
+                                    }
+                                  },
+                                  [_vm._v("Editar Clase")]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "a",
+                                  {
+                                    staticClass: "btn btn-warning",
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.viewDelete(
+                                          course.id_class,
+                                          course.name
+                                        )
+                                      }
+                                    }
+                                  },
+                                  [_vm._v("Eliminar Clase")]
                                 )
                               ])
                             ],
@@ -441,6 +526,58 @@ var render = function() {
                   }),
                   0
                 )
+              ])
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "modal fade", attrs: { id: "deleteC" } }, [
+          _c("div", { staticClass: "modal-sm modal-dialog" }, [
+            _c("div", { staticClass: "modal-content" }, [
+              _vm._m(1),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-body" }, [
+                _c("div", { staticClass: "form-group row text-center" }, [
+                  _c("label", { attrs: { for: "name" } }, [
+                    _vm._v(
+                      "Esta seguro que desea eliminar " +
+                        _vm._s(_vm.delName) +
+                        " ?"
+                    )
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "modal-footer" }, [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "btn btn-danger float-right",
+                      attrs: { href: "" },
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          return _vm.deleteClass(_vm.delId)
+                        }
+                      }
+                    },
+                    [_vm._v("Si")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "a",
+                    {
+                      staticClass: "btn btn-warning",
+                      attrs: { href: "" },
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          return _vm.deleteC()
+                        }
+                      }
+                    },
+                    [_vm._v("Cancelar")]
+                  )
+                ])
               ])
             ])
           ])
@@ -475,6 +612,21 @@ var render = function() {
         ],
         1
       )
+    : _vm.showComponent === "edit_class"
+    ? _c(
+        "div",
+        [
+          _c("lectives-edit-class", {
+            attrs: {
+              id_lective_planification: _vm.id_lective_planification,
+              id_weekly_plan: _vm.id_weekly_plan,
+              id_class: _vm.id_class,
+              back: _vm.showSection
+            }
+          })
+        ],
+        1
+      )
     : _vm._e()
 }
 var staticRenderFns = [
@@ -484,6 +636,21 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("h3", { staticClass: "card-header fondo text-center" }, [
       _vm._v("\n            Ciclo\n          "),
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: { type: "button", "data-dismiss": "modal" }
+        },
+        [_c("span", [_vm._v("×")])]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header" }, [
       _c(
         "button",
         {

@@ -24,7 +24,7 @@
         <div class="card-body">
           <div class="accordion" id="accordionExample">
             <div class="card" v-for="(course, t) in courses" :key="t">
-                   
+
               <div class="card-header" :id="'heading' +t">
                 <h2 class="mb-0">
                   <button
@@ -64,20 +64,41 @@
                         v-bind:src="'https://www.youtube.com/embed/'+item_content.content">
                       </iframe>
                     </div>
-                    <div class="modal-footer">                        
-                      <a 
-                        class="btn btn-warning"                         
-                        v-on:click="showSection('create_activity',current_course.id_lective_planification,current_course.id_weekly_plan, course.id_class)"              
-
-                      >Crear Actividad</a>
+                    <div class="modal-footer">
+                        <a class="btn btn-warning" v-on:click="showSection('create_activity',current_course.id_lective_planification,current_course.id_weekly_plan, course.id_class)"
+                        >Crear Actividad</a>
+                        <a class="btn btn-warning" v-on:click="showSection('edit_class',current_course.id_lective_planification,current_course.id_weekly_plan,course.id_class)"
+                        >Editar Clase</a>
+                        <a class="btn btn-warning" v-on:click="viewDelete(course.id_class,course.name)"
+                        >Eliminar Clase</a>
                     </div><!--END FOOTER-->
-                  </div><!--END CART BODY-->     
+                  </div><!--END CART BODY-->
                 </div>
               </div>
             </div><!--accordion-->
           </div><!--CARD body-->
         </div><!--CARD-->
       </div>
+    </div>
+    <div class="modal fade" id="deleteC">
+        <div class="modal-sm modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                    <span>&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group row text-center">
+                        <label for="name">Esta seguro que desea eliminar {{ delName }} ?</label>
+                    </div>
+                    <div class="modal-footer">
+                        <a class="btn btn-danger float-right" href v-on:click.prevent="deleteClass(delId)">Si</a>
+                        <a class="btn btn-warning" href v-on:click.prevent="deleteC()">Cancelar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
   </div>
   <div v-else-if="showComponent === 'create_class'">
@@ -86,26 +107,52 @@
   <div v-else-if="showComponent === 'create_activity'">
     <lectives-teacher-activity :id_lective_planification="id_lective_planification" :id_weekly_plan="id_weekly_plan" :id_course="id_class" :back="showSection"></lectives-teacher-activity>
   </div>
+  <div v-else-if="showComponent === 'edit_class'">
+    <lectives-edit-class :id_lective_planification="id_lective_planification" :id_weekly_plan="id_weekly_plan" :id_class="id_class" :back="showSection"></lectives-edit-class>
+  </div>
 </template>
 <script>
 export default {
   props:["current_course","courses", "backPage"],
   data() {
-    return {      
+    return {
       showComponent:'inicio',
       id_lective_planification: null,
       id_weekly_plan: null,
       id_class: null,
+      delName: "",
+      delId: "",
     };
   },
   created() {},
+  mounted() {
+      console.log("cursos", this.courses);
+  },
   methods: {
      showSection(data, id_lective_planification, id_weekly_plan, id_class){
-      this.showComponent = data; 
+      this.showComponent = data;
       this.id_weekly_plan = id_weekly_plan;
       this.id_lective_planification = id_lective_planification;
       this.id_class = id_class;
-    }
+    },
+    returnPage() {
+        window.location = "/teacher/lectives/courses";
+    },
+    deleteClass(id_class){
+        var url = "/api/lectives/delete/class/"+id_class;
+        axios.put(url).then((response) => {
+            toastr.success("Clase eliminada correctamente");
+            this.returnPage();
+        });
+    },
+    deletC() {
+        $("#deleteC").modal("hide");
+    },
+    viewDelete(id, name) {
+            this.delName = name;
+            this.delId = id;
+            $("#deleteC").modal("show");
+        },
   },
 };
 </script>

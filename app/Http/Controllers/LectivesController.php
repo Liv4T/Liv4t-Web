@@ -372,6 +372,48 @@ class LectivesController extends Controller
 
     }
 
+     /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getWeeklyDetail(int $id_class)
+    {
+        $auth = Auth::user();
+
+        $user = User::find($auth->id);
+
+        $ret_model=[];
+
+        $courses=LectiveClass::where('deleted',0)->where('id',$id_class)->first();
+
+        $course_content_data=LectiveClassContent::where('deleted',0)->where('id_lective_class',$courses->id)->get();
+
+        $course_content=[];
+
+        foreach ($course_content_data as $key_course_content => $course_content_item) {
+            array_push($course_content,[
+                'id_content'=>$course_content_item->id,
+                'content_type'=>$course_content_item->content_type,
+                'content'=>$course_content_item->content,
+                'description'=>$course_content_item->description,
+                'student_visited_date'=>$course_content_item->student_visited_date,
+                'state'=>$course_content_item->state
+            ]);
+        }
+
+        $ret_model=[
+            'id_class'=>$courses->id,
+            'name'=>$courses->name,
+            'description'=>$courses->description,
+            'hourly_intensity'=>$courses->hourly_intensity,
+            'state'=>$courses->state,
+            'content'=>$course_content
+        ];
+
+        return response()->json($ret_model);
+
+    }
 
     /**
      * Display a listing of the resource.
@@ -449,13 +491,62 @@ class LectivesController extends Controller
                     }
                 }
             }
-
-
-
-
         }
 
         return;
+    }
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function saveClassDetail(Request $request)
+    {
+        $auth = Auth::user();
+
+        $data = $request->all();
+        //return $data;
+
+        $user = User::find($auth->id);
+
+            if(isset($data['id_class']) && $data['id_class']!=0)
+            {
+                LectiveClass::where('id',$data['id_class'])->update(array('name'=>$data['name'],'description'=>$data['description'],'hourly_intensity'=>$data['hourly_intensity'],'updated_user'=> $user->id));
+
+                if($data['id_class']) // es una actualizacion
+                {
+                    foreach ($data['content'] as $key_d => $item_detail) {
+                        if(isset($item_detail['id_content']) && $item_detail['id_content']!=0)
+                        {
+                            LectiveClassContent::where('id',$item_detail['id_content'])->update(array('content'=>$item_detail['content'],'description'=>$item_detail['description'],'updated_user'=> $user->id));
+                        }
+                        else if(isset($item_detail['id_content']) && $item_detail['id_content']==0)
+                        {
+                            LectiveClassContent::create([
+                                'id_lective_class'=>$data['id_class'],
+                                'content_type'=>$item_detail['content_type'],
+                                'content'=>$item_detail['content'],
+                                'description'=>$item_detail['description'],
+                                'state'=>1,
+                                'deleted'=>0,
+                                'updated_user'=>$user->id
+                            ]);
+                        }
+                    }
+                }
+
+            }
+            return response('ok',200);
+    }
+
+    public function deleteClassDetail(int $id_class){
+
+        $auth = Auth::user();
+        $user = User::find($auth->id);
+
+        LectiveClass::where('id',$id_class)->update(array('deleted'=>1,'updated_user'=> $user->id));
+
+        return response('ok',200);
     }
 
     /**

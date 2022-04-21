@@ -254,6 +254,7 @@ moment__WEBPACK_IMPORTED_MODULE_1___default.a.locale("es");
     axios.get("/api/lectives").then(function (response) {
       if (response.data.length > 0) {
         _this.planifications = response.data;
+        console.log(_this.planifications);
         _this.lectivs = true;
       } else {
         _this.lectivs = false;
@@ -265,7 +266,7 @@ moment__WEBPACK_IMPORTED_MODULE_1___default.a.locale("es");
 
       _this.areas.forEach(function (e) {
         _this.colorClass.filter(function (i) {
-          // console.log(i.area === e.text);  
+          // console.log(i.area === e.text);
           var text1 = i.area;
           var text2 = e.text;
           text1 = _this.nameMinus(text1);
@@ -277,7 +278,7 @@ moment__WEBPACK_IMPORTED_MODULE_1___default.a.locale("es");
           }
         });
       });
-    }); // console.log("Component mounted.");        
+    }); // console.log("Component mounted.");
   },
   watch: {
     nameArea: function nameArea(new_value, old_value) {
@@ -475,63 +476,57 @@ var render = function() {
         "div",
         { staticClass: "row pd-20" },
         [
-          _c(
-            "div",
-            { staticClass: "dropdown col-md-2" },
-            [
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-warning dropdown-toggle mg-btn",
-                  staticStyle: {
-                    "background-color": "#49CEFB",
-                    "border-color": "#49CEFB",
-                    "box-shadow": "3px 3px 3px 3px #b0acac"
-                  },
-                  attrs: {
-                    type: "button",
-                    id: "admin",
-                    "data-toggle": "dropdown",
-                    "aria-haspopup": "true",
-                    "aria-expanded": "false"
-                  }
+          _c("div", { staticClass: "dropdown col-md-2" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-warning dropdown-toggle mg-btn",
+                staticStyle: {
+                  "background-color": "#49CEFB",
+                  "border-color": "#49CEFB",
+                  "box-shadow": "3px 3px 3px 3px #b0acac"
                 },
-                [_vm._v(_vm._s(_vm.$t("lang.area.electivas")))]
-              ),
-              _vm._v(" "),
+                attrs: {
+                  type: "button",
+                  id: "admin",
+                  "data-toggle": "dropdown",
+                  "aria-haspopup": "true",
+                  "aria-expanded": "false"
+                }
+              },
+              [_vm._v(_vm._s(_vm.$t("lang.area.electivas")))]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "dropdown-menu",
+                attrs: { "aria-labelledby": "admin" }
+              },
               _vm._l(_vm.planifications, function(area, k) {
                 return _c(
-                  "div",
+                  "a",
                   {
                     key: k,
-                    staticClass: "dropdown-menu",
-                    attrs: { "aria-labelledby": "admin" }
+                    staticClass: "dropdown-item",
+                    attrs: { href: "" },
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        ;(_vm.nameArea = area.lective.name),
+                          (_vm.id_lective_planification =
+                            area.id_planification),
+                          (_vm.idArea = ""),
+                          (_vm.idClassroom = "")
+                      }
+                    }
                   },
-                  [
-                    _c(
-                      "a",
-                      {
-                        staticClass: "dropdown-item",
-                        attrs: { href: "" },
-                        on: {
-                          click: function($event) {
-                            $event.preventDefault()
-                            ;(_vm.nameArea = area.lective.name),
-                              (_vm.id_lective_planification =
-                                area.id_planification),
-                              (_vm.idArea = ""),
-                              (_vm.idClassroom = "")
-                          }
-                        }
-                      },
-                      [_vm._v(_vm._s(area.lective.name))]
-                    )
-                  ]
+                  [_vm._v(_vm._s(area.lective.name))]
                 )
-              })
-            ],
-            2
-          ),
+              }),
+              0
+            )
+          ]),
           _vm._v(" "),
           _vm._l(_vm.areas, function(area, t) {
             return _c("div", { key: t, staticClass: "col-md-2" }, [

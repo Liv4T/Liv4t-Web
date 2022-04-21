@@ -4,39 +4,28 @@
             <div class="row">
                 <div class="col-md-11 mx-auto">
                     <div class="custom-card text-center">
-                        <h3 class="card-header fondo">Mis clases - Electiva {{planification.lective.name}} Trimestre {{planification.period_consecutive}}</h3>
-                    </div>
-                    <div class="div-weekly-plan">
-                        <div>
-                            <label>Ciclo:</label>
-                            <textarea class="form-control" cols="60" readonly>{{weekly_plan.name}}</textarea>
-                        </div>
-                        <div>
-                            <label>Observación:</label>
-                            <textarea class="form-control" cols="60" readonly>{{weekly_plan.observation}}</textarea>
-                        </div>
-
+                        <h3 class="card-header fondo">Editar Clase</h3>
                     </div>
                     <div class="div-classes">
-                        <div class="div-class"  v-for="(item,key_d) in weekly_plan_detail" :key="key_d">
-                            <h3>Clase {{key_d+1}}</h3>
+                        <div class="div-class" >
+                            <h3>Clase</h3>
                             <div class="title">
                               <div>
                                     <label><span class="required">*</span>Nombre:</label>
-                                    <textarea class="form-control" cols="40" v-model="item.name"></textarea>
+                                    <textarea class="form-control" cols="40" v-model="weekly_plan_detail.name"></textarea>
                                 </div>
                                 <div>
                                     <label><span class="required">*</span>Descripción:</label>
-                                    <textarea class="form-control" cols="40" v-model="item.description"></textarea>
+                                    <textarea class="form-control" cols="40" v-model="weekly_plan_detail.description"></textarea>
                                 </div>
                                    <div>
                                     <label><span class="required">*</span>Intensidad:</label>
-                                    <input type="number" class="form-control" v-model="item.hourly_intensity" />
+                                    <input type="number" class="form-control" v-model="weekly_plan_detail.hourly_intensity" />
                                 </div>
                             </div>
                             <div class="content">
-                                <div class="div-resource" v-for="(item_content,key_c) in item.content" :key="key_c">
-                                    <span class="closed-icon" v-on:click="removeResource(key_d,key_c)"><i v-if="key_c>2" class="fa fa-minus" ></i></span>
+                                <div class="div-resource" v-for="(item_content,key_c) in weekly_plan_detail.content" :key="key_c">
+                                    <span class="closed-icon" v-on:click="removeResource(key_c)"><i v-if="key_c>2" class="fa fa-minus" ></i></span>
                                     <h4 v-if="item_content.content_type === 'DOCUMENT'">Documento</h4>
                                     <h4 v-else-if="item_content.content_type === 'LINK'">Enlace</h4>
                                     <h4 v-else-if="item_content.content_type === 'VIDEO'">Enlace Video (Youtube)</h4>
@@ -48,7 +37,7 @@
                                         <label v-if="item_content.content_type === 'DOCUMENT'">Archivo</label>
                                         <label v-else-if="item_content.content_type === 'LINK'">Enlace</label>
                                         <label v-else-if="item_content.content_type === 'VIDEO'">Enlace</label>
-                                        <input v-if="item_content.content_type === 'DOCUMENT'" class="form-control" type="file" @change="onFileChange($event,key_d,key_c)" />
+                                        <input v-if="item_content.content_type === 'DOCUMENT'" class="form-control" type="file" @change="onFileChange($event,0,key_c)" />
                                         <a v-if="item_content.content_type === 'DOCUMENT' && item_content.content!=''" v-bind:href="item_content.content" target="_blank">{{item_content.description}}</a>
                                         <input  v-if="item_content.content_type !== 'DOCUMENT'" class="form-control" type="text" v-model="item_content.content" />
                                     </div>
@@ -56,9 +45,9 @@
                                 </div>
                                  <div class="div-resource"   >
                                     <div class="form-item">
-                                        <span v-on:click="addResource(key_d,'DOCUMENT')">+ Agregar Documento</span>
-                                        <span v-on:click="addResource(key_d,'LINK')">+ Agregar Enlace</span>
-                                        <span v-on:click="addResource(key_d,'VIDEO')">+ Agregar Video</span>
+                                        <span v-on:click="addResource('DOCUMENT')">+ Agregar Documento</span>
+                                        <span v-on:click="addResource('LINK')">+ Agregar Enlace</span>
+                                        <span v-on:click="addResource('VIDEO')">+ Agregar Video</span>
                                     </div>
 
 
@@ -110,7 +99,7 @@ import VueFormWizard from "vue-form-wizard";
 import "vue-form-wizard/dist/vue-form-wizard.min.css";
 Vue.use(VueFormWizard);
 export default {
-    props: ["id_lective_planification", "id_weekly_plan", "back"],
+    props: ["id_lective_planification","id_weekly_plan","id_class","back"],
     data() {
         return {
             myOptions: [],
@@ -139,57 +128,21 @@ export default {
         };
     },
     mounted() {
-         axios.get(`/api/lectives/planification/${this.id_lective_planification}`).then((response) => {
-
-            this.planification = response.data;
-
-            //find weekly_plan
-            this.weekly_plan=this.planification.weeklies.find(e=>e.id==this.id_weekly_plan);
-
-        });
-
-
-        axios.get(`/api/lectives/planification/${this.id_lective_planification}/weekly/${this.id_weekly_plan}/course`).then((response) => {
-
-
-             this.weekly_plan_detail = response.data;
-             console.log(this.weekly_plan_detail);
-
-             this.weekly_plan_detail.push({
-                    'name':'',
-                    'description':'',
-                    'hourly_intensity':0,
-                    'state':1,
-                    'content':[
-                        {
-                            'content_type':'DOCUMENT',
-                            'content':'',
-                            'description':''
-                        },
-                        {
-                            'content_type':'LINK',
-                            'content':'',
-                            'description':''
-                        },
-                        {
-                            'content_type':'VIDEO',
-                            'content':'',
-                            'description':''
-                        }
-                    ]
-                });
-
-        });
-
-
-
+        this.getData();
     },
     methods: {
+        getData(){
+            axios.get(`/api/lectives/class/${this.id_class}`).then((response) => {
+                this.weekly_plan_detail = response.data;
+                console.log(this.weekly_plan_detail);
+            });
+        },
         returnPage() {
             window.location = "/teacher/lectives/courses";
         },
-        addResource(index,resource_type){
-            this.weekly_plan_detail[index].content.push({
+        addResource(resource_type){
+            this.weekly_plan_detail.content.push({
+                'id_content': 0,
                 'content_type':resource_type,
                 'content':'',
                 'description':''
@@ -199,23 +152,7 @@ export default {
            this.weekly_plan_detail[ix_weekly_plan].content.splice(index,1)
         },
         saveData(){
-
-            this.weekly_plan_detail.forEach(e=>{
-                if(e.name && !e.id_class)
-                {
-                    e.id_class=0;
-                }
-
-                    e.content.forEach(c=>{
-                        if(e.description && !e.id_content)
-                        {
-                            e.id_content=0;
-                        }
-                    });
-
-            });
-
-             axios.put(`/api/lectives/planification/${this.id_lective_planification}/weekly/${this.id_weekly_plan}/course`,this.weekly_plan_detail).then((response) => {
+             axios.put(`/api/lectives/class/${this.weekly_plan_detail.id_class}`,this.weekly_plan_detail).then((response) => {
 
                // this.getPlanificationEvent(this.id_lective_planification);
                 toastr.success("Clases actualizadas correctamente");
@@ -233,12 +170,12 @@ export default {
                 // if uploaded file is valid with validation rules
 
                 data.append("file", files[0]);
-                data.append("name", this.weekly_plan_detail[id_weekly_content].content[item_index].description.split(' ').join('_'));
+                data.append("name", this.weekly_plan_detail.content[item_index].description.split(' ').join('_'));
                 data.append("count", `-lective-class-${id_weekly_content}-${item_index}`);
 
                 let _fileNameSplit=file.name.split(".");
                 axios.post("/fileDocument", data).then(response => {
-                   this.weekly_plan_detail[id_weekly_content].content[item_index].content=`${window.location.origin}/uploads/clases/${this.weekly_plan_detail[id_weekly_content].content[item_index].description.split(' ').join('_')}-lective-class-${id_weekly_content}-${item_index}.${_fileNameSplit[_fileNameSplit.length-1]}`;
+                   this.weekly_plan_detail.content[item_index].content=`${window.location.origin}/uploads/clases/${this.weekly_plan_detail.content[item_index].description.split(' ').join('_')}-lective-class-${id_weekly_content}-${item_index}.${_fileNameSplit[_fileNameSplit.length-1]}`;
                 });
             }
         },

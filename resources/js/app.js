@@ -29,7 +29,7 @@ const i18n = new VueI18n({
     }
   }
 });
-  
+
 
 // the main entrance
 /* eslint-disable no-new */
@@ -68,7 +68,7 @@ Vue.component("footer-home", require("./components/footerHome.vue").default);
 Vue.component("unit-class", require("./components/unitComponent.vue").default);
 Vue.component("free-component", require("./components/freeComponent.vue").default);
 Vue.component("freeu-component", require("./components/freeUnitComponent.vue").default);
-Vue.component("course-component", () => import ("./components/courseComponent.vue")); 
+Vue.component("course-component", () => import ("./components/courseComponent.vue"));
 Vue.component("trim-component", () =>import("./components/TrimComponent.vue"));
 Vue.component("course-view", require("./components/CourseView.vue").default);
 Vue.component("semanal-component", require("./components/courseSemanalComponet.vue").default);
@@ -223,8 +223,8 @@ Vue.component("lectives-teacher-activities", () => import ("./components/lective
 Vue.component("lectives-teacher-activity", () => import ("./components/lectivesTeacherActivityComponent.vue"));
 Vue.component("lectives-teacher-board", () => import ("./components/lectivesTeacherBoardComponent.vue"));
 Vue.component("lectives-teacher-students", () => import ("./components/lectivesTeacherStudentsComponent.vue"));
-
 Vue.component("lectives-teacher-notes", () => import ("./components/lectivesTeacherNotesComponent.vue"));
+Vue.component("lectives-edit-class", () => import ("./components/lectivesEditClassComponent.vue"));
 
 
 Vue.component("repository-component", () => import("./components/repositoryComponent.vue"));

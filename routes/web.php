@@ -898,6 +898,9 @@ Route::get('/api/lectives/planification/{id_lective_planification}', 'LectivesCo
 Route::put('/api/lectives/planification', 'LectivesController@savePlanificationDetail');
 Route::put('/api/lectives/planification/{id_lective_planification}/weekly', 'LectivesController@saveWeeklyPlanification');
 Route::get('/api/lectives/planification/{id_lective_planification}/weekly/{id_weekly_plan}/course', 'LectivesController@getWeeklyPlanificationDetail');
+Route::get('/api/lectives/class/{id_class}', 'LectivesController@getWeeklyDetail');
+Route::put('/api/lectives/class/{id_class}', 'LectivesController@saveClassDetail');
+Route::put('/api/lectives/delete/class/{id_class}', 'LectivesController@deleteClassDetail');
 Route::put('/api/lectives/planification/{id_lective_planification}/weekly/{id_weekly_plan}/course', 'LectivesController@saveWeeklyPlanificationDetail');
 Route::get('/api/lectives/planification/{id_lective_planification}/student', 'LectivesController@getPlanificationStudents');
 Route::put('/api/lectives/planification/{id_lective_planification}/student', 'LectivesController@addStudents');
