@@ -44,6 +44,7 @@ class ProductsExport implements FromView
                 $dat->content = $arrayCont;
             }
         }
+        libxml_use_internal_errors(true);
         return view("classContent", compact("datos"));
     }
 }
