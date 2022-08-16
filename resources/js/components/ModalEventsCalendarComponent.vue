@@ -114,7 +114,7 @@
             },
         },
         mounted() {
-        
+
         },
         methods: {
             createEvent() {
@@ -167,24 +167,24 @@
                 } else if (this.typeEvent == 3) {
                     if (this.materia.length >= 1 && this.arrayDaysEvent.length >= 1) {
                         for (let i = 0; i < this.materia.length; i++) {
-                        for (let j = 0; j < this.arrayDaysEvent.length; j++) {
-                            axios
-                            .post(url, {
-                                //Cursos generales
-                                name: this.nameEvent,
-                                startDateTime: this.arrayDaysEvent[j],
-                                endDateTime: this.arrayDaysEventMes[j],
-                                id_area: this.materia[i].id,
-                                id_classroom: this.materia[i].id_classroom,
-                                url: this.nameMeet,
-                                id_padre: this.lastId + 1,
-                            })
-                            .then((response) => {
-                                toastr.success("Nuevo evento creado exitosamente");
-                                this.getMenu();
-                            })
-                            .catch((error) => {});
-                        }
+                            for (let j = 0; j < this.arrayDaysEvent.length; j++) {
+                                axios
+                                .post(url, {
+                                    //Cursos generales
+                                    name: this.nameEvent,
+                                    startDateTime: this.arrayDaysEvent[j],
+                                    endDateTime: this.arrayDaysEventMes[j],
+                                    id_area: this.materia[i].id,
+                                    id_classroom: this.materia[i].id_classroom,
+                                    url: this.nameMeet,
+                                    id_padre: this.lastId + 1,
+                                })
+                                .then((response) => {
+                                    toastr.success("Nuevo evento creado exitosamente");
+                                    this.getMenu();
+                                })
+                                .catch((error) => {});
+                            }
                         }
                     }
                 }
@@ -262,7 +262,7 @@
                     hasta2.setDate(hasta2.getDate() + 365);
                     var dia = desde.getDate(desde);
                     var dia2 = desde2.getDate(desde2);
-                    
+
                     while (moment(desde).isSameOrBefore(hasta)) {
                         var dayMonth = desde.getDate(desde);
                         if (dayMonth == dia) {
