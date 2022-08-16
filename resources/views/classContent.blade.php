@@ -25,7 +25,7 @@
             <td>{{ $data->cicle }}</td>
             <td>{{ $data->class_name }}</td>
             <td>{{ $data->class_description }}</td>
-            <td>
+            {{-- <td>
                 @foreach ($data->content as $content)
                         @isset($content['content_type'])
                             <strong>Tipo de contenido: </strong>{{ $content['content_type'] }}<br>
@@ -37,7 +37,7 @@
                             <strong>Descripcion: </strong>{{ $content['description'] }}<br>
                         @endisset
                 @endforeach
-            </td>
+            </td> --}}
             <td>{{ $data->date }}</td>
         </tr>
     @endforeach
