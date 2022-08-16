@@ -1,8 +1,6 @@
 <table>
     <thead>
     <tr>
-
-
          <th>Salón</th>
          <th>Nombre</th>
          <th>Apellido</th>
