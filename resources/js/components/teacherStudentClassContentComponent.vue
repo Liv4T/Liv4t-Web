@@ -83,7 +83,7 @@
                                 <div class="card-body">
                                             <div class="row">
                                                 <div class="col-12">
-                                                    <b>Descripción:</b>
+                                                    <b>Descripciónnn:</b>
                                                     <textarea
                                                         class="form-control-plaintext"
                                                         v-model="current_activity.description"

@@ -29,7 +29,7 @@
       </div>
     </div>
     <!-- START CONTENT -->
-    <div class="row margin-top-20"> 
+    <div class="row margin-top-20">
         <div class="col-md-10 mx-auto">
           <div class="card">
             <h5 class="card-header">Copiar desde:</h5>
@@ -67,13 +67,13 @@
                       <option value="all">- Todas las clases -</option>
                       <option  v-for="(class_plaan, k_cc) in class_planning_select" :key="k_cc" v-bind:value="class_plaan">{{ class_plaan.name }}</option>
                     </select>
-                  </div>              
+                  </div>
                 </div>
             </div>
           </div>
         </div>
     </div>
-    <div class="row margin-top-20"> 
+    <div class="row margin-top-20">
         <div class="col-md-10 mx-auto">
           <div class="card">
             <h5 class="card-header">Copiar a:</h5>
@@ -92,7 +92,7 @@
                       <option value="null">-- Seleccione --</option>
                       <option v-if="area!=fromData.area"  v-for="(area, k_a) in my_areas" :key="k_a"  v-bind:value="area" >{{ area.text }}</option>
                     </select>
-                  </div>     
+                  </div>
                 </div>
                 <div class="row margin-top-20">
 
@@ -118,10 +118,10 @@
           </div>
         </div>
     </div>
-    <div class="row margin-top-20"> 
+    <div class="row margin-top-20">
         <div class="col-md-10 mx-auto text-right">
-          <button class="btn btn-warning" 
-          :disabled="fromData.area=='null' || toData.area=='null' || toData.weekly_planning=='null'" 
+          <button class="btn btn-warning"
+          :disabled="fromData.area=='null' || toData.area=='null' || toData.weekly_planning=='null'"
           type="button" data-toggle="modal" data-target="#exampleModal">Copiar información</button>
         </div>
     </div>
@@ -143,11 +143,13 @@
             <div v-show="fromData.class_planning!='all'">
               <label for="date">Fecha Inicio de Clase</label>
               <input type="datetime-local" class="form-control" v-model="fromData.class_planning.date_init_class"/>
-            </div>     
+            </div>
             <div v-show="fromData.class_planning=='all'" v-for="(class_plan, key) in class_planning_select" :key="key">
-              <label>{{class_plan.name}}</label>
+              <div v-show="class_plan.date_init_class!=null">
+                <label>{{class_plan.name}}</label>
               <input type="datetime-local" class="form-control" v-model="class_plan.date_init_class"/>
-            </div>     
+              </div>
+            </div>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
@@ -162,7 +164,7 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Progreso de Duplicación</h5>            
+            <h5 class="modal-title" id="exampleModalLabel">Progreso de Duplicación</h5>
           </div>
           <div class="modal-body">
             <div v-show="loading === true">
@@ -170,16 +172,16 @@
                 Cargando
               </div>
             </div>
-            <div v-show="loading === false">              
+            <div v-show="loading === false">
               <div class="alert alert-success" role="alert">
                 Duplicación Completa
               </div>
             </div>
-          </div>          
+          </div>
         </div>
       </div>
     </div>
- 
+
     <!-- END CONTENT -->
   </div>
 </div>
@@ -296,7 +298,7 @@ export default {
   },
   mounted() {
    this.getTrimestres();
-   this.getAreas();    
+   this.getAreas();
    console.log("fromData",this.fromData);
   },
   methods: {
@@ -305,12 +307,12 @@ export default {
       $('#progressModal').modal('show');
       console.log(this.fromData);
       axios.put("/api/planification/copy",{fromData:this.fromData,toData:this.toData, class_planning:this.class_planning_select}).then((response) => {
-        this.loading = false;      
-      });   
-      setTimeout(function(){ 
+        this.loading = false;
+      });
+      setTimeout(function(){
         $('#progressModal').modal('hide');
         $('#exampleModal').modal('hide');
-      }, 2000);           
+      }, 2000);
     },
     getAreas(){
       axios.get("/GetArearByUser").then((response) => {
@@ -332,7 +334,7 @@ export default {
        axios.get(`/editOneWeek/${this.toData.area.id}/${this.toData.area.id_classroom}/${this.fromData.trimestres}`).then((response) => {
         this.to_weekly_planning=response.data;
       });
-      
+
     },
     onChangeWeerklyPlanTo($event){
 
@@ -346,7 +348,7 @@ export default {
       else{
         this.to_class_planning=[];
       }
-     
+
     },
     onChangeWeerklyPlanFrom($event){
 
@@ -361,7 +363,7 @@ export default {
       else{
         this.class_planning_select=[];
       }
-     
+
     },
     onChangeAreaFrom($event){
       if(this.fromData.area!='' && this.fromData.trimestres!=''){

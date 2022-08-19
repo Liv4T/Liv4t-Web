@@ -146,6 +146,24 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["course", "backPreview"],
   data: function data() {
@@ -369,6 +387,94 @@ var render = function() {
                     return
                   }
                   _vm.$set(_vm.course, "description", $event.target.value)
+                }
+              }
+            })
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-12" }, [
+            _c("b", [
+              _vm._v(_vm._s(_vm.$t("lang.class.transversalSkills")) + ":")
+            ]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.course.transversals,
+                  expression: "course.transversals"
+                }
+              ],
+              staticClass: "form-control-plaintext",
+              attrs: { type: "text", readonly: "" },
+              domProps: { value: _vm.course.transversals },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.course, "transversals", $event.target.value)
+                }
+              }
+            })
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-12" }, [
+            _c("b", [
+              _vm._v(_vm._s(_vm.$t("lang.class.classObjectives")) + ":")
+            ]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.course.objetivesClass,
+                  expression: "course.objetivesClass"
+                }
+              ],
+              staticClass: "form-control-plaintext",
+              attrs: { type: "text", readonly: "" },
+              domProps: { value: _vm.course.objetivesClass },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.course, "objetivesClass", $event.target.value)
+                }
+              }
+            })
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-12" }, [
+            _c("b", [_vm._v(_vm._s(_vm.$t("lang.homework.task")) + ":")]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.course.work,
+                  expression: "course.work"
+                }
+              ],
+              staticClass: "form-control-plaintext",
+              attrs: { type: "text", readonly: "" },
+              domProps: { value: _vm.course.work },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.course, "work", $event.target.value)
                 }
               }
             })

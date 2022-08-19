@@ -1,6 +1,6 @@
 <template>
     <!-- Modal -->
-    
+
     <div class="div-classes">
         <div class="div-class">
             <div class="title row">
@@ -34,7 +34,25 @@
                         v-model="course.description"
                         readonly
                     ></textarea>
-                </div>                               
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <b>{{ $t('lang.class.transversalSkills') }}:</b>
+                    <input type="text" class="form-control-plaintext" v-model="course.transversals" readonly/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <b>{{ $t('lang.class.classObjectives') }}:</b>
+                    <input type="text" class="form-control-plaintext" v-model="course.objetivesClass" readonly/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <b>{{ $t('lang.homework.task') }}:</b>
+                    <input type="text" class="form-control-plaintext" v-model="course.work" readonly/>
+                </div>
             </div>
             <div class="row">
                 <div class="col-12">
@@ -47,37 +65,37 @@
                         <h4 style="color:#f79d52" v-if=" item_content.content_type === 'DOCUMENT'">
                             {{ $t('lang.general.document') }}
                         </h4>
-                                        
+
                         <h4 style="color:#f79d52" v-else-if=" item_content.content_type === 'LINK' ">
                             {{ $t('lang.general.link') }}
                         </h4>
-                                        
+
                         <h4 style="color:#f79d52" v-else-if=" item_content.content_type === 'VIDEO'">
                             {{ $t('lang.general.video') }}
                         </h4>
-                                
+
                         <h4 style="color:#f79d52" v-else-if=" item_content.content_type === 'YOUTUBE'">
                             {{ $t('lang.general.video') }}
                         </h4>
-                                        
+
                         <div class="form-item">
                             <input class="form-control-plaintext" type="text" v-model="item_content.description" readonly/>
                         </div>
-                        
+
                         <div class="form-item">
                             <div class="form-button">
                                 <a class="btn btn-primary" v-if=" item_content.content_type ==='DOCUMENT'" v-on:click=" openDocument(item_content)">
                                     {{ $t('lang.general.readDocument') }}
                                 </a>
-                                                
+
                                 <a class="btn btn-primary" v-if=" item_content.content_type === 'LINK' " v-on:click=" openLink(item_content)" target="_blank">
                                     {{ $t('lang.general.letsGoToWork') }}
                                 </a>
-                                                
+
                                 <video id="vid" @playing="playVideo(item_content)" v-if=" item_content.content_type ==='VIDEO' " controls>
                                     <source v-bind:src="item_content.content" type="video/mp4"/>
                                 </video>
-                                                
+
                                 <iframe v-if="item_content.content_type ==='YOUTUBE'" class="container_youtube"  v-bind:src="resolveYoutubeLink(item_content.content)" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
                                 </iframe>
                             </div>
@@ -100,7 +118,7 @@
                             <button class="btn btn-warning" v-if="activity.id == act.id" @click.prevent="closeQuestion()">
                                 {{ $t('lang.general.cancel') }}
                             </button>
-                                                
+
                             <button class="btn btn-primary" v-if=" act.interaction && act.interaction.state==3 && activity.id != act.id" @click.prevent="openFeedback(key_a)">
                                 {{ $t('lang.general.feedback') }}
                             </button>
@@ -126,14 +144,14 @@
                             <activity-questionary v-if="act.activity_type=='CUESTIONARIO'" v-bind:playing="true" v-bind:module="act.module" v-bind:disabled="act.interaction && act.interaction.state>1"></activity-questionary>
                             <activity-complete-sentence v-if="act.activity_type=='COMPLETAR_ORACION'" v-bind:playing="true" v-bind:module="act.module" v-bind:disabled="act.interaction && act.interaction.state>1"></activity-complete-sentence>
                             <activity-relationship v-if="act.activity_type=='RELACION'" v-bind:playing="true" v-bind:module="act.module" v-bind:disabled="act.interaction && act.interaction.state>1"></activity-relationship>
-                            <activity-crossword v-if="act.activity_type=='CRUCIGRAMA'" v-bind:playing="true" v-bind:module="act.module" v-bind:disabled="act.interaction && act.interaction.state>1"></activity-crossword>                            
+                            <activity-crossword v-if="act.activity_type=='CRUCIGRAMA'" v-bind:playing="true" v-bind:module="act.module" v-bind:disabled="act.interaction && act.interaction.state>1"></activity-crossword>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
         <a v-on:click="backPreview" class="btn btn-primary">{{ $t('lang.table.back_to') }}</a>
-    </div>              
+    </div>
 </template>
 <script>
 export default {
@@ -143,25 +161,25 @@ export default {
             activity:{}
         };
     },
-    
+
     mounted() {
         console.log(this.course)
     },
     methods: {
         openDocument(resource) {
             console.log('Recurso de previowModal: ',resource);
-            try {                
+            try {
                 window.open(resource.content);
             } catch(error) {
                 console.log(error);
             }
         },
         openLink(resource) {
-            try {                
+            try {
                 window.open(resource.content);
             } catch {}
         },
-        playVideo(resource) {            
+        playVideo(resource) {
         },
         resolveYoutubeLink(link_youtube)
         {

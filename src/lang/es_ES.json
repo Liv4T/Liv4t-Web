@@ -33,7 +33,9 @@
         "classAttendance": "Asistencia a clases",
         "dateAndTime": "Fecha y hora",
         "intensity": "Intensidad",
-        "score": "Calificación"
+        "score": "Calificación",
+        "transversalSkills": "Habilidades transversales",
+        "classObjectives": "Objetivos de la clase"
     },
     "homework": {
         "homework": "Entregas",
@@ -113,7 +115,7 @@
         "induccion_hs":"Inducción HS",
         "induccion_ms":"Inducción MS",
         "filosofia": "Filosofia",
-        "lectura critica y filosofia":"Lectura Critica y Filosofia"        
+        "lectura critica y filosofia":"Lectura Critica y Filosofia"
     },
     "messages":{
         "messages":"Mensajes",
@@ -150,5 +152,5 @@
         "coordinators":"Coordinadores",
         "tutors":"Tutores",
         "nursing":"Enfermería"
-    }   
+    }
 }

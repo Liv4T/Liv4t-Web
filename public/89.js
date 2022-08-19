@@ -377,7 +377,7 @@ var render = function() {
               [
                 _c("div", { staticClass: "row" }, [
                   _c("div", { staticClass: "col-12" }, [
-                    _c("b", [_vm._v("Descripción:")]),
+                    _c("b", [_vm._v("Descripciónnn:")]),
                     _vm._v(" "),
                     _c("textarea", {
                       directives: [

@@ -44,6 +44,7 @@ class ProductsExport implements FromView
                 $dat->content = $arrayCont;
             }
         }
+        //omitimos errores en CDATA para las celdas de excel
         libxml_use_internal_errors(true);
         return view("classContent", compact("datos"));
     }
