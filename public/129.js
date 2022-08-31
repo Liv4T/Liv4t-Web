@@ -1023,14 +1023,7 @@ var render = function() {
                                           key: ob,
                                           domProps: { value: obj.id }
                                         },
-                                        [
-                                          _vm._v(
-                                            _vm._s(obj.achievement) +
-                                              " " +
-                                              _vm._s(obj.percentage) +
-                                              "%"
-                                          )
-                                        ]
+                                        [_vm._v(_vm._s(obj.achievement))]
                                       )
                                     })
                                   ],
@@ -1266,56 +1259,7 @@ var render = function() {
                                     ])
                                   ]
                                 )
-                              }),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "col-md-6" }, [
-                                _c("label", { attrs: { for: "name" } }, [
-                                  _vm._v("Contenidos")
-                                ]),
-                                _vm._v(" "),
-                                _c("textarea", {
-                                  directives: [
-                                    {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value: input.contenido,
-                                      expression: "input.contenido"
-                                    }
-                                  ],
-                                  staticClass: "form-control",
-                                  attrs: {
-                                    name: "competences",
-                                    placeholder:
-                                      "Es la explicacion o sintesis de la unidad.",
-                                    required: ""
-                                  },
-                                  domProps: { value: input.contenido },
-                                  on: {
-                                    change: function($event) {
-                                      return _vm.annualContentUpdateEvent(
-                                        $event,
-                                        t,
-                                        "inputs",
-                                        "contenido"
-                                      )
-                                    },
-                                    input: function($event) {
-                                      if ($event.target.composing) {
-                                        return
-                                      }
-                                      _vm.$set(
-                                        input,
-                                        "contenido",
-                                        $event.target.value
-                                      )
-                                    }
-                                  }
-                                }),
-                                _vm._v(" "),
-                                _c("div", { staticClass: "invalid-feedback" }, [
-                                  _vm._v("Please fill out this field")
-                                ])
-                              ])
+                              })
                             ],
                             2
                           )

@@ -35,12 +35,12 @@
                                 </div>
 
                             <div class="row">
-                                <label>Posible fecha de Clase:</label>
+                                <label>Posible fecha de Clase (opcional)</label>
                                 <input type="datetime-local" class="form-control" v-model="course.date_init_class" />
                                 <input type="hidden" id="timezone" name="timezone" value="-05:00">
                             </div>
                             <div class="row">
-                                <label>Link de Clase</label>
+                                <label>Link de Clase (opcional)</label>
                                 <input type="text-local" class="form-control" v-model="course.url_class" />
                             </div>
 
@@ -50,12 +50,12 @@
                                 </label>
                                 <textarea class="form-control" v-model="course.work" name="work" id="work"></textarea>
                             </div>
-                            <div class="col-12">
+                            <!-- <div class="col-12">
                                 <label for="transversals">
                                     Habilidades Transversales
                                 </label>
                                 <textarea class="form-control" v-model="course.transversals" name="transversals" id="transversals"></textarea>
-                            </div>
+                            </div> -->
 
                             <div class="row">
                                 <div class="col-12">

@@ -848,35 +848,6 @@ var render = function() {
                     { key: t, staticClass: "form-group mx-auto" },
                     [
                       _c("div", { staticClass: "classroom-planning-section" }, [
-                        _c("strong", [_vm._v("Objetivo: ")]),
-                        _vm._v(" "),
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: input1.porcentaje,
-                              expression: "input1.porcentaje"
-                            }
-                          ],
-                          staticClass: "form-control form-control-sm",
-                          staticStyle: { width: "50px" },
-                          attrs: { type: "number" },
-                          domProps: { value: input1.porcentaje },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(
-                                input1,
-                                "porcentaje",
-                                $event.target.value
-                              )
-                            }
-                          }
-                        }),
-                        _vm._v("%\n                                        "),
                         _c("span", [
                           _c(
                             "a",
@@ -1027,44 +998,6 @@ var render = function() {
                   _vm._l(_vm.inputsPIAR, function(inputsP, key) {
                     return _c("div", { key: "-" + key }, [
                       _c("div", { staticClass: "classroom-planning-section" }, [
-                        _c("strong", [_vm._v("Objetivo:")]),
-                        _vm._v(" "),
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: inputsP.porcentajePIAR,
-                              expression: "inputsP.porcentajePIAR"
-                            }
-                          ],
-                          staticClass: "form-control form-control-sm",
-                          staticStyle: { width: "50px" },
-                          attrs: { type: "number" },
-                          domProps: { value: inputsP.porcentajePIAR },
-                          on: {
-                            change: function($event) {
-                              return _vm.annualContentUpdateEvent(
-                                $event,
-                                key,
-                                "inputsPIAR"
-                              )
-                            },
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(
-                                inputsP,
-                                "porcentajePIAR",
-                                $event.target.value
-                              )
-                            }
-                          }
-                        }),
-                        _vm._v(
-                          "%\n\n                                            "
-                        ),
                         _c("span", [
                           _c(
                             "a",

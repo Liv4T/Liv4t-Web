@@ -152,6 +152,7 @@ __webpack_require__.r(__webpack_exports__);
       id_cicle: "",
       filter: '',
       cycle_number: 0,
+      lengthCycles: 0,
       cicle_name: ""
     };
   },
@@ -175,10 +176,11 @@ __webpack_require__.r(__webpack_exports__);
       var url = "/cycle/teacher/" + this.idArea + "/" + id_trimestre;
       axios.get(url).then(function (response) {
         _this2.cycles = response.data;
+        _this2.lengthCycles = response.data.length;
         /* if(this.planif === 'claseEst'){
             var urlsel = "/viewGetWeek/" + this.idArea +'/'+id_trimestre;
             axios.get(urlsel).then((response) => {
-               let data = response.data;                       
+               let data = response.data;
                data.forEach((element)=>{
                    this.cycles.push({
                         driving_question: element.text,
@@ -309,7 +311,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.item-cycle {\r\n    height: 50px;\r\n    overflow: hidden;\r\n    color: white;\r\n    background: #00cbcec1;\r\n    margin: 8px;\r\n    line-height: 50px;\r\n    margin-bottom: 2rem;\r\n    border-radius: 10px;\n}\n.menu-cycle{\r\n    color: white;\r\n    text-decoration: none;\r\n    font-weight: bold;\r\n    font-size: 28px;\n}\r\n", ""]);
+exports.push([module.i, "\n.item-cycle {\n    height: 50px;\n    overflow: hidden;\n    color: white;\n    background: #00cbcec1;\n    margin: 8px;\n    line-height: 50px;\n    margin-bottom: 2rem;\n    border-radius: 10px;\n}\n.menu-cycle{\n    color: white;\n    text-decoration: none;\n    font-weight: bold;\n    font-size: 28px;\n}\n", ""]);
 
 // exports
 
@@ -389,11 +391,7 @@ var render = function() {
                             }
                           }
                         },
-                        [
-                          _c("label", [
-                            _vm._v("Ciclo " + _vm._s(trimestre.nombre))
-                          ])
-                        ]
+                        [_c("label", [_vm._v(_vm._s(trimestre.nombre))])]
                       )
                     ])
                   ]),
@@ -517,7 +515,11 @@ var render = function() {
                                 _vm._l(_vm.filteredRows, function(cycle, k) {
                                   return _c("tr", { key: k }, [
                                     _c("td", [
-                                      _vm._v(_vm._s(cycle.driving_question))
+                                      _vm._v(
+                                        _vm._s(cycle.order_items) +
+                                          " " +
+                                          _vm._s(cycle.driving_question)
+                                      )
                                     ]),
                                     _vm._v(" "),
                                     _c(
@@ -684,7 +686,7 @@ var render = function() {
                         ])
                       : _c("div", [
                           _vm._v(
-                            "\r\n                        No hay Clases asignadas al Ciclo "
+                            "\n                        No hay Clases asignadas al Ciclo "
                           ),
                           _c("strong", [_vm._v(_vm._s(_vm.cicle_name))])
                         ])
@@ -771,6 +773,7 @@ var render = function() {
               id_classroom: _vm.id_classroom,
               id_trimestre: _vm.idTrimestre,
               orden: _vm.orden,
+              lengthCycles: _vm.lengthCycles,
               cleanClasId: _vm.cleanIdModule
             }
           })

@@ -38,12 +38,6 @@
             </div>
             <div class="row">
                 <div class="col-12">
-                    <b>{{ $t('lang.class.transversalSkills') }}:</b>
-                    <input type="text" class="form-control-plaintext" v-model="course.transversals" readonly/>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-12">
                     <b>{{ $t('lang.class.classObjectives') }}:</b>
                     <input type="text" class="form-control-plaintext" v-model="course.objetivesClass" readonly/>
                 </div>

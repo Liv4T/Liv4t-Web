@@ -80,7 +80,7 @@
                                             <label for="name">Objetivo</label>
                                              <select id="activity_type" class="form-control"  v-model="input.objetive">
                                                     <option value="">-- Seleccione --</option>
-                                                    <option v-for="(obj, ob) in objetives" :key="ob" v-bind:value="obj.id" >{{ obj.achievement }} {{ obj.percentage}}%</option>
+                                                    <option v-for="(obj, ob) in objetives" :key="ob" v-bind:value="obj.id" >{{ obj.achievement }}</option>
                                             </select>
                                         </div>
                                         <div class="col-md-6">
@@ -145,7 +145,7 @@
                                                 />
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
+                                        <!-- <div class="col-md-6">
 
                                             <label for="name">Contenidos</label>
                                             <textarea
@@ -157,7 +157,7 @@
                                             required
                                             ></textarea>
                                             <div class="invalid-feedback">Please fill out this field</div>
-                                        </div>
+                                        </div> -->
                                     </div>
                                     <!-- <div class="modal-footer">
                                     <a submit="createCourses" class="btn btn-warning float-right">Guardar</a>

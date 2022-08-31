@@ -907,7 +907,9 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "row" }, [
-                      _c("label", [_vm._v("Posible fecha de Clase:")]),
+                      _c("label", [
+                        _vm._v("Posible fecha de Clase (opcional)")
+                      ]),
                       _vm._v(" "),
                       _c("input", {
                         directives: [
@@ -946,7 +948,7 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "row" }, [
-                      _c("label", [_vm._v("Link de Clase")]),
+                      _c("label", [_vm._v("Link de Clase (opcional)")]),
                       _vm._v(" "),
                       _c("input", {
                         directives: [
@@ -1000,40 +1002,6 @@ var render = function() {
                               return
                             }
                             _vm.$set(_vm.course, "work", $event.target.value)
-                          }
-                        }
-                      })
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-12" }, [
-                      _c("label", { attrs: { for: "transversals" } }, [
-                        _vm._v(
-                          "\n                                Habilidades Transversales\n                            "
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("textarea", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.course.transversals,
-                            expression: "course.transversals"
-                          }
-                        ],
-                        staticClass: "form-control",
-                        attrs: { name: "transversals", id: "transversals" },
-                        domProps: { value: _vm.course.transversals },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(
-                              _vm.course,
-                              "transversals",
-                              $event.target.value
-                            )
                           }
                         }
                       })

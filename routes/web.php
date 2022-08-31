@@ -1146,3 +1146,4 @@ Route::middleware('auth')->get('/clasesClient', function () {
 Route::middleware('auth')->get('/checkPay/{id_area}/{code}', 'EnableSubjectController@checkPay');
 Route::resource('subject','EnableSubjectController');
 Route::put('updateMessajeView/{id_sender}','ViewMessagesController@update');
+Route::middleware('auth')->get('getNumCycles/{id_area}/{id_classroom}/{id_trimestre}','CoursesController@getNumCycles');

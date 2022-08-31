@@ -77,13 +77,13 @@
 
                                     <div class="form-group mx-auto" v-for="(input1, t) in inputs1" :key="t">
                                         <div class="classroom-planning-section">
-                                            <strong>Objetivo: </strong>
+                                            <!-- <strong>Objetivo: </strong>
                                             <input
                                                 class="form-control form-control-sm"
                                                 type="number"
                                                 style="width:50px;"
                                                 v-model="input1.porcentaje"
-                                            />%
+                                            />% -->
                                             <span>
                                                 <a
                                                     href="#"
@@ -122,14 +122,14 @@
                                     <div v-show="(activityForPIARStudents == true && piarStudents.length > 0)">
                                         <div v-for="(inputsP, key) in inputsPIAR" :key="'-'+key">
                                             <div class="classroom-planning-section">
-                                                <strong>Objetivo:</strong>
+                                                <!-- <strong>Objetivo:</strong>
                                                 <input
                                                     v-on:change="annualContentUpdateEvent($event,key,'inputsPIAR')"
                                                     class="form-control form-control-sm"
                                                     type="number"
                                                     style="width:50px;"
                                                     v-model="inputsP.porcentajePIAR"
-                                                />%
+                                                />% -->
 
                                                 <span>
                                                     <a

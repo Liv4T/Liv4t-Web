@@ -76,14 +76,14 @@
                       </div>
                     <div class="col-md-6">
                       <label for="name">Observación</label>
-                      <textarea name="competences" 
+                      <textarea name="competences"
                         v-on:change="contentUpdateEvent(t,'observation')"
                       class="form-control" v-model="input.observation"></textarea>
                     </div>
-                    <div class="col-md-6">
+                    <!-- <div class="col-md-6">
                       <label for="ajustes">Ajustes PIAR</label>
                       <textarea type="text" name="ajustes" class="form-control" v-model="input.ajustes"> </textarea>
-                    </div>
+                    </div> -->
                   </div>
                   <div class="modal-footer">
                     <a v-on:click="cleanClasId" style="margin-right: auto;" class="btn btn-warning">Volver</a>
@@ -141,14 +141,14 @@ import VueFormWizard from "vue-form-wizard";
 import "vue-form-wizard/dist/vue-form-wizard.min.css";
 Vue.use(VueFormWizard);
 export default {
-  props: ["id_area", "id_classroom", "id_trimestre", "orden","cleanClasId"],
+  props: ["id_area", "id_classroom", "id_trimestre", "orden","lengthCycles","cleanClasId"],
   data() {
     return {
       inputs: [
         {
           driving_question: "",
           observation: "",
-          numeroCiclo: this.orden+'.'+1,
+          numeroCiclo: this.id_trimestre+'.'+(this.lengthCycles+1),
           class_development: "",
           ajustes: "",
         },
@@ -164,7 +164,9 @@ export default {
       errors: [],
     };
   },
-  mounted() {},
+  mounted() {
+    console.log('ciclo count', this.lengthCycles);
+  },
   methods: {
     contentUpdateEvent(index,property){
       this.inputs[index][property]=this.inputs[index][property].replace(/[^a-zA-Z0-9-.ñáéíóú_*+-/=&%$#!()?¡¿ ]/g, "|");
@@ -180,7 +182,7 @@ export default {
         driving_question: "",
         observation: "",
         class_development: "",
-        numeroCiclo: this.orden+'.'+(index+2),
+        numeroCiclo: this.id_trimestre+'.'+(this.lengthCycles+index+2),
         ajustes: "",
       });
     },
