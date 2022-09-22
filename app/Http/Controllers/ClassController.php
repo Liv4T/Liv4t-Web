@@ -22,12 +22,14 @@ use App\ClassContent;
 use App\ClassContentInteraction;
 use App\ClassInteraction;
 use App\Classroom;
+use App\ClassroomStudent;
 use App\ConfigurationParameter;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use PhpParser\Node\Stmt\Foreach_;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class ClassController extends Controller
 {
@@ -617,7 +619,7 @@ class ClassController extends Controller
     public function saveCourse(Request $request,int $id_module)
     {
         $auth = Auth::user();
-
+        //return $request;
         $this->validate($request, [
             'name' => 'required',
             'description' => 'required'
@@ -780,7 +782,6 @@ class ClassController extends Controller
                     $id_activity=$activity_new->id;
                 }
 
-
                 if($id_activity!=0 && $activity['activity_type']=='CUESTIONARIO')
                 {
                     //update activity_questions
@@ -883,12 +884,22 @@ class ClassController extends Controller
                         ]);
                         $id_modelo=$modelo_new->id;
                     }
-
-
-
                 }
 
+                $ids_students = [];
+                $weekly = Weekly::select('id_area','id_classroom')->where('id',$id_module)->first();
+                $area_name = Area::select('name')->where('id',$weekly['id_area'])->first();
+                $ids_students = ClassroomStudent::select('id_user')->where('id_classroom',$weekly['id_classroom'])->get();
 
+                foreach($ids_students as $student){
+                    $data_student = User::findOrFail($student->id_user);
+                    $email_to = $data_student->parent_email;
+
+                    Mail::send('emails.newActivity', ["parent_name" => $data_student->parent, "student_name" => $data_student->name . ' ' .$data_student->last_name, "delivery_max_date" => $activity['delivery_max_date'], "area_name" => $area_name['name'], "class_name" => $data['name']], function ($message) use ($email_to) {
+                        $message->to($email_to, 'Liv4T Nueva Actividad');
+                        $message->subject('Liv4T Nueva Actividad');
+                    });
+                }
             }//foreach activities
         }
 

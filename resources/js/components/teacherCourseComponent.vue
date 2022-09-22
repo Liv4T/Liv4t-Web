@@ -538,7 +538,7 @@ export default {
                console.log('id_class1', this.eventIdClass);
                toastr.success("Clases actualizadas correctamente");
                this.createEvent();
-               this.returnPage();
+               //this.returnPage();
             },
                 (error)=>{console.log(error);
                 toastr.error("ERROR:Por favor valide que la información esta completa");

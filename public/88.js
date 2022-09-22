@@ -533,9 +533,8 @@ Vue.use(vue_form_wizard__WEBPACK_IMPORTED_MODULE_0___default.a);
         console.log('id_class1', _this3.eventIdClass);
         toastr.success("Clases actualizadas correctamente");
 
-        _this3.createEvent();
+        _this3.createEvent(); //this.returnPage();
 
-        _this3.returnPage();
       }, function (error) {
         console.log(error);
         toastr.error("ERROR:Por favor valide que la información esta completa");
