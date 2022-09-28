@@ -30,6 +30,7 @@ use Illuminate\Support\Facades\Auth;
 use PhpParser\Node\Stmt\Foreach_;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
+use Carbon\Carbon;
 
 class ClassController extends Controller
 {
@@ -174,16 +175,18 @@ class ClassController extends Controller
                 foreach($activity_questions as $i_question => $question) {
                     $student_response=[];
                     $response='';
-                    if($user->type_user==3)//student
+                    if($user->type_user==3 || $user->type_user==2)//student or teacher
                     {
                         $student_response=ActivityQuestionInteraction::where('id_activity_question',$question->id)->where('id_student',$user->id)->where('deleted',0)->first();
 
                         if(!isset($student_response))
                         {
                             $student_response=['response'=>-1];
+                            $url = NULL;
                         }
                         else{
                             $response=$student_response->response;
+                            $url = $student_response->url_activities;
                         }
                     }
 
@@ -196,6 +199,7 @@ class ClassController extends Controller
                         'justify'=>$question->justify,
                         'state'=>$question->state,
                         'student_response'=>$student_response,
+                        'url_activity' => $url,
                         'response'=>$response
                     ]);
                 }
@@ -1276,6 +1280,50 @@ class ClassController extends Controller
             $class->status = 0;
             $class->save();
             return $class;
+        }
+    }
+    public function uploadFileActivities(Request $request)
+    {
+        $user = Auth::user();
+        $file = request('file');
+        if (!empty($file)) {
+            $fileName = $file->getClientOriginalName();
+            $div_file_name = explode(".", $fileName);
+            $div_file_name = end($div_file_name);
+            $extension = $div_file_name;
+            $fileName_1 = $user->id.'-'.request("0").'-'.date("Y-m-d");
+            $fileName = strtr($fileName_1, " ", "_");
+            // file with path
+            $filePath = url('uploads/activities/' . $fileName . "." . $extension);
+            //Move Uploaded File
+            $destinationPath = 'uploads/activities/';
+            if ($file->move($destinationPath, $fileName . "." . $extension)) {
+                for($i = 0; $i < request('length'); $i++){
+                    ActivityQuestionInteraction::create([
+                        'id_activity_question'=>request($i),
+                        'id_student'=>$user->id,
+                        'response'=>0,
+                        'score'=>0,
+                        'url_activities'=>$filePath,
+                        'state'=>1,
+                        'deleted'=>0,
+                        'updated_user'=>$user->id
+                    ]);
+                }
+                $activity = ActivityQuestion::select('id_activity')->where('id', request('0'))->first();
+                ActivityInteraction::create([
+                    'id_activity'=>$activity['id_activity'],
+                    'id_student'=>$user->id,
+                    'latest_access_date'=>date("Y-m-d H:i"),
+                    'score'=>0,
+                    'state'=>1,
+                    'deleted'=>0,
+                    'updated_user'=>$user->id
+                ]);
+
+                return 'ok';
+            }
+            return "error";
         }
     }
 }

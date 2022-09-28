@@ -79,7 +79,7 @@
                                         v-model="course.description"
                                         readonly
                                     ></textarea>
-                                </div>                               
+                                </div>
                             </div>
                             <div class="row">
                                 <div class="col-12">
@@ -395,7 +395,7 @@ export default {
         });
         axios.get(`/GetNameWeekly/${this.id_module}`).then(response => {
             this.weekly_plan = { name: response.data };
-        });        
+        });
 
     },
     methods: {
@@ -717,7 +717,8 @@ export default {
                         );
                     }
                 );
-        }
+        },
+
     }
 };
 </script>

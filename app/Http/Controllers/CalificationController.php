@@ -334,9 +334,11 @@ class CalificationController extends Controller
                     if(!isset($student_response))
                     {
                         $student_response=['response'=>-1];
+                        $url = NULL;
                     }
                     else{
                         $response=$student_response->response;
+                        $url = $student_response->url_activities;
                     }
 
 
@@ -349,6 +351,7 @@ class CalificationController extends Controller
                         'justify'=>$question->justify,
                         'state'=>$question->state,
                         'student_response'=>$student_response,
+                        'url_activity' => $url,
                         'response'=>$response
                     ]);
                 }

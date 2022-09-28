@@ -63,16 +63,26 @@
                     </div>
                 </template>
                 <template v-if="playing">
+                    <div class="row">
+                        <div class="col-12 text-left" v-show="module.questions[0].url_activity==null">
+                            <label>Responder con un documento pdf</label>
+                            <div class="col-lg-6">
+                                <input class="form-control" type="file" accept=".pdf" placeholder="Seleccione un archivo" @change="onFileChange($event,module.questions)"/>
+                            </div>
+                        </div>
+                        <div class="col-12 text-left" v-show="module.questions[0].url_activity!=null">
+                            <a class="btn btn-primary" :href="`${module.questions[0].url_activity}`" target="_blank">Ver PDF</a>
+                        </div>
+                    </div>
                     <div class="row"  v-for="(question, k_q) in module.questions" v-bind:key="k_q" >
                         <div class="col-12">
                             <div class="row">
                                 <div class="col-12 text-left">
                                     <div class="row">
-
                                         <div class="col-7"><label><span class="required" >*</span>Pregunta N° {{k_q+1}} :</label></div>
-                                        <div class="col-5 text-right">
+                                        <!-- <div class="col-5 text-right">
                                             <button class="btn btn-warning" alt="Remover pregunta" v-if="(k_q)>0 && !disabled" @click.prevent="RemoveQuestionEvent(k_q)" >Remover pregunta</button>
-                                        </div>
+                                        </div> -->
                                     </div>
                                     <div v-if="question.type_question!='EQUATION'" class="question_container" v-html="question.question">
 
@@ -129,6 +139,9 @@ export default {
             formula: "",
         }
     },
+    mounted(){
+        console.log('mounted', this.module);
+    },
     methods:{
           AddQuestionEvent(){
                 this.module.questions.push({
@@ -155,8 +168,41 @@ export default {
         RemoveOptionOnQuestion(index_question,index)
         {
             this.module.questions[index_question].options.splice(index,1);
-            
+
         },
+        getMenu(){
+            location.reload();
+        },
+        onFileChange(file,modules) {
+            let files = file.target.files || file.dataTransfer.files;
+            this.data = new FormData();
+            if (files.length > 0) {
+                //console.log('evento');
+                let file = files[0];
+                let _fileNameSplit=file.name.split(".");
+
+                // if uploaded file is valid with validation rules
+                let file_extension=_fileNameSplit[_fileNameSplit.length-1];
+                let file_name=file.name.replace(`.${file_extension}`,'');
+
+                this.data.append("file", files[0]);
+                this.data.append("name", file_name);
+                modules.forEach((e, i)=>{
+                    this.data.append(i, e.id)
+                })
+                this.data.append("length", modules.length);
+                console.log('module', modules);
+                axios.post("/saveAtivitiesFile", this.data).then(response => {
+
+                }).then((response) => {
+                    toastr.success("Respuestas enviadas exitosamente");
+                    this.getMenu();
+                    }).catch(err=>{});
+            }
+
+
+        },
+
     /*
         uploadQuestionFile(file){
             return new Promise((resolve,reject)=>{
@@ -178,9 +224,9 @@ export default {
             return Math.random() * (max - min) + min;
         },
         SetQuestionEvent(content,ix_question){
-        
+
             this.module.questions[ix_question].question=content;
-           
+
         },
         SetJustifyEvent(content,ix_question){
            this.module.questions[ix_question].justify=content;

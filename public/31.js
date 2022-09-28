@@ -127,6 +127,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['module', 'disabled', 'playing'],
   data: function data() {
@@ -143,6 +153,9 @@ __webpack_require__.r(__webpack_exports__);
       }],
       formula: ""
     };
+  },
+  mounted: function mounted() {
+    console.log('mounted', this.module);
   },
   methods: {
     AddQuestionEvent: function AddQuestionEvent() {
@@ -168,6 +181,40 @@ __webpack_require__.r(__webpack_exports__);
     },
     RemoveOptionOnQuestion: function RemoveOptionOnQuestion(index_question, index) {
       this.module.questions[index_question].options.splice(index, 1);
+    },
+    getMenu: function getMenu() {
+      location.reload();
+    },
+    onFileChange: function onFileChange(file, modules) {
+      var _this = this;
+
+      var files = file.target.files || file.dataTransfer.files;
+      this.data = new FormData();
+
+      if (files.length > 0) {
+        //console.log('evento');
+        var _file = files[0];
+
+        var _fileNameSplit = _file.name.split("."); // if uploaded file is valid with validation rules
+
+
+        var file_extension = _fileNameSplit[_fileNameSplit.length - 1];
+
+        var file_name = _file.name.replace(".".concat(file_extension), '');
+
+        this.data.append("file", files[0]);
+        this.data.append("name", file_name);
+        modules.forEach(function (e, i) {
+          _this.data.append(i, e.id);
+        });
+        this.data.append("length", modules.length);
+        console.log('module', modules);
+        axios.post("/saveAtivitiesFile", this.data).then(function (response) {}).then(function (response) {
+          toastr.success("Respuestas enviadas exitosamente");
+
+          _this.getMenu();
+        })["catch"](function (err) {});
+      }
     },
 
     /*
@@ -607,186 +654,246 @@ var render = function() {
             : _vm._e(),
           _vm._v(" "),
           _vm.playing
-            ? _vm._l(_vm.module.questions, function(question, k_q) {
-                return _c("div", { key: k_q, staticClass: "row" }, [
+            ? [
+                _c("div", { staticClass: "row" }, [
                   _c(
                     "div",
-                    { staticClass: "col-12" },
+                    {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: _vm.module.questions[0].url_activity == null,
+                          expression: "module.questions[0].url_activity==null"
+                        }
+                      ],
+                      staticClass: "col-12 text-left"
+                    },
                     [
-                      _c("div", { staticClass: "row" }, [
-                        _c(
-                          "div",
-                          { staticClass: "col-12 text-left" },
-                          [
-                            _c("div", { staticClass: "row" }, [
-                              _c("div", { staticClass: "col-7" }, [
-                                _c("label", [
-                                  _c("span", { staticClass: "required" }, [
-                                    _vm._v("*")
-                                  ]),
-                                  _vm._v(
-                                    "Pregunta N° " + _vm._s(k_q + 1) + " :"
-                                  )
+                      _c("label", [_vm._v("Responder con un documento pdf")]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-lg-6" }, [
+                        _c("input", {
+                          staticClass: "form-control",
+                          attrs: {
+                            type: "file",
+                            accept: ".pdf",
+                            placeholder: "Seleccione un archivo"
+                          },
+                          on: {
+                            change: function($event) {
+                              return _vm.onFileChange(
+                                $event,
+                                _vm.module.questions
+                              )
+                            }
+                          }
+                        })
+                      ])
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: _vm.module.questions[0].url_activity != null,
+                          expression: "module.questions[0].url_activity!=null"
+                        }
+                      ],
+                      staticClass: "col-12 text-left"
+                    },
+                    [
+                      _c(
+                        "a",
+                        {
+                          staticClass: "btn btn-primary",
+                          attrs: {
+                            href: "" + _vm.module.questions[0].url_activity,
+                            target: "_blank"
+                          }
+                        },
+                        [_vm._v("Ver PDF")]
+                      )
+                    ]
+                  )
+                ]),
+                _vm._v(" "),
+                _vm._l(_vm.module.questions, function(question, k_q) {
+                  return _c("div", { key: k_q, staticClass: "row" }, [
+                    _c(
+                      "div",
+                      { staticClass: "col-12" },
+                      [
+                        _c("div", { staticClass: "row" }, [
+                          _c(
+                            "div",
+                            { staticClass: "col-12 text-left" },
+                            [
+                              _c("div", { staticClass: "row" }, [
+                                _c("div", { staticClass: "col-7" }, [
+                                  _c("label", [
+                                    _c("span", { staticClass: "required" }, [
+                                      _vm._v("*")
+                                    ]),
+                                    _vm._v(
+                                      "Pregunta N° " + _vm._s(k_q + 1) + " :"
+                                    )
+                                  ])
                                 ])
                               ]),
                               _vm._v(" "),
-                              _c("div", { staticClass: "col-5 text-right" }, [
-                                k_q > 0 && !_vm.disabled
-                                  ? _c(
-                                      "button",
-                                      {
-                                        staticClass: "btn btn-warning",
-                                        attrs: { alt: "Remover pregunta" },
-                                        on: {
-                                          click: function($event) {
-                                            $event.preventDefault()
-                                            return _vm.RemoveQuestionEvent(k_q)
-                                          }
-                                        }
-                                      },
-                                      [_vm._v("Remover pregunta")]
-                                    )
-                                  : _vm._e()
-                              ])
-                            ]),
-                            _vm._v(" "),
-                            question.type_question != "EQUATION"
-                              ? _c("div", {
-                                  staticClass: "question_container",
-                                  domProps: {
-                                    innerHTML: _vm._s(question.question)
-                                  }
-                                })
-                              : _vm._e(),
-                            _vm._v(" "),
-                            question.type_question == "EQUATION"
-                              ? _c("equation-component", {
-                                  attrs: { content: question.question }
-                                })
-                              : _vm._e()
-                          ],
-                          1
-                        )
-                      ]),
-                      _vm._v(" "),
-                      question.type_question == "SIMPLE_RTA"
-                        ? _vm._l(question.options, function(option, k_op) {
-                            return _c(
-                              "div",
-                              { key: k_op, staticClass: "row" },
-                              [
-                                _c("div", { staticClass: "col-12 text-left" }, [
+                              question.type_question != "EQUATION"
+                                ? _c("div", {
+                                    staticClass: "question_container",
+                                    domProps: {
+                                      innerHTML: _vm._s(question.question)
+                                    }
+                                  })
+                                : _vm._e(),
+                              _vm._v(" "),
+                              question.type_question == "EQUATION"
+                                ? _c("equation-component", {
+                                    attrs: { content: question.question }
+                                  })
+                                : _vm._e()
+                            ],
+                            1
+                          )
+                        ]),
+                        _vm._v(" "),
+                        question.type_question == "SIMPLE_RTA"
+                          ? _vm._l(question.options, function(option, k_op) {
+                              return _c(
+                                "div",
+                                { key: k_op, staticClass: "row" },
+                                [
                                   _c(
-                                    "button",
-                                    {
-                                      staticClass: "q-option",
-                                      class: {
-                                        "q-option-checked":
-                                          question.response == k_op
+                                    "div",
+                                    { staticClass: "col-12 text-left" },
+                                    [
+                                      _c(
+                                        "button",
+                                        {
+                                          staticClass: "q-option",
+                                          class: {
+                                            "q-option-checked":
+                                              question.response == k_op
+                                          },
+                                          attrs: { disabled: _vm.disabled },
+                                          on: {
+                                            click: function($event) {
+                                              return _vm.SelectOptionEvent(
+                                                k_q,
+                                                k_op
+                                              )
+                                            }
+                                          }
+                                        },
+                                        [
+                                          _vm._v(_vm._s(option.content) + " "),
+                                          k_op == question.valid_answer_index &&
+                                          _vm.disabled
+                                            ? _c("i", {
+                                                staticClass: "fa fa-check"
+                                              })
+                                            : _vm._e()
+                                        ]
+                                      )
+                                    ]
+                                  )
+                                ]
+                              )
+                            })
+                          : _vm._e(),
+                        _vm._v(" "),
+                        question.type_question == "OPEN_RTA"
+                          ? [
+                              _c("div", { staticClass: "row" }, [
+                                _c(
+                                  "div",
+                                  { staticClass: "col-12" },
+                                  [
+                                    _c("editor-component", {
+                                      attrs: {
+                                        content: question.response,
+                                        readonly: _vm.disabled
                                       },
-                                      attrs: { disabled: _vm.disabled },
                                       on: {
-                                        click: function($event) {
-                                          return _vm.SelectOptionEvent(
-                                            k_q,
-                                            k_op
+                                        updateText: function($event) {
+                                          return _vm.SetResponseEvent(
+                                            $event,
+                                            k_q
                                           )
                                         }
                                       }
-                                    },
-                                    [
-                                      _vm._v(_vm._s(option.content) + " "),
-                                      k_op == question.valid_answer_index &&
-                                      _vm.disabled
-                                        ? _c("i", {
-                                            staticClass: "fa fa-check"
-                                          })
-                                        : _vm._e()
-                                    ]
-                                  )
-                                ])
-                              ]
-                            )
-                          })
-                        : _vm._e(),
-                      _vm._v(" "),
-                      question.type_question == "OPEN_RTA"
-                        ? [
-                            _c("div", { staticClass: "row" }, [
-                              _c(
-                                "div",
-                                { staticClass: "col-12" },
-                                [
-                                  _c("editor-component", {
-                                    attrs: {
-                                      content: question.response,
-                                      readonly: _vm.disabled
-                                    },
-                                    on: {
-                                      updateText: function($event) {
-                                        return _vm.SetResponseEvent($event, k_q)
+                                    })
+                                  ],
+                                  1
+                                )
+                              ])
+                            ]
+                          : _vm._e(),
+                        _vm._v(" "),
+                        question.type_question == "EQUATION"
+                          ? [
+                              _c("div", { staticClass: "row" }, [
+                                question.type_question == "EQUATION"
+                                  ? _c("div", [_vm._v("Respuesta")])
+                                  : _vm._e(),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  { staticClass: "col-12" },
+                                  [
+                                    _c("equation-component", {
+                                      attrs: {
+                                        content: question.response,
+                                        readonly: _vm.disabled
+                                      },
+                                      on: {
+                                        updateText: function($event) {
+                                          return _vm.SetResponseEvent(
+                                            $event,
+                                            k_q
+                                          )
+                                        }
                                       }
-                                    }
-                                  })
-                                ],
-                                1
-                              )
+                                    })
+                                  ],
+                                  1
+                                )
+                              ])
+                            ]
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _vm.disabled
+                          ? _c("div", { staticClass: "row " }, [
+                              _c("div", { staticClass: "col-12" }, [
+                                _c(
+                                  "label",
+                                  { attrs: { for: "question-answer" } },
+                                  [_vm._v("Justificación:")]
+                                ),
+                                _vm._v(" "),
+                                _c("div", {
+                                  staticClass: "question-answer",
+                                  domProps: {
+                                    innerHTML: _vm._s(question.justify)
+                                  }
+                                })
+                              ])
                             ])
-                          ]
-                        : _vm._e(),
-                      _vm._v(" "),
-                      question.type_question == "EQUATION"
-                        ? [
-                            _c("div", { staticClass: "row" }, [
-                              question.type_question == "EQUATION"
-                                ? _c("div", [_vm._v("Respuesta")])
-                                : _vm._e(),
-                              _vm._v(" "),
-                              _c(
-                                "div",
-                                { staticClass: "col-12" },
-                                [
-                                  _c("equation-component", {
-                                    attrs: {
-                                      content: question.response,
-                                      readonly: _vm.disabled
-                                    },
-                                    on: {
-                                      updateText: function($event) {
-                                        return _vm.SetResponseEvent($event, k_q)
-                                      }
-                                    }
-                                  })
-                                ],
-                                1
-                              )
-                            ])
-                          ]
-                        : _vm._e(),
-                      _vm._v(" "),
-                      _vm.disabled
-                        ? _c("div", { staticClass: "row " }, [
-                            _c("div", { staticClass: "col-12" }, [
-                              _c(
-                                "label",
-                                { attrs: { for: "question-answer" } },
-                                [_vm._v("Justificación:")]
-                              ),
-                              _vm._v(" "),
-                              _c("div", {
-                                staticClass: "question-answer",
-                                domProps: {
-                                  innerHTML: _vm._s(question.justify)
-                                }
-                              })
-                            ])
-                          ])
-                        : _vm._e()
-                    ],
-                    2
-                  )
-                ])
-              })
+                          : _vm._e()
+                      ],
+                      2
+                    )
+                  ])
+                })
+              ]
             : _vm._e()
         ],
         2
